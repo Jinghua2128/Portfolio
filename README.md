@@ -30,7 +30,7 @@ Enable GitHub Pages:
 
 Go to the repository on GitHub, navigate to Settings > Pages.
 Set the source to the main branch and / (root) folder.
-The site will be available at https://yourusername.github.io.
+The site will be available at https://jinghua2128.github.io/Portfolio/
 
 
 

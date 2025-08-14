@@ -3,71 +3,723 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liu GuangXuan's Portfolio</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Liu Guangxuan - 3D Artist & Game Developer</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #000428 0%, #004e92 50%, #009ffd 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(0, 0, 0, 0.98);
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: #007bff;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #000428, #004e92);
+            opacity: 0.8;
+        }
+
+        .hero-content {
+            z-index: 2;
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-primary {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: #007bff;
+            border: 2px solid #007bff;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            background: #007bff;
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 123, 255, 0.2);
+            border-color: #007bff;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #000428, #004e92);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #007bff;
+        }
+
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #007bff;
+        }
+
+        .project-tools {
+            font-size: 0.9rem;
+            color: #87ceeb;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .project-description {
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .skill-title {
+            color: #007bff;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Resume Section */
+        .resume-content {
+            text-align: center;
+        }
+
+        .resume-download {
+            display: inline-block;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .resume-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 123, 255, 0.2);
+            border-color: #007bff;
+        }
+
+        .contact-icon {
+            font-size: 2rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        .contact-link {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-link:hover {
+            color: #007bff;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>Liu GuangXuan's Portfolio</h1>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#works">Works</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#contact">Contact</a></li>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">LGX</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#resume" class="nav-link">Resume</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-        </nav>
-    </header>
-    <section id="home">
-        <h2>Welcome</h2>
-        <p>Welcome to my portfolio! Here, I showcase my experiences, projects, and skills in leadership, technical development, and creative design.</p>
+            <button class="mobile-menu" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">3D Artist & Game Developer</h1>
+            <p class="hero-subtitle">Passionate about Immersive Experiences<br>
+            Dynamic modeller specializing in game assets, environments, and immersive media. Proficient in Maya, Substance Painter, and Unity, with a flair for blending creativity and technical execution.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="cta-btn cta-primary">Explore My Work</a>
+                <a href="#contact" class="cta-btn cta-secondary">Contact Me</a>
+            </div>
+        </div>
+        <!-- Floating Particles -->
+        <div class="particle" style="top: 20%; left: 10%; width: 4px; height: 4px; animation-delay: 0s;"></div>
+        <div class="particle" style="top: 60%; left: 85%; width: 6px; height: 6px; animation-delay: 2s;"></div>
+        <div class="particle" style="top: 80%; left: 20%; width: 3px; height: 3px; animation-delay: 4s;"></div>
+        <div class="particle" style="top: 30%; left: 70%; width: 5px; height: 5px; animation-delay: 1s;"></div>
     </section>
-    <section id="works">
-        <h2>My Works</h2>
-        <div class="work-item">
-            <h3>Shenzhen OIP (05/09/2024 - 14/09/2024)</h3>
-            <p>It was an incredible opportunity to experience life as a student abroad! During the programme, I attended classes at an overseas university, gaining fresh insights and broadening my perspective through exposure to diverse ideas. The highlight was immersing myself in Shenzhen's vibrant culture and lifestyle, making the experience both enriching and unforgettable.</p>
-            <!-- Add image if available: <img src="images/oip-group-photo.jpg" alt="Shenzhen OIP Group Photo"> -->
-        </div>
-        <div class="work-item">
-            <h3>GGF China Booth (08/11/2024)</h3>
-            <p>I hosted the China booth, introducing attendees to Chinese culture and the game Black Myth: Wukong. Using a screen provided by the school, I showcased engaging content about traditional cultural elements and modern gaming, offering an interactive and immersive experience.</p>
-            <!-- Add image if available: <img src="images/ggf-group-photo.jpg" alt="GGF China Booth Photo"> -->
+
+    <!-- Projects Section -->
+    <section id="projects" class="section">
+        <h2 class="section-title">Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h3 class="project-title">Sci-Fi Weapon (Modelled & Textured)</h3>
+                <p class="project-tools">Tools: Maya, Substance Painter, Unity</p>
+                <p class="project-description">High-poly model with PBR textures, optimized for real-time rendering. Features detailed wireframe modeling and advanced material work for game-ready assets.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-user-ninja"></i>
+                </div>
+                <h3 class="project-title">Stylized Fantasy Character</h3>
+                <p class="project-tools">Tools: ZBrush, Maya, Substance Painter</p>
+                <p class="project-description">Original character design with rigging and animation tests in Unity. Complete pipeline from concept to in-engine implementation with custom shaders.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-mountain"></i>
+                </div>
+                <h3 class="project-title">Procedural Terrain Generator</h3>
+                <p class="project-tools">Tools: Unity, C#</p>
+                <p class="project-description">Custom tool for dynamic terrain creation using Perlin noise. Features real-time generation, texture blending, and performance optimization for large-scale environments.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-city"></i>
+                </div>
+                <h3 class="project-title">Game Environment Asset Pack</h3>
+                <p class="project-tools">Tools: Maya, Substance Designer, Unity</p>
+                <p class="project-description">Complete modular environment kit with seamless tiling textures, optimized LODs, and comprehensive material library for efficient world building.</p>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3 class="project-title">Interactive VR Experience</h3>
+                <p class="project-tools">Tools: Unity, C#, Oculus SDK</p>
+                <p class="project-description">Immersive VR application with custom interaction systems, spatial audio implementation, and optimized performance for smooth VR gameplay experience.</p>
+            </div>
         </div>
     </section>
-    <section id="skills">
-        <h2>Skills</h2>
-        <div class="skill-category">
-            <h3>Leadership Skills</h3>
-            <ul>
-                <li>Leading teams (e.g., head of the planning crew and video committee during the Shenzhen trip)</li>
-                <li>Coordinating events and activities (e.g., organizing cultural booth activities)</li>
-            </ul>
-        </div>
-        <div class="skill-category">
-            <h3>Technical Skills</h3>
-            <ul>
-                <li>Programming (e.g., developing Sundrop Farm in Python)</li>
-                <li>3D modeling and texturing (e.g., procedural texturing of chess pieces using Substance Painter)</li>
-                <li>Interactive development (e.g., creating websites for my own portfolio)</li>
-            </ul>
-        </div>
-        <div class="skill-category">
-            <h3>Design and Creative Skills</h3>
-            <ul>
-                <li>Graphic design (e.g., logo design for Applied Design)</li>
-                <li>UX/UI design (e.g., YouTube Shorts revamp using Figma and wireframes)</li>
-                <li>Game design and analysis (e.g., analyzing gameplay loops for Apex Legends and Kingdoms)</li>
-            </ul>
+
+    <!-- About Section -->
+    <section id="about" class="section">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="about-info">
+                <p class="about-text">Currently studying Immersive Media at Ngee Ann Poly, I balance my passion for 3D art with hands-on experience in teamwork and problem-solving—whether in game jams or service roles. Eager to bring my technical skills and creative vision to a game studio.</p>
+                <p class="about-text">My journey in 3D art and game development is driven by a fascination with creating worlds that players can lose themselves in. I thrive on the technical challenges of optimization and the creative satisfaction of bringing concepts to life.</p>
+                
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <div class="skill-title">3D Modelling</div>
+                        <p>Maya, Blender, Substance Painter, ZBrush</p>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-title">Game Development</div>
+                        <p>Unity, C#, Python, Unreal Engine</p>
+                    </div>
+                    <div class="skill-category">
+                        <div class="skill-title">Soft Skills</div>
+                        <p>Team Collaboration, Adaptability, Problem-Solving</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:your.email@example.com">your.email@example.com</a></p>
-        <p>GitHub: <a href="https://github.com/jinghua2128">jinghua2128</a></p>
+
+    <!-- Resume Section -->
+    <section id="resume" class="section">
+        <h2 class="section-title">Resume</h2>
+        <div class="resume-content">
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">Download my complete resume to learn more about my experience, education, and technical skills.</p>
+            <a href="#" class="resume-download" onclick="downloadResume()">
+                <i class="fas fa-download" style="margin-right: 0.5rem;"></i>
+                Download Resume (PDF)
+            </a>
+            <div style="margin-top: 2rem;">
+                <h3 style="color: #007bff; margin-bottom: 1rem;">Relevant Coursework</h3>
+                <p>Advanced 3D Modelling • Game Programming • Interactive Media Design • Digital Asset Pipeline • VR/AR Development</p>
+            </div>
+        </div>
     </section>
-    <footer>
-        <p>&copy; 2025 Liu GuangXuan. All rights reserved.</p>
-    </footer>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <h2 class="section-title">Let's Connect</h2>
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email</h3>
+                <a href="mailto:liuguangxuan1230@gmail.com" class="contact-link">liuguangxuan1230@gmail.com</a>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-artstation"></i>
+                </div>
+                <h3>ArtStation</h3>
+                <a href="#" class="contact-link">View Portfolio</a>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-linkedin"></i>
+                </div>
+                <h3>LinkedIn</h3>
+                <a href="#" class="contact-link">Professional Profile</a>
+            </div>
+            
+            <div class="contact-item">
+                <div class="contact-icon">
+                    <i class="fab fa-github"></i>
+                </div>
+                <h3>GitHub</h3>
+                <a href="#" class="contact-link">Code Repository</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and cards
+        document.querySelectorAll('.section, .project-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Project card interactions
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
+        }
+
+        // Resume download function
+        function downloadResume() {
+            alert('Resume download would be implemented here. Please connect your actual PDF file.');
+            // In a real implementation, you would link to your actual resume file
+            // window.open('path-to-your-resume.pdf', '_blank');
+        }
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-bg');
+            if (parallax) {
+                const speed = scrolled * 0.5;
+                parallax.style.transform = `translateY(${speed}px)`;
+            }
+        });
+
+        // Dynamic particle generation
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.width = (Math.random() * 4 + 2) + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            document.querySelector('.hero').appendChild(particle);
+            
+            setTimeout(() => {
+                particle.remove();
+            }, 6000);
+        }
+
+        // Create particles periodically
+        setInterval(createParticle, 3000);
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            setTimeout(function() {
+                document.body.style.transition = 'opacity 0.5s ease-in';
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Typing effect for hero title (optional enhancement)
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect on load
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const heroTitle = document.querySelector('.hero-title');
+                if (heroTitle) {
+                    const originalText = heroTitle.textContent;
+                    typeWriter(heroTitle, originalText, 150);
+                }
+            }, 500);
+        });
+    </script>
 </body>
 </html>

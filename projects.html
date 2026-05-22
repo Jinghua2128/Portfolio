@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects | Liu GuangXuan</title>
+    <link rel="icon" href="imgs/icon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <nav id="navbar" aria-label="Main navigation">
+        <a href="index.html" class="nav-logo">&lt;LGX /&gt;</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <main>
+        <section class="section page-hero">
+            <div class="section-inner">
+                <span class="section-tag">// my work</span>
+                <h1 class="page-title">Selected projects across games, UX, interaction, and 3D design.</h1>
+                <div class="section-line"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-inner">
+                <div class="auth-panel account-panel">
+                    <div class="account-copy">
+                        <span class="section-tag">// project manager</span>
+                        <h2>Project Login</h2>
+                        <p id="project-auth-hint">Login to add, edit, or delete project cards saved in Firebase.</p>
+                        <div class="account-benefits">
+                            <span>Add new projects</span>
+                            <span>Edit project wording</span>
+                            <span>Save portfolio content online</span>
+                        </div>
+                    </div>
+                    <form id="project-auth-form" class="auth-form">
+                        <label for="project-auth-name">Display name</label>
+                        <input id="project-auth-name" type="text" placeholder="Display name for new accounts" />
+                        <label for="project-auth-email">Email</label>
+                        <input id="project-auth-email" type="email" placeholder="Email" required="required" />
+                        <label for="project-auth-password">Password</label>
+                        <input id="project-auth-password" type="password" placeholder="Password" required="required" />
+                        <label for="project-auth-mode">Action</label>
+                        <select id="project-auth-mode" aria-label="Login mode">
+                            <option value="login">Login</option>
+                            <option value="register">Create account</option>
+                        </select>
+                        <div class="auth-actions">
+                            <button class="btn btn-primary" type="submit">Continue</button>
+                            <button class="btn btn-secondary" id="project-logout-button" type="button" hidden="hidden">Logout</button>
+                        </div>
+                        <p id="project-auth-status" class="auth-status" aria-live="polite"></p>
+                    </form>
+                </div>
+
+                <div id="project-admin-panel" class="admin-panel" hidden="hidden">
+                    <span class="section-tag">// firebase editor</span>
+                    <h2>Add or Edit Projects</h2>
+                    <p>Projects are saved in Firestore and displayed as portfolio cards.</p>
+                    <form id="project-form" class="post-form">
+                        <input id="project-id" type="text" placeholder="Project ID, e.g. sundrop-farm" />
+                        <input id="project-number" type="text" placeholder="Card number, e.g. 05" required="required" />
+                        <input id="project-title" type="text" placeholder="Project title" required="required" />
+                        <input id="project-category" type="text" placeholder="Category" required="required" />
+                        <textarea id="project-description" rows="5" placeholder="Project description" required="required"></textarea>
+                        <input id="project-tags" type="text" placeholder="Tags separated by commas, e.g. Unity, C#, Game Design" />
+                        <div class="auth-actions">
+                            <button class="btn btn-primary" type="submit">Save Project</button>
+                            <button class="btn btn-secondary" id="reset-project-form" type="button">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="projects-grid" class="projects-grid">
+                    <div class="blog-loading">
+                        <p class="card-tag">Firebase</p>
+                        <h2 class="card-title">Loading projects...</h2>
+                        <p class="card-desc">If Firebase is unavailable, the page will show the default project cards.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="footer-copy">Copyright 2026 Liu GuangXuan. Projects shaped through learning and iteration.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="projects-firebase.js"></script>
+</body>
+</html>

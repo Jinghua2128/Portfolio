@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | Liu GuangXuan</title>
+    <link rel="icon" href="imgs/icon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+    <nav id="navbar" aria-label="Main navigation">
+        <a href="index.html" class="nav-logo">&lt;LGX /&gt;</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <div class="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="blog.html">Blog</a>
+        <a href="contact.html">Contact</a>
+    </div>
+
+    <main>
+        <section class="section page-hero">
+            <div class="section-inner">
+                <span class="section-tag">// thoughts &amp; notes</span>
+                <h1 class="page-title">Experiences that shaped my creative and cultural perspective.</h1>
+                <div class="section-line"></div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-inner">
+                <div class="auth-panel account-panel">
+                    <div class="account-copy">
+                        <span class="section-tag">// secure access</span>
+                        <h2>Blog Account</h2>
+                        <p id="auth-hint">Login or create an account to comment on posts.</p>
+                        <div class="account-benefits">
+                            <span>Comment on posts</span>
+                            <span>Edit your own comments</span>
+                            <span>Manage posts when signed in</span>
+                        </div>
+                    </div>
+                    <form id="auth-form" class="auth-form">
+                        <label for="auth-name">Display name</label>
+                        <input id="auth-name" type="text" placeholder="Display name for new accounts" />
+                        <label for="auth-email">Email</label>
+                        <input id="auth-email" type="email" placeholder="Email" required="required" />
+                        <label for="auth-password">Password</label>
+                        <input id="auth-password" type="password" placeholder="Password" required="required" />
+                        <label for="auth-mode">Action</label>
+                        <select id="auth-mode" aria-label="Login mode">
+                            <option value="login">Login</option>
+                            <option value="register">Create account</option>
+                        </select>
+                        <div class="auth-actions">
+                            <button class="btn btn-primary" type="submit">Continue</button>
+                            <button class="btn btn-secondary" id="logout-button" type="button" hidden="hidden">Logout</button>
+                        </div>
+                        <p id="auth-status" class="auth-status" aria-live="polite"></p>
+                    </form>
+                </div>
+
+                <div id="admin-panel" class="admin-panel" hidden="hidden">
+                    <span class="section-tag">// admin tools</span>
+                    <h2>Edit Blog Posts</h2>
+                    <p>These controls appear only for the configured admin account in Firebase.</p>
+                    <form id="post-form" class="post-form">
+                        <input id="post-id" type="text" placeholder="Post ID, e.g. shenzhen-oip" />
+                        <input id="post-title" type="text" placeholder="Post title" required="required" />
+                        <input id="post-category" type="text" placeholder="Category" required="required" />
+                        <div class="form-row">
+                            <input id="post-day" type="text" placeholder="Day, e.g. 05" required="required" />
+                            <input id="post-month" type="text" placeholder="Month/year, e.g. Sep 2024" required="required" />
+                        </div>
+                        <textarea id="post-excerpt" rows="5" placeholder="Post content" required="required"></textarea>
+                        <div class="auth-actions">
+                            <button class="btn btn-primary" type="submit">Save Post</button>
+                            <button class="btn btn-secondary" id="reset-post-form" type="button">Clear</button>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="blog-list" class="blog-list">
+                    <div class="blog-loading">
+                        <p class="post-category">Firebase</p>
+                        <h2 class="post-title">Loading posts...</h2>
+                        <p class="post-excerpt">If Firebase is unavailable, the page will show the default portfolio blog posts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p class="footer-copy">Copyright 2026 Liu GuangXuan. Notes from creative media learning.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="blog-firebase.js"></script>
+</body>
+</html>

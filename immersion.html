@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Explore selected 3D models by Liu GuangXuan, with work made in Maya, Substance Painter and ZBrush." />
+    <title>3D Immersion | Liu GuangXuan</title>
+    <link rel="icon" href="imgs/Logo/icon.ico" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="immersion.css" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <nav id="navbar" aria-label="Main navigation">
+        <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="immersion.html" class="active" aria-current="page">3D Immersion</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="mobile-menu">
+        <a href="index.html">Home</a><a href="about.html">About</a><a href="projects.html">Projects</a>
+        <a href="immersion.html" aria-current="page">3D Immersion</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a>
+    </div>
+    <main id="main-content">
+        <section class="section page-hero immersion-heading">
+            <div class="section-inner">
+                <span class="section-tag">// selected 3D work</span>
+                <h1 class="page-title">3D Immersion</h1>
+                <p class="immersion-intro">A closer look at form, material, and detail. Choose a model to explore it at your own pace.</p>
+                <div class="section-line"></div>
+            </div>
+        </section>
+        <section class="section immersion-section" aria-label="3D gallery">
+            <div class="section-inner immersion-layout">
+                <div class="model-library">
+                    <h2>Selected models</h2>
+                    <div id="model-list" class="model-list" aria-label="Choose a model">
+                        <a href="https://sketchfab.com/3d-models/6fbc704037754126ae66f0604db4d62b" target="_blank" rel="noopener noreferrer">Chess pices - Knight</a>
+                        <a href="https://sketchfab.com/3d-models/30e4d2f5ffda42718012338c096c9cc5" target="_blank" rel="noopener noreferrer">hologram</a>
+                        <a href="https://sketchfab.com/3d-models/9daa1337b6704d8cb0d3a6ce90513fea" target="_blank" rel="noopener noreferrer">Crystals</a>
+                    </div>
+                    <p class="model-library-note">Maya · Substance Painter<br />Crystals also uses ZBrush.</p>
+                    <a class="text-action" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noopener noreferrer">View Sketchfab profile ↗</a>
+                </div>
+                <div class="model-stage">
+                    <div class="model-heading">
+                        <div><h2 id="model-title">Chess pices - Knight</h2><p id="model-tools">Maya · Substance Painter</p></div>
+                        <span id="model-position" aria-live="polite">1 / 3</span>
+                    </div>
+                    <div id="model-viewport" class="model-viewport" aria-label="Interactive model viewer">
+                        <div id="model-frame-host"></div>
+                        <div id="model-placeholder" class="model-placeholder">
+                            <p class="model-placeholder-mark" aria-hidden="true">[ 3D ]</p>
+                            <p>Explore from every angle.</p>
+                            <p class="model-privacy">The interactive view loads from Sketchfab only when you choose to open it.</p>
+                            <button id="model-load" class="btn btn-primary" type="button" hidden>Load 3D view</button>
+                            <noscript><p>JavaScript is off. Use the model links to explore the original work on Sketchfab.</p></noscript>
+                        </div>
+                    </div>
+                    <p id="model-status" class="model-status" role="status" aria-live="polite">3D is optional. Titles, tools and original work links are always available.</p>
+                    <div id="model-navigation" class="model-navigation" hidden>
+                        <button id="model-previous" class="text-action" type="button">← Previous model</button>
+                        <button id="model-next" class="text-action" type="button">Next model →</button>
+                        <button id="model-stop" class="text-action" type="button" hidden>Close 3D view</button>
+                    </div>
+                    <div id="model-camera" class="model-camera" role="group" aria-label="Camera controls" hidden>
+                        <button class="btn btn-secondary" data-camera="left" type="button">Rotate left</button>
+                        <button class="btn btn-secondary" data-camera="right" type="button">Rotate right</button>
+                        <button class="btn btn-secondary" data-camera="in" type="button">Zoom in</button>
+                        <button class="btn btn-secondary" data-camera="out" type="button">Zoom out</button>
+                        <button class="btn btn-secondary" data-camera="reset" type="button">Reset view</button>
+                    </div>
+                    <p id="model-instructions" class="model-instructions" hidden>Drag to orbit and pinch to zoom, or use the camera buttons above with your keyboard. Tab moves between controls. Close the 3D view to release its resources.</p>
+                    <a id="model-source" class="text-action" href="https://sketchfab.com/3d-models/6fbc704037754126ae66f0604db4d62b" target="_blank" rel="noopener noreferrer">Open original on Sketchfab ↗</a>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-socials">
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+        </div>
+        <p class="footer-copy">Copyright 2026 Liu GuangXuan.</p>
+    </footer>
+    <script src="script.js"></script>
+    <script type="module" src="immersion.js"></script>
+</body>
+</html>

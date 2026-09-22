@@ -3,18 +3,21 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Blog updates from Liu GuangXuan about projects, immersive media, creative practice, and Ngee Ann Polytechnic." />
     <title>Blog | Liu GuangXuan</title>
-    <link rel="icon" href="imgs/icon.ico" />
+    <link rel="icon" href="imgs/Logo/icon.ico" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
-        <a href="index.html" class="nav-logo">&lt;LGX /&gt;</a>
+        <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="projects.html">Projects</a></li>
-            <li><a href="blog.html" class="active">Blog</a></li>
+            <li><a href="immersion.html">3D Immersion</a></li>
+            <li><a href="blog.html" class="active" aria-current="page">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
         <button class="hamburger" type="button" aria-label="Open menu" aria-expanded="false">
@@ -26,73 +29,29 @@
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
-        <a href="blog.html">Blog</a>
+        <a href="immersion.html">3D Immersion</a>
+        <a href="blog.html" aria-current="page">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
-    <main>
-        <section class="section page-hero">
-            <div class="section-inner">
-                <span class="section-tag">// thoughts &amp; notes</span>
-                <h1 class="page-title">Experiences that shaped my creative and cultural perspective.</h1>
-                <div class="section-line"></div>
+    <main id="main-content">
+        <section class="section page-hero compact-hero">
+            <div class="section-inner split-heading">
+                <div>
+                    <span class="section-tag">// journal</span>
+                    <h1 class="page-title">Short updates from projects, school, and creative practice.</h1>
+                    <div class="section-line"></div>
+                </div>
+                <div class="page-actions">
+                    <button class="btn btn-secondary" type="button" data-drawer-open="blog-login-drawer">Account</button>
+                    <button class="btn btn-primary" id="open-post-drawer" type="button" data-drawer-open="blog-post-drawer" hidden="hidden">New Post</button>
+                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section content-section">
             <div class="section-inner">
-                <div class="auth-panel account-panel">
-                    <div class="account-copy">
-                        <span class="section-tag">// secure access</span>
-                        <h2>Blog Account</h2>
-                        <p id="auth-hint">Login or create an account to comment on posts.</p>
-                        <div class="account-benefits">
-                            <span>Comment on posts</span>
-                            <span>Edit your own comments</span>
-                            <span>Manage posts when signed in</span>
-                        </div>
-                    </div>
-                    <form id="auth-form" class="auth-form">
-                        <label for="auth-name">Display name</label>
-                        <input id="auth-name" type="text" placeholder="Display name for new accounts" />
-                        <label for="auth-email">Email</label>
-                        <input id="auth-email" type="email" placeholder="Email" required="required" />
-                        <label for="auth-password">Password</label>
-                        <input id="auth-password" type="password" placeholder="Password" required="required" />
-                        <label for="auth-mode">Action</label>
-                        <select id="auth-mode" aria-label="Login mode">
-                            <option value="login">Login</option>
-                            <option value="register">Create account</option>
-                        </select>
-                        <div class="auth-actions">
-                            <button class="btn btn-primary" type="submit">Continue</button>
-                            <button class="btn btn-secondary" id="logout-button" type="button" hidden="hidden">Logout</button>
-                        </div>
-                        <p id="auth-status" class="auth-status" aria-live="polite"></p>
-                    </form>
-                </div>
-
-                <div id="admin-panel" class="admin-panel" hidden="hidden">
-                    <span class="section-tag">// admin tools</span>
-                    <h2>Edit Blog Posts</h2>
-                    <p>These controls appear only for the configured admin account in Firebase.</p>
-                    <form id="post-form" class="post-form">
-                        <input id="post-id" type="text" placeholder="Post ID, e.g. shenzhen-oip" />
-                        <input id="post-title" type="text" placeholder="Post title" required="required" />
-                        <input id="post-category" type="text" placeholder="Category" required="required" />
-                        <div class="form-row">
-                            <input id="post-day" type="text" placeholder="Day, e.g. 05" required="required" />
-                            <input id="post-month" type="text" placeholder="Month/year, e.g. Sep 2024" required="required" />
-                        </div>
-                        <textarea id="post-excerpt" rows="5" placeholder="Post content" required="required"></textarea>
-                        <div class="auth-actions">
-                            <button class="btn btn-primary" type="submit">Save Post</button>
-                            <button class="btn btn-secondary" id="reset-post-form" type="button">Clear</button>
-                        </div>
-                    </form>
-                </div>
-
-                <div id="blog-list" class="blog-list">
+                <div id="blog-list" class="blog-card-grid" aria-live="polite">
                     <div class="blog-loading">
                         <p class="post-category">Firebase</p>
                         <h2 class="post-title">Loading posts...</h2>
@@ -103,7 +62,90 @@
         </section>
     </main>
 
+    <aside id="blog-login-drawer" class="side-drawer" aria-labelledby="blog-login-title" hidden="hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="section-tag">// secure access</span>
+                <h2 id="blog-login-title">Blog Account</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close login panel" data-drawer-close>&times;</button>
+        </div>
+        <p id="auth-hint" class="drawer-note">Login or create an account to comment on posts.</p>
+        <div class="account-benefits compact-benefits">
+            <span>Comment on posts</span>
+            <span>Edit your own comments</span>
+            <span>Manage posts when signed in</span>
+        </div>
+        <form id="auth-form" class="auth-form drawer-form">
+            <label for="auth-name" hidden>Display name</label>
+            <input id="auth-name" type="text" placeholder="For new accounts" hidden disabled />
+            <label for="auth-email">Email</label>
+            <input id="auth-email" type="email" placeholder="Email" required="required" data-autofocus />
+            <label for="auth-password">Password</label>
+            <input id="auth-password" type="password" placeholder="Password" required="required" />
+            <label for="auth-mode">Action</label>
+            <select id="auth-mode" aria-label="Login mode">
+                <option value="login">Login</option>
+                <option value="register">Create account</option>
+            </select>
+            <div class="auth-actions">
+                <button class="btn btn-primary" type="submit">Continue</button>
+                <button class="btn btn-secondary" id="logout-button" type="button" hidden="hidden">Logout</button>
+            </div>
+            <p id="auth-status" class="auth-status" aria-live="polite"></p>
+        </form>
+    </aside>
+
+    <aside id="blog-post-drawer" class="side-drawer wide-drawer" aria-labelledby="blog-post-editor-title" hidden="hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="section-tag">// admin tools</span>
+                <h2 id="blog-post-editor-title">Create Blog Post</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close post editor" data-drawer-close>&times;</button>
+        </div>
+        <div id="admin-panel" hidden>
+            <p class="drawer-note">Write in plain text, preview your post, and publish when ready.</p>
+            <form id="post-form" class="post-form drawer-form">
+                <input id="post-id" type="text" placeholder="Post ID, e.g. shenzhen-oip" />
+                <input id="post-title" type="text" placeholder="Post title" required="required" />
+                <input id="post-category" type="text" placeholder="Category or tags" required="required" />
+                <div class="form-row">
+                    <input id="post-day" type="text" placeholder="Day, e.g. 05" required="required" />
+                    <input id="post-month" type="text" placeholder="Month/year, e.g. Sep 2024" required="required" />
+                </div>
+                <input id="post-cover-image" type="url" placeholder="Cover image URL or imgs/example.jpg" />
+                <input id="post-image-urls" type="text" placeholder="Content image URLs, separated by commas" />
+                <input id="post-link" type="url" placeholder="Optional project or GitHub link" />
+                <textarea id="post-excerpt" rows="3" placeholder="Short summary" required="required"></textarea>
+                <textarea id="post-body" rows="6" placeholder="Short body text for Read More"></textarea>
+                <div class="auth-actions">
+                    <button class="btn btn-primary" type="submit">Save Post</button>
+                    <button class="btn btn-secondary" id="reset-post-form" type="button">Clear</button>
+                </div>
+            </form>
+        </div>
+    </aside>
+
+    <aside id="blog-read-drawer" class="side-drawer wide-drawer" aria-labelledby="blog-read-title" hidden="hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="section-tag">// read more</span>
+                <h2 id="blog-read-title">Post Details</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close blog post" data-drawer-close>&times;</button>
+        </div>
+        <div id="blog-read-content"></div>
+    </aside>
+
     <footer>
+        <div class="footer-socials">
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+        </div>
         <p class="footer-copy">Copyright 2026 Liu GuangXuan. Notes from creative media learning.</p>
     </footer>
 
@@ -112,6 +154,12 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="script.js"></script>
     <script src="firebase-config.js"></script>
+    <link rel="stylesheet" href="editor-tools.css" />
+    <script src="editor-tools.js"></script>
+    <link rel="stylesheet" href="image-upload.css" />
+    <script src="image-upload.js"></script>
+    <script src="content-order.js"></script>
+    <script src="project-catalog.js"></script>
     <script src="blog-firebase.js"></script>
 </body>
 </html>

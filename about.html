@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="About Liu GuangXuan, a Year 3 Immersive Media student at Ngee Ann Polytechnic exploring games, interaction, motion, UI/UX, video, and 3D." />
     <title>About | Liu GuangXuan</title>
-    <link rel="icon" href="imgs/icon.ico" />
+    <link rel="icon" href="imgs/Logo/icon.ico" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
-        <a href="index.html" class="nav-logo">&lt;LGX /&gt;</a>
+        <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="about.html" class="active" aria-current="page">About</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="immersion.html">3D Immersion</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -24,61 +27,139 @@
 
     <div class="mobile-menu">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
+        <a href="about.html" aria-current="page">About</a>
         <a href="projects.html">Projects</a>
+        <a href="immersion.html">3D Immersion</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
-    <main>
+    <main id="main-content">
         <section class="section page-hero">
             <div class="section-inner">
                 <span class="section-tag">// who I am</span>
-                <h1 class="page-title">Creative student exploring storytelling, interaction, and technology.</h1>
+                <h1 class="page-title">Creative student in immersive media.</h1>
                 <div class="section-line"></div>
             </div>
         </section>
 
         <section class="section">
             <div class="section-inner about-grid">
-                <div class="about-visual" aria-hidden="true">
-                    <div class="blob"></div>
-                    <div class="about-avatar">LGX</div>
-                </div>
+                <aside class="about-profile-card" aria-label="Life stage carousel">
+                    <div class="profile-snapshot-frame life-carousel" data-life-carousel tabindex="0">
+                        <div class="life-carousel-header">
+                            <span class="profile-kicker">Life Stages</span>
+                            <span class="life-counter" data-life-counter>1 / 5</span>
+                        </div>
+                        <div class="life-carousel-track" aria-live="polite">
+                            <article class="life-slide is-active" data-life-slide aria-hidden="false">
+                                <div class="life-visual" aria-hidden="true">
+                                    <span class="life-stage-mark">0</span>
+                                    <span class="life-place">Puyang, Henan</span>
+                                </div>
+                                <div class="life-content">
+                                    <span class="life-date">2007</span>
+                                    <h2>Stage 0</h2>
+                                    <p>I was born in Puyang, Henan, and grew up with family, cartoons, games, and simple childhood moments.</p>
+                                </div>
+                            </article>
+                            <article class="life-slide" data-life-slide aria-hidden="true">
+                                <div class="life-visual" aria-hidden="true">
+                                    <span class="life-stage-mark">1</span>
+                                    <span class="life-place">Childhood</span>
+                                </div>
+                                <div class="life-content">
+                                    <span class="life-date">Early years</span>
+                                    <h2>Stage 1</h2>
+                                    <p>My early years gave me strong family values, curiosity, and a quiet desire to explore more.</p>
+                                </div>
+                            </article>
+                            <article class="life-slide" data-life-slide aria-hidden="true">
+                                <div class="life-visual" aria-hidden="true">
+                                    <span class="life-stage-mark">2</span>
+                                    <span class="life-place">Primary</span>
+                                </div>
+                                <div class="life-content">
+                                    <span class="life-date">West Spring Primary</span>
+                                    <h2>Stage 2</h2>
+                                    <p>Primary school helped me grow in confidence, curiosity, friendship, and gratitude.</p>
+                                </div>
+                            </article>
+                            <article class="life-slide" data-life-slide aria-hidden="true">
+                                <div class="life-visual" aria-hidden="true">
+                                    <span class="life-stage-mark">3</span>
+                                    <span class="life-place">Secondary</span>
+                                </div>
+                                <div class="life-content">
+                                    <span class="life-date">Chua Chu Kang Secondary</span>
+                                    <h2>Stage 3</h2>
+                                    <p>Secondary school helped me build teamwork, resilience, communication, and confidence through events and CCAs.</p>
+                                </div>
+                            </article>
+                            <article class="life-slide" data-life-slide aria-hidden="true">
+                                <div class="life-visual" aria-hidden="true">
+                                    <span class="life-stage-mark">Now</span>
+                                    <span class="life-place">Ngee Ann Polytechnic</span>
+                                </div>
+                                <div class="life-content">
+                                    <span class="life-date">Current stage</span>
+                                    <h2>Now</h2>
+                                    <p>I study Immersive Media at Ngee Ann Polytechnic, exploring games, interaction, motion, UI/UX, video, and 3D.</p>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="life-carousel-controls" aria-label="Life stage controls">
+                            <button class="life-arrow life-arrow-prev" type="button" data-life-prev aria-label="Previous life stage"></button>
+                            <div class="life-dots" role="tablist" aria-label="Life stage slides">
+                                <button class="life-dot is-active" type="button" role="tab" aria-selected="true" data-life-dot aria-label="Show Stage 0"></button>
+                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show Stage 1"></button>
+                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show Stage 2"></button>
+                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show Stage 3"></button>
+                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show current stage"></button>
+                            </div>
+                            <button class="life-arrow life-arrow-next" type="button" data-life-next aria-label="Next life stage"></button>
+                        </div>
+                    </div>
+                    <div class="profile-summary-card">
+                        <h2>Liu GuangXuan</h2>
+                        <p>Year 3 Immersive Media student creating work across games, motion, UI/UX, video, and 3D.</p>
+                        <div class="profile-highlights" aria-label="Portfolio focus areas">
+                            <span>Game Design</span>
+                            <span>Motion</span>
+                            <span>3D</span>
+                            <span>UI/UX</span>
+                        </div>
+                    </div>
+                </aside>
                 <div>
                     <span class="section-tag">// profile</span>
                     <h2 class="section-title">About Me</h2>
                     <div class="section-line"></div>
                     <p class="about-bio">
-                        I am a Year 3 Diploma student in Immersive Media at Ngee Ann Polytechnic. My interests include game design, interactive media, UI/UX, motion graphics, video editing, and 3D art.
+                        I am a Year 3 Immersive Media student at Ngee Ann Polytechnic, interested in games, interaction, UI/UX, motion, video, and 3D.
                     </p>
                     <p class="about-bio">
-                        I enjoy exploring how creativity and technology can work together to make digital experiences more meaningful. Whether I am designing a game system, editing a video, planning motion, or building a website, I try to make the work clear and purposeful.
-                    </p>
-                    <p class="about-bio">
-                        I also have experience in leadership, event planning, cultural activities, and multimedia storytelling. These experiences help me collaborate, organise ideas, and present creative work with confidence.
+                        I enjoy combining storytelling, creativity, and technology. I also bring leadership, event planning, cultural activities, and multimedia storytelling experience.
                     </p>
 
                     <p class="skills-title">// Core Skills</p>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>Frontend Development</span><span>HTML / CSS / JS</span></div>
-                        <div class="skill-track"><div class="skill-fill" style="width: 88%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>Game Development</span><span>Unity / C# / Python</span></div>
-                        <div class="skill-track"><div class="skill-fill" style="width: 82%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>Video &amp; Motion</span><span>AE / Premiere Pro</span></div>
-                        <div class="skill-track"><div class="skill-fill" style="width: 84%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>3D Design</span><span>Blender / Maya / Substance</span></div>
-                        <div class="skill-track"><div class="skill-fill" style="width: 78%"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <div class="skill-header"><span>UI/UX &amp; Design</span><span>Figma / Wireframes</span></div>
-                        <div class="skill-track"><div class="skill-fill" style="width: 80%"></div></div>
+                    <div class="skills-console" data-skills-console>
+                        <div class="skills-tabs" role="tablist" aria-label="Skill categories">
+                            <button class="skill-tab is-active" type="button" role="tab" aria-selected="true" data-skill-key="frontend">Frontend</button>
+                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="game">Game</button>
+                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="motion">Motion</button>
+                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="threeD">3D</button>
+                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="ux">UI/UX</button>
+                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="soft">Soft Skills</button>
+                        </div>
+                        <article class="skill-detail" aria-live="polite">
+                            <p class="card-tag" data-skill-label>Frontend Development</p>
+                            <h3 data-skill-title>Responsive websites and interactive UI.</h3>
+                            <p data-skill-copy>Clean layouts, UI states, and Firebase-connected features for desktop and mobile.</p>
+                            <div class="skill-tool-grid" data-skill-tools>
+                                <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Firebase</span><span>GitHub</span>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>
@@ -86,6 +167,13 @@
     </main>
 
     <footer>
+        <div class="footer-socials">
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+        </div>
         <p class="footer-copy">Copyright 2026 Liu GuangXuan. Built with creativity and code.</p>
     </footer>
 

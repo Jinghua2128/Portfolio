@@ -5,16 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Portfolio of Liu GuangXuan, an Immersive Media student at Ngee Ann Polytechnic." />
     <title>Liu GuangXuan | Immersive Media Portfolio</title>
-    <link rel="icon" href="imgs/icon.ico" />
+    <link rel="icon" href="imgs/Logo/icon.ico" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
-        <a href="index.html" class="nav-logo">&lt;LGX /&gt;</a>
+        <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="index.html" class="active" aria-current="page">Home</a></li>
             <li><a href="about.html">About</a></li>
             <li><a href="projects.html">Projects</a></li>
+            <li><a href="immersion.html">3D Immersion</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -24,14 +26,15 @@
     </nav>
 
     <div class="mobile-menu">
-        <a href="index.html">Home</a>
+        <a href="index.html" aria-current="page">Home</a>
         <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
+        <a href="immersion.html">3D Immersion</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
-    <main>
+    <main id="main-content">
         <section class="hero">
             <div class="hero-grid" aria-hidden="true"></div>
             <div class="hero-content">
@@ -46,10 +49,52 @@
                     <a class="btn btn-primary" href="projects.html">View Projects</a>
                     <a class="btn btn-secondary" href="about.html">About Me</a>
                 </div>
+                <div class="hero-lab" data-focus-lab>
+                    <div class="hero-lab-tabs" role="tablist" aria-label="Creative focus areas">
+                        <button class="hero-lab-tab is-active" type="button" role="tab" aria-selected="true" data-focus-key="interactive">Interactive</button>
+                        <button class="hero-lab-tab" type="button" role="tab" aria-selected="false" data-focus-key="motion">Motion</button>
+                        <button class="hero-lab-tab" type="button" role="tab" aria-selected="false" data-focus-key="threeD">3D</button>
+                        <button class="hero-lab-tab" type="button" role="tab" aria-selected="false" data-focus-key="ux">UI/UX</button>
+                    </div>
+                    <article class="hero-lab-card" aria-live="polite">
+                        <p class="card-tag" data-focus-label>Interactive Development</p>
+                        <h2 data-focus-title>Playable systems, web tools, and AR ideas.</h2>
+                        <p data-focus-copy>I enjoy building experiences where people can click, explore, test, and respond instead of only watching from the outside.</p>
+                        <div class="hero-lab-meter" aria-hidden="true"><span data-focus-meter style="width: 86%"></span></div>
+                        <div class="tag-list compact-tags" data-focus-tools>
+                            <span>Unity</span><span>Firebase</span><span>JavaScript</span><span>C#</span>
+                        </div>
+                    </article>
+                </div>
             </div>
             <div class="scroll-indicator" aria-hidden="true">
                 <div class="scroll-line"></div>
                 <span>Portfolio</span>
+            </div>
+        </section>
+
+        <section class="section home-overview" aria-label="Portfolio overview">
+            <div class="section-inner">
+                <span class="section-tag">// overview</span>
+                <h2 class="section-title">Building thoughtful media experiences across design, code, and storytelling.</h2>
+                <div class="section-line"></div>
+                <div class="overview-grid">
+                    <article class="info-card">
+                        <p class="card-tag">Focus</p>
+                        <h3>Immersive Media</h3>
+                        <p>Exploring games, interaction, motion, video, UI/UX, and 3D art through focused builds and independent practice.</p>
+                    </article>
+                    <article class="info-card">
+                        <p class="card-tag">Tools</p>
+                        <h3>Creative Production</h3>
+                        <p>Working with Unity, HTML, CSS, JavaScript, Python, C#, After Effects, Premiere Pro, Blender, Maya, Substance Painter, Figma, and GitHub.</p>
+                    </article>
+                    <article class="info-card">
+                        <p class="card-tag">Strength</p>
+                        <h3>Collaboration</h3>
+                        <p>Bringing leadership, event planning, cultural activities, and multimedia storytelling into creative team environments.</p>
+                    </article>
+                </div>
             </div>
         </section>
     </main>
@@ -59,6 +104,8 @@
             <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
             <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
             <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
         </div>
         <p class="footer-copy">Copyright 2026 Liu GuangXuan. Built for immersive media opportunities.</p>
     </footer>

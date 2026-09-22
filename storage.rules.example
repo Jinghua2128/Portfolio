@@ -1,0 +1,18 @@
+// LOCAL EXAMPLE ONLY. Merge this path into existing rules after reviewing other grants.
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /portfolio-media/{uid}/{kind}/{file} {
+      // Portfolio images are public, including uploaded-but-not-yet-published images.
+      allow get: if kind in ['project', 'post'];
+      allow create: if request.auth != null
+        && request.auth.uid == uid
+        && request.auth.uid in ['Q6EYoSaAdBQDCJ8BIO9U0CIA7fq2']
+        && kind in ['project', 'post']
+        && request.resource.size > 0
+        && request.resource.size <= 4 * 1024 * 1024
+        && request.resource.contentType in ['image/jpeg', 'image/png', 'image/webp'];
+      allow update, delete, list: if false;
+    }
+  }
+}

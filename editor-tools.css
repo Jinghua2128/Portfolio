@@ -1,0 +1,32 @@
+/* Editing surfaces use the main site's existing type, spacing and colour tokens. */
+.managed-editor { gap: 24px; }
+.editor-section { border: 0; border-top: 1px solid var(--border); padding: 20px 0 0; min-width: 0; display: grid; gap: 18px; }
+.editor-section legend { padding-right: 12px; font-size: 1rem; font-weight: 700; }
+.editor-field { display: grid; gap: 7px; min-width: 0; }
+.editor-field label { font-size: .88rem; font-weight: 600; color: var(--text); }
+.editor-help { color: var(--text-muted); font-size: .8rem; line-height: 1.6; }
+.editor-field input, .editor-field select, .editor-field textarea { width: 100%; min-width: 0; min-height: 44px; color-scheme: dark; }
+.editor-field select { border: 1px solid var(--border); border-radius: 8px; padding: .8rem .95rem; background: var(--bg-2); color: var(--text); font: inherit; }
+.editor-field input, .editor-field select, .editor-field textarea { scroll-margin-block: 85px; }
+.editor-field input[type="checkbox"] { width: 22px; min-height: 22px; }
+.editor-field input[type="hidden"] { display: none; }
+.editor-field [aria-invalid="true"] { outline: 2px solid #fca5a5; outline-offset: 2px; }
+.editor-status { font-size: .88rem; color: var(--text-muted); overflow-wrap: anywhere; }
+.editor-status:empty { display: none; }
+.editor-status.error { color: #fca5a5; }
+.editor-chip-entry { display: flex; align-items: center; gap: 12px; }
+.editor-chip-entry input { flex: 1; }
+.editor-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.editor-chip { border: 1px solid var(--border); background: var(--bg-2); color: var(--text); border-radius: 6px; min-height: 36px; padding: 5px 10px; cursor: pointer; font: inherit; font-size: .8rem; overflow-wrap: anywhere; max-width: 100%; }
+.editor-preview { border-top: 1px solid var(--border); padding-top: 18px; overflow-wrap: anywhere; }
+.editor-preview summary { cursor: pointer; min-height: 44px; }
+.editor-preview p, .editor-preview h3 { margin-bottom: 12px; }
+.editor-preview-body { white-space: pre-wrap; }
+.draft-recovery { padding: 16px; background: var(--bg-2); border: 1px solid var(--border); border-radius: var(--radius); }
+.draft-recovery .text-action { margin: 8px 16px 0 0; min-height: 44px; }
+.managed-editor .auth-actions { position: sticky; bottom: -1px; background: var(--bg-2); padding: 14px 0; border-top: 1px solid var(--border); z-index: 1; flex-wrap: wrap; }
+.managed-editor [disabled] { opacity: .65; cursor: wait; }
+.project-facts { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; margin: 20px 0; }
+.project-facts dt { color: var(--text-muted); }
+.project-facts dd { overflow-wrap: anywhere; }
+.project-card-meta { font-size: .78rem; color: var(--text-muted); margin-bottom: 10px; }

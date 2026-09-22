@@ -7,8 +7,8 @@ const defaultPosts = [
         title: "EchoWorks: Singapore Red Cross Playbook Pitch",
         excerpt: "Wrapped up our final EchoWorks pitch with my groupmate, presenting the finished solution for the Singapore Red Cross playbook.",
         body: "Today we finished pitching our final EchoWorks solution with my groupmate for the Singapore Red Cross playbook. We walked through the full solution, showed how the interactive training scenarios support workplace communication, and closed out the pitch with a Q&A session. It was a strong finish to the capstone journey: the planning, prototyping, and refinement all came together in one clear presentation.",
-        coverImage: "imgs/Blogs/EchoWorks/photo.JPG",
-        imageUrls: ["imgs/Blogs/EchoWorks/photo.JPG"],
+        coverImage: "../imgs/Blogs/EchoWorks/photo.JPG",
+        imageUrls: ["../imgs/Blogs/EchoWorks/photo.JPG"],
         link: "",
     },
     {
@@ -19,8 +19,8 @@ const defaultPosts = [
         title: "Shenzhen Overseas Immersion Programme",
         excerpt: "A short reflection on overseas learning, collaboration, and cultural exposure in Shenzhen.",
         body: "The Shenzhen OIP gave me a chance to experience learning in a different environment and understand student life overseas. Through classes, activities, and cultural exposure, I gained a wider perspective on collaboration and creative practice.",
-        coverImage: "imgs/Blogs/OIP/OIP_grp_photo.jpg",
-        imageUrls: ["imgs/Blogs/OIP/OIP_grp_photo.jpg"],
+        coverImage: "../imgs/Blogs/OIP/OIP_grp_photo.jpg",
+        imageUrls: ["../imgs/Blogs/OIP/OIP_grp_photo.jpg"],
         link: "",
     },
     {
@@ -31,8 +31,8 @@ const defaultPosts = [
         title: "GGF China Booth",
         excerpt: "A cultural booth experience combining Chinese culture, games, presentation, and media storytelling.",
         body: "I hosted the China booth and introduced attendees to Chinese culture and Black Myth: Wukong. The booth combined cultural sharing with modern game-related media, helping visitors connect with the topic in an engaging way.",
-        coverImage: "imgs/Blogs/GGF/GGF_grp_photo.jpg",
-        imageUrls: ["imgs/Blogs/GGF/GGF_grp_photo.jpg"],
+        coverImage: "../imgs/Blogs/GGF/GGF_grp_photo.jpg",
+        imageUrls: ["../imgs/Blogs/GGF/GGF_grp_photo.jpg"],
         link: "",
     },
 ];
@@ -69,8 +69,9 @@ let unsubscribePosts = null;
 let activeCommentsUnsubscribe = null;
 let activePost = null;
 let latestPosts = [];
-const postEditor = PortfolioEditor.mount(postForm, "post");
-const postImageUploads = PortfolioImageUpload.mount({ form: postForm, kind: "post" });
+const postImageUpload = window.PortfolioImageUpload?.mount({ form: postForm, kind: "post" });
+let loadedPostDate = "", loadedPostDay = "", loadedPostMonth = "";
+postForm.addEventListener("reset", () => { loadedPostDate = loadedPostDay = loadedPostMonth = ""; });
 
 function isConfiguredAdmin(user) {
     if (!user) {
@@ -128,7 +129,7 @@ function mergePosts(firebasePosts = []) {
 }
 
 function renderPosts(posts) {
-    posts = PortfolioContentOrder.newest(posts.filter((post) => post.publicationState !== "draft" && post.state !== "draft"), "post");
+    posts = PortfolioContentOrder.newest(posts.filter(post => post.publicationState !== "draft" && post.state !== "draft"), "post");
     latestPosts = posts;
     blogList.innerHTML = "";
 
@@ -170,11 +171,11 @@ function resolveBlogImage(image) {
     };
     const path = match?.[1];
     const current = Object.hasOwn(moved, path) ? moved[path] : (Object.values(moved).includes(path) ? path : "");
-    return current ? `imgs/${current}` : image;
+    return current ? `../imgs/${current}` : image;
 }
 
 function renderCoverImage(post) {
-    const image = PortfolioEditor.safeURL(resolveBlogImage(post.coverImage || firstImage(post.imageUrls)));
+    const image = resolveBlogImage(post.coverImage || firstImage(post.imageUrls));
     if (!image) {
         return `<span>${escapeHtml((post.category || "Post").slice(0, 2).toUpperCase())}</span>`;
     }
@@ -191,8 +192,8 @@ function openPost(post) {
 }
 
 function renderReadDrawer(post) {
-    const images = normalizeImageList(post.imageUrls).map(resolveBlogImage).filter(PortfolioEditor.safeURL);
-    const coverImage = PortfolioEditor.safeURL(resolveBlogImage(post.coverImage));
+    const images = normalizeImageList(post.imageUrls).map(resolveBlogImage);
+    const coverImage = resolveBlogImage(post.coverImage);
     const body = post.body || post.excerpt || "";
 
     readDrawerContent.innerHTML = `
@@ -202,8 +203,7 @@ function renderReadDrawer(post) {
             <h3>${escapeHtml(post.title || "Untitled Post")}</h3>
             <p class="drawer-date">${escapeHtml([post.day, post.month].filter(Boolean).join(" "))}</p>
             ${renderPostBody(body)}
-            ${PortfolioEditor.safeURL(post.link) ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.link)}" target="_blank" rel="noreferrer">Open Link</a>` : ""}
-            ${PortfolioEditor.safeURL(post.relatedProject) ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.relatedProject)}">Related project</a>` : ""}
+            ${post.link ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.link)}" target="_blank" rel="noreferrer">Open Link</a>` : ""}
             ${images.length ? `<div class="content-image-grid">${images.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(post.title || "Blog image")} ${index + 1}" loading="lazy" />`).join("")}</div>` : ""}
             <div class="post-actions admin-post-actions"></div>
             <section class="comments-block" aria-label="Comments">
@@ -225,11 +225,6 @@ function renderReadDrawer(post) {
         editButton.textContent = "Edit post";
         editButton.addEventListener("click", () => fillPostForm(post));
         adminActions.appendChild(editButton);
-        if (post.source === "firebase") {
-            const deleteButton = document.createElement("button"); deleteButton.type = "button"; deleteButton.className = "text-action danger";
-            deleteButton.textContent = defaultPosts.some((item) => item.id === post.id) ? "Reset saved changes" : "Delete post";
-            deleteButton.addEventListener("click", () => deletePost(post)); adminActions.append(deleteButton);
-        }
     }
 
     renderCommentEntry(post.id);
@@ -266,7 +261,8 @@ function watchPosts() {
         unsubscribePosts();
     }
 
-    // Keep the existing journal entries visible while Firestore connects.
+    // Keep the journal useful while Firestore connects. The live collection
+    // remains the source of truth and replaces these existing local entries.
     renderPosts(mergePosts());
 
     if (!db) {
@@ -411,71 +407,65 @@ async function deleteComment(postId, commentId) {
 }
 
 function fillPostForm(post) {
-    if (!isAdmin || !postEditor.load({
-        ...post, date: post.date || legacyPostDate(post), "cover-image": post.coverImage,
-        "image-urls": normalizeImageList(post.imageUrls), "related-project": post.relatedProject,
-    })) return;
+    if (!isAdmin) return;
+    postImageUpload?.reset();
+    postIdInput.value = post.id;
+    postTitleInput.value = post.title || "";
+    postCategoryInput.value = post.category || "";
+    postDayInput.value = post.day || "";
+    postMonthInput.value = post.month || "";
+    loadedPostDate = post.date || "";
+    loadedPostDay = postDayInput.value; loadedPostMonth = postMonthInput.value;
+    postCoverImageInput.value = post.coverImage || "";
+    postImageUrlsInput.value = normalizeImageList(post.imageUrls).join(", ");
+    postLinkInput.value = post.link || "";
+    postExcerptInput.value = post.excerpt || "";
+    postBodyInput.value = post.body || "";
     PortfolioUI.openDrawer("blog-post-drawer");
     postTitleInput.focus();
 }
 
 function resetPostForm() {
-    postEditor.clear();
-}
-
-function legacyPostDate(post) {
-    const match = String(post.month || "").match(/^([A-Za-z]{3})\s+(\d{4})$/);
-    const month = match ? ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"].indexOf(match[1].toLowerCase()) + 1 : 0;
-    return month && /^\d{1,2}$/.test(post.day) ? `${match[2]}-${String(month).padStart(2, "0")}-${String(post.day).padStart(2, "0")}` : "";
-}
-
-async function deletePost(post) {
-    if (!isAdmin || !db) return;
-    const isDefault = defaultPosts.some((item) => item.id === post.id);
-    if (!confirm(isDefault ? `Reset saved changes to “${post.title}”? The original built-in post and its comments will remain.` : `Delete “${post.title}”? This cannot be undone here. Its comments will remain stored in Firebase.`)) return;
-    try { await db.collection("posts").doc(post.id).delete(); activePost = null; activeCommentsUnsubscribe?.(); PortfolioUI.closeDrawer(); }
-    catch (error) { window.alert(`Could not delete this post. ${error.message}`); }
+    postForm.reset();
+    postIdInput.value = "";
 }
 
 async function savePost(event) {
     event.preventDefault();
 
-    if (!isAdmin || postEditor.isBusy()) {
-        postEditor.message("Only the configured admin can edit posts.", true);
+    if (!isAdmin) {
+        setMessage("Only the configured admin can edit posts.", "error");
         return;
     }
-    if (postEditor.values().publication === "draft") { postEditor.saveDraft(); return; }
-    if (!postEditor.validate()) return;
-    if (!db) { postEditor.message("Firebase is unavailable. Save a local draft and try again later.", true); return; }
-    const data = postEditor.values();
-    const existing = latestPosts.find((item) => item.id === data.id);
-    const docRef = data.id ? db.collection("posts").doc(data.id) : db.collection("posts").doc();
-    const savingUID = currentUser.uid;
-    postEditor.saveDraft();
-    let day = postDayInput.value.trim(), month = postMonthInput.value.trim();
-    if (/^\d{4}-\d{2}-\d{2}$/.test(data.date)) {
-        const [year, monthNumber, date] = data.date.split("-"); day = date;
-        month = `${["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][Number(monthNumber) - 1]} ${year}`;
+
+    const id = (postIdInput.value || slugify(postTitleInput.value)).trim();
+    if (!id) {
+        setMessage("Please add a post title first.", "error");
+        return;
     }
-    postEditor.setBusy(true);
-    try {
-        await docRef.set({
+
+    await db.collection("posts").doc(id).set({
         title: postTitleInput.value.trim(),
         category: postCategoryInput.value.trim(),
-        day, month, date: data.date, relatedProject: data["related-project"], publicationState: "published",
+        day: postDayInput.value.trim(),
+        month: postMonthInput.value.trim(),
+        date: postDayInput.value === loadedPostDay && postMonthInput.value === loadedPostMonth ? loadedPostDate : (() => {
+            const stamp = PortfolioContentOrder.date({ day: postDayInput.value.trim(), month: postMonthInput.value.trim() }, "post");
+            return stamp ? new Date(stamp).toISOString().slice(0, 10) : "";
+        })(),
         coverImage: postCoverImageInput.value.trim(),
         imageUrls: parseCommaList(postImageUrlsInput.value),
         link: postLinkInput.value.trim(),
         excerpt: postExcerptInput.value.trim(),
         body: postBodyInput.value.trim(),
-        sortOrder: existing?.sortOrder || Date.now(),
-        ...(!existing ? { createdAt: firebase.firestore.FieldValue.serverTimestamp() } : {}),
+        sortOrder: latestPosts.find(post => post.id === id)?.sortOrder || Date.now(),
+        ...(!latestPosts.some(post => post.id === id) ? { createdAt: firebase.firestore.FieldValue.serverTimestamp() } : {}),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, { merge: true });
 
-        if (currentUser?.uid === savingUID) postEditor.saved();
-    } catch (error) { if (currentUser?.uid === savingUID) postEditor.message(`Could not publish. Your draft is still in the editor. ${error.message}`, true); }
-    finally { postEditor.setBusy(false); }
+    resetPostForm();
+    setMessage("Post saved to Firebase.", "success");
+    PortfolioUI.closeDrawer();
 }
 
 authForm.addEventListener("submit", async (event) => {
@@ -509,29 +499,11 @@ logoutButton.addEventListener("click", () => {
 
 postForm.addEventListener("submit", savePost);
 resetPostButton.addEventListener("click", resetPostForm);
-openPostDrawerButton.addEventListener("click", (event) => {
-    event.preventDefault(); event.stopPropagation();
-    if (isAdmin && postEditor.startNew()) PortfolioUI.openDrawer("blog-post-drawer");
-});
 
 function applyBlogAuthState(user) {
     currentUser = user;
     isAdmin = isConfiguredAdmin(user);
-    postImageUploads.setUser(isAdmin ? user : null);
-    postEditor.setUser(isAdmin ? user : null);
-    if (!isAdmin && document.querySelector("#blog-post-drawer.is-open")) PortfolioUI.closeDrawer();
-    if (isAdmin && db) {
-        const listedChoices = (projects) => projects
-            .map((project) => window.PortfolioProjectPolicy?.prepare(project) || project)
-            .filter((project) => window.PortfolioProjectPolicy?.isListed(project) !== false)
-            .filter((project) => project.publicationState !== "draft" && project.state !== "draft" && project.title);
-        postEditor.setProjectChoices(listedChoices(window.PortfolioProjectCatalog || []));
-        db.collection("projects").get().then((snapshot) => {
-            const choices = new Map((window.PortfolioProjectCatalog || []).map((project) => [project.id, project]));
-            snapshot.docs.forEach((doc) => choices.set(doc.id, { ...doc.data(), id: doc.id }));
-            if (isAdmin) postEditor.setProjectChoices(listedChoices(Array.from(choices.values())));
-        }).catch(() => { /* Pasting a related project URL remains available offline. */ });
-    }
+    postImageUpload?.setUser(isAdmin ? user : null);
 
     if (user) {
         authHint.textContent = isAdmin
@@ -545,6 +517,10 @@ function applyBlogAuthState(user) {
 
     adminPanel.hidden = !isAdmin;
     openPostDrawerButton.hidden = !isAdmin;
+    const editorDrawer = document.querySelector("#blog-post-drawer");
+    if (!isAdmin && editorDrawer?.getAttribute("aria-modal") === "true") {
+        PortfolioUI.closeDrawer();
+    }
     watchPosts();
 
     if (activePost) {

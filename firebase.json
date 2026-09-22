@@ -1,0 +1,26 @@
+﻿{
+    "hosting":  {
+                    "public":  ".",
+                    "ignore":  [
+                                   "firebase.json",
+                                   ".firebaserc",
+                                   ".git/**",
+                                   ".gitignore",
+                                   ".env",
+                                   "firebase-rules.txt",
+                                   "start-website.bat",
+                                   "*.log"
+                               ],
+                    "headers":  [
+                                    {
+                                        "source":  "**/*.@(js|css)",
+                                        "headers":  [
+                                                        {
+                                                            "key":  "Cache-Control",
+                                                            "value":  "no-cache"
+                                                        }
+                                                    ]
+                                    }
+                                ]
+                }
+}

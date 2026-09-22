@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Portfolio projects by Liu GuangXuan across Unity, AR, 3D environments, motion graphics, UI/UX, branding, and web development." />
     <title>Projects | Liu GuangXuan</title>
-    <link rel="icon" href="imgs/icon.ico" />
+    <link rel="icon" href="imgs/Logo/icon.ico" />
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
-        <a href="index.html" class="nav-logo">&lt;LGX /&gt;</a>
+        <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="projects.html" class="active">Projects</a></li>
+            <li><a href="projects.html" class="active" aria-current="page">Projects</a></li>
+            <li><a href="immersion.html">3D Immersion</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -25,83 +28,153 @@
     <div class="mobile-menu">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
-        <a href="projects.html">Projects</a>
+        <a href="projects.html" aria-current="page">Projects</a>
+        <a href="immersion.html">3D Immersion</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
-    <main>
-        <section class="section page-hero">
-            <div class="section-inner">
-                <span class="section-tag">// my work</span>
-                <h1 class="page-title">Selected projects across games, UX, interaction, and 3D design.</h1>
-                <div class="section-line"></div>
-            </div>
-        </section>
-
-        <section class="section">
-            <div class="section-inner">
-                <div class="auth-panel account-panel">
-                    <div class="account-copy">
-                        <span class="section-tag">// project manager</span>
-                        <h2>Project Login</h2>
-                        <p id="project-auth-hint">Login to add, edit, or delete project cards saved in Firebase.</p>
-                        <div class="account-benefits">
-                            <span>Add new projects</span>
-                            <span>Edit project wording</span>
-                            <span>Save portfolio content online</span>
-                        </div>
+    <main id="main-content">
+        <section class="section project-showcase-section">
+            <div class="section-inner project-showcase-shell">
+                <div class="project-showcase-top">
+                    <div class="project-showcase-copy">
+                        <span class="section-tag">// project showcase</span>
+                        <h1 class="page-title project-showcase-title">Project Showcase</h1>
+                        <p class="project-showcase-intro">A curated selection of interactive, game, 3D, motion, and web projects built with creative technology.</p>
                     </div>
-                    <form id="project-auth-form" class="auth-form">
-                        <label for="project-auth-name">Display name</label>
-                        <input id="project-auth-name" type="text" placeholder="Display name for new accounts" />
-                        <label for="project-auth-email">Email</label>
-                        <input id="project-auth-email" type="email" placeholder="Email" required="required" />
-                        <label for="project-auth-password">Password</label>
-                        <input id="project-auth-password" type="password" placeholder="Password" required="required" />
-                        <label for="project-auth-mode">Action</label>
-                        <select id="project-auth-mode" aria-label="Login mode">
-                            <option value="login">Login</option>
-                            <option value="register">Create account</option>
-                        </select>
-                        <div class="auth-actions">
-                            <button class="btn btn-primary" type="submit">Continue</button>
-                            <button class="btn btn-secondary" id="project-logout-button" type="button" hidden="hidden">Logout</button>
-                        </div>
-                        <p id="project-auth-status" class="auth-status" aria-live="polite"></p>
-                    </form>
+                    <div class="page-actions project-showcase-actions">
+                        <button class="btn btn-secondary" type="button" data-drawer-open="project-login-drawer">Account</button>
+                        <button class="btn btn-primary" id="open-project-drawer" type="button" data-drawer-open="project-editor-drawer" hidden="hidden">New Project</button>
+                    </div>
                 </div>
 
-                <div id="project-admin-panel" class="admin-panel" hidden="hidden">
-                    <span class="section-tag">// firebase editor</span>
-                    <h2>Add or Edit Projects</h2>
-                    <p>Projects are saved in Firestore and displayed as portfolio cards.</p>
-                    <form id="project-form" class="post-form">
-                        <input id="project-id" type="text" placeholder="Project ID, e.g. sundrop-farm" />
-                        <input id="project-number" type="text" placeholder="Card number, e.g. 05" required="required" />
-                        <input id="project-title" type="text" placeholder="Project title" required="required" />
-                        <input id="project-category" type="text" placeholder="Category" required="required" />
-                        <textarea id="project-description" rows="5" placeholder="Project description" required="required"></textarea>
-                        <input id="project-tags" type="text" placeholder="Tags separated by commas, e.g. Unity, C#, Game Design" />
-                        <div class="auth-actions">
-                            <button class="btn btn-primary" type="submit">Save Project</button>
-                            <button class="btn btn-secondary" id="reset-project-form" type="button">Clear</button>
-                        </div>
-                    </form>
+                <div class="featured-projects-panel project-feature-stage">
+                    <div class="featured-copy">
+                        <span class="section-tag">// selected highlights</span>
+                        <h2>Featured Work</h2>
+                        <p>A few strongest pieces, shown first for quick review.</p>
+                    </div>
+                    <div id="featured-projects" class="project-showcase-feature-grid" aria-live="polite"></div>
                 </div>
 
-                <div id="projects-grid" class="projects-grid">
-                    <div class="blog-loading">
-                        <p class="card-tag">Firebase</p>
-                        <h2 class="card-title">Loading projects...</h2>
-                        <p class="card-desc">If Firebase is unavailable, the page will show the default project cards.</p>
+                <div class="project-library-panel">
+                    <div class="grid-heading interactive-heading">
+                        <div>
+                            <span class="section-tag">// browse work</span>
+                            <h2>Project Library</h2>
+                        </div>
+                        <p id="project-result-count" class="project-result-count" aria-live="polite"></p>
+                    </div>
+                    <div class="project-tools" aria-label="Project filters">
+                        <div class="project-filter-buttons" role="tablist" aria-label="Filter project cards">
+                            <button class="filter-chip is-active" type="button" role="tab" aria-selected="true" data-project-filter="all">All</button>
+                            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="interactive">Interactive</button>
+                            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="3d">3D</button>
+                            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="motion">Motion</button>
+                            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="ux">UI/UX</button>
+                            <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="branding">Branding</button>
+                        </div>
+                        <label class="project-search">
+                            <span>Search</span>
+                            <input id="project-search" type="search" placeholder="Try Unity, Firebase, motion, UX" autocomplete="off" />
+                        </label>
+                    </div>
+                    <div id="projects-grid" class="projects-grid project-showcase-grid">
+                        <div class="blog-loading">
+                            <p class="card-tag">Firebase</p>
+                            <h2 class="card-title">Loading projects...</h2>
+                            <p class="card-desc">If Firebase is unavailable, the page will show local portfolio cards.</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <aside id="project-login-drawer" class="side-drawer" aria-labelledby="project-login-title" hidden="hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="section-tag">// project manager</span>
+                <h2 id="project-login-title">Project Account</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close project login" data-drawer-close>&times;</button>
+        </div>
+        <p id="project-auth-hint" class="drawer-note">Login to add, edit, or delete project cards saved in Firebase.</p>
+        <div class="account-benefits compact-benefits">
+            <span>Add new projects</span>
+            <span>Mark top 3 featured work</span>
+            <span>Save portfolio content online</span>
+        </div>
+        <form id="project-auth-form" class="auth-form drawer-form">
+            <label for="project-auth-name" hidden>Display name</label>
+            <input id="project-auth-name" type="text" placeholder="For new accounts" hidden disabled />
+            <label for="project-auth-email">Email</label>
+            <input id="project-auth-email" type="email" placeholder="Email" required="required" data-autofocus />
+            <label for="project-auth-password">Password</label>
+            <input id="project-auth-password" type="password" placeholder="Password" required="required" />
+            <label for="project-auth-mode">Action</label>
+            <select id="project-auth-mode" aria-label="Login mode">
+                <option value="login">Login</option>
+                <option value="register">Create account</option>
+            </select>
+            <div class="auth-actions">
+                <button class="btn btn-primary" type="submit">Continue</button>
+                <button class="btn btn-secondary" id="project-logout-button" type="button" hidden="hidden">Logout</button>
+            </div>
+            <p id="project-auth-status" class="auth-status" aria-live="polite"></p>
+        </form>
+    </aside>
+
+    <aside id="project-detail-drawer" class="side-drawer wide-drawer" aria-labelledby="project-detail-title" hidden="hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="section-tag">// project details</span>
+                <h2 id="project-detail-title">Project Details</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close project details" data-drawer-close>&times;</button>
+        </div>
+        <div id="project-detail-content"></div>
+    </aside>
+    <aside id="project-editor-drawer" class="side-drawer wide-drawer" aria-labelledby="project-editor-title" hidden="hidden">
+        <div class="drawer-header">
+            <div>
+                <span class="section-tag">// firebase editor</span>
+                <h2 id="project-editor-title">Add or Edit Project</h2>
+            </div>
+            <button class="drawer-close" type="button" aria-label="Close project editor" data-drawer-close>&times;</button>
+        </div>
+        <div id="project-admin-panel" hidden>
+            <p class="drawer-note">Manage your real project details. Review a local draft before publishing changes.</p>
+            <form id="project-form" class="post-form drawer-form">
+                <input id="project-id" type="text" placeholder="Project ID, e.g. sundrop-farm" />
+                <input id="project-number" type="text" placeholder="Card number, e.g. 05" required="required" />
+                <input id="project-title" type="text" placeholder="Project title" required="required" />
+                <input id="project-category" type="text" placeholder="Category" required="required" />
+                <textarea id="project-description" rows="4" placeholder="1-2 sentence project description" required="required"></textarea>
+                <input id="project-tags" type="text" placeholder="Tags separated by commas, e.g. Unity, C#, Game Design" />
+                <input id="project-link" type="url" placeholder="Optional project or GitHub link" />
+                <input id="project-image" type="url" placeholder="Optional preview image URL" />
+                <label class="checkbox-row" for="project-featured">
+                    <input id="project-featured" type="checkbox" />
+                    <span>Feature this project in the top section</span>
+                </label>
+                <div class="auth-actions">
+                    <button class="btn btn-primary" type="submit">Save Project</button>
+                    <button class="btn btn-secondary" id="reset-project-form" type="button">Clear</button>
+                </div>
+            </form>
+        </div>
+    </aside>
+
     <footer>
+        <div class="footer-socials">
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+        </div>
         <p class="footer-copy">Copyright 2026 Liu GuangXuan. Projects shaped through learning and iteration.</p>
     </footer>
 
@@ -110,6 +183,15 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <script src="script.js"></script>
     <script src="firebase-config.js"></script>
+    <link rel="stylesheet" href="editor-tools.css" />
+    <script src="editor-tools.js"></script>
+    <link rel="stylesheet" href="image-upload.css" />
+    <script src="image-upload.js"></script>
+    <link rel="stylesheet" href="project-highlights.css" />
+    <script src="content-order.js"></script>
+    <script src="project-highlights.js"></script>
+    <script src="project-catalog.js"></script>
+    <script src="project-management.js"></script>
     <script src="projects-firebase.js"></script>
 </body>
 </html>

@@ -1,0 +1,5 @@
+.project-highlight-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; margin-bottom: 18px; }
+.project-highlight-tabs button { min-height: 44px; white-space: normal; text-align: left; }
+.project-highlight-tabs button:focus-visible, #featured-projects:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.project-date-status-fields, .project-date-status-fields label { display: grid; gap: 12px; min-width: 0; }
+.project-date-status-fields select { width: 100%; min-width: 0; min-height: 44px; padding: 12px; color: inherit; background: #111; border: 1px solid #555; font: inherit; }

@@ -8,6 +8,7 @@ build/
 # Environment variables
 .env
 .env.local
+.env.*
 
 # Logs
 *.log
@@ -20,5 +21,33 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Dependency lock files (optional)
+# Local Firebase browser configuration (both site variants)
 firebase-config.js
+
+# Local agent tools and deployment outputs; retain the reproducible recipe/docs
+/.agents/
+/.codex/
+/deploy/*
+!/deploy/README.md
+!/deploy/package-cloudbase.ps1
+
+# Publish only the eight previously approved existing media assets.
+# Other media remains on this machine, including portraits, extra photos and APKs.
+/imgs/**
+!/imgs/Logo/
+!/imgs/Logo/icon.ico
+!/imgs/Logo/logo.png
+!/imgs/Blogs/
+!/imgs/Blogs/GGF/
+!/imgs/Blogs/GGF/GGF_grp_photo.jpg
+!/imgs/Blogs/OIP/
+!/imgs/Blogs/OIP/OIP_grp_photo.jpg
+!/imgs/Blogs/EchoWorks/
+!/imgs/Blogs/EchoWorks/photo.JPG
+!/imgs/Projects/
+!/imgs/Projects/BurntConesRevamp/
+!/imgs/Projects/BurntConesRevamp/BurntConesRevamp_HomePage.jpg
+!/imgs/Projects/CarbonCreative/
+!/imgs/Projects/CarbonCreative/CarbonCreative_HomePage.jpg
+!/imgs/Projects/EchoWorks/
+!/imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg

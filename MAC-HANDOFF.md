@@ -2,6 +2,8 @@
 
 Prepared 22 September 2026 from `D:\Portfolio`. Repository: [Jinghua2128/Portfolio](https://github.com/Jinghua2128/Portfolio), branch `main`.
 
+The current source and this guide were pushed in commit `093dd0616a374611dee0649834afe34b0d0f39f0` and independently verified against GitHub's `main`. A subsequent documentation checkpoint records that result; fetch the latest `main`, including that checkpoint. No GitHub Release or hosting deployment was performed.
+
 ## Immediate objective
 
 The user requested a complete transfer to another Codex on their Mac and a GitHub push before any further implementation. This stage packages the existing source and project knowledge for continuation. No new feature, redesign, hosting deployment or production Firebase operation is part of the transfer.
@@ -114,7 +116,7 @@ Storage provisioning, billing, deployed rules and real phone upload/save/reload 
 
 ## What was verified, and what was not
 
-Fresh Windows checks for this transfer are recorded in the current `HANDOFF.md` checkpoint. All **16 existing runtime JS files** and the new config template passed syntax checks. Independent source review confirmed **19 retained / six public** built-in projects and **218 local references across 11 HTML pages**, with exact case matching. The recorded ZIP checksum matched and all 41 archived files matched the current source bytes, including exactly eight approved media files. A targeted credential-pattern scan of the proposed text files found no matching private-key/token/service-account patterns; this is not an exhaustive security audit. No new runtime feature changes were made in this handoff task. Git publication is only complete after a successful push and independent comparison of the remote branch with the local commit.
+Fresh Windows checks for this transfer are recorded in the current `HANDOFF.md` checkpoint. All **16 existing runtime JS files** and the new config template passed syntax checks. Independent source review confirmed **19 retained / six public** built-in projects and **218 local references across 11 HTML pages**, with exact case matching. The recorded ZIP checksum matched and all 41 archived files matched the current source bytes, including exactly eight approved media files. A targeted credential-pattern scan of the proposed text files found no matching private-key/token/service-account patterns; this is not an exhaustive security audit. The staged whitespace check passed. No new runtime feature changes were made in this handoff task. The source push succeeded and its remote commit ID matched local HEAD, as recorded above.
 
 Historical Windows evidence, chiefly 14 September, is described in full in `HANDOFF.md`: root/editorial Projects and Blog at 1440x1000 and 390x844; local fallback/identity, catalog retention/visibility, editor merge/custom fields, account isolation, upload error/progress/cancel/retry, URL retention, Blog ordering, project views, keyboard controls, no horizontal overflow and no runtime exceptions. Auth/Firestore/Storage write-path tests used **local doubles**, not production accounts. Earlier tests rendered all three live Sketchfab models and exercised camera controls.
 

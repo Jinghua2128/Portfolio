@@ -39,7 +39,7 @@
 
 ## DEC-CI-DEPLOY-20261022 — GitHub push deploys the Cloudflare Worker (option B)
 
-- Date / status: 2026-10-22 — Active; first successful Worker deploy pending token permission.
+- Date / status: 2026-10-22 — Active; first Worker deploy succeeded and the live site was verified on 22 October.
 - Decision: the owner chose GitHub Actions → Wrangler rather than creating a new Git-integrated Pages project. Dashboard inspection corrected the original assumption: the live project `liuguangxuan-portfolio` is a **Cloudflare Worker with static assets**, not a Pages project, and keeps the custom domain. A push to `main` builds `dist/` from the 50-file allowlist and runs `wrangler deploy` using `wrangler.jsonc` (`assets.directory = ./dist`). Firebase browser config is generated from repository secrets at build time and is never committed.
 - Reason: keeps the existing project and custom domain, makes deployment reproducible from the audited allowlist, and avoids a host migration.
 - Consequences: `.github/workflows/deploy-worker.yml`, `wrangler.jsonc` and `deploy/build-package.mjs` become the release path; the PowerShell recipe remains legacy. `dist/` and `.wrangler/` are ignored. **Every push to `main` is a production deployment** — do not push without intent. Repository secrets: `CLOUDFLARE_API_TOKEN` must include **Account → Workers Scripts → Edit** (Pages:Edit alone cannot deploy a Worker), `CLOUDFLARE_ACCOUNT_ID` must be the account that owns the Worker (`fb9e2989477bd90c3b9d99973d240a74`), plus the `FIREBASE_*` values. Tokens and config values never enter Git, docs or chat.

@@ -47,6 +47,16 @@ Only record meaningful failures and repeatable lessons. Do not treat a guess as 
 - **Verification:** 43-check route/accessibility harness plus a targeted article/login-drawer harness passed against 8766 on 22 October (see HANDOFF.md active checkpoint).
 - **Lesson:** confirm what owns a port (process, cwd, served content) before using or stopping it; do not kill an unrelated server to reclaim a documented port — serve on a free port and record the actual URL. Use `--no-sandbox` only for same-origin local QA automation, never to load untrusted content.
 
+## DEPLOY-CF-20261022 — Assumed Cloudflare Pages; the live project was a Worker
+
+- **Date / status:** 2026-10-22 — Fixed; first Worker deploy succeeded and the live site was re-verified.
+- **Expected / actual:** the new pipeline assumed a Pages Direct Upload project named `liuguangxuan-portfolio`. The first GitHub Actions run built `dist/` successfully, but `wrangler pages deploy` failed with “The Pages project … does not exist”. The Pages API also returned success with **0 projects** for the account ID in the secret.
+- **Reproduction / evidence:** failed run `39722949632`; a temporary workflow queried `/accounts/{id}/pages/projects` → 0 results; the Cloudflare dashboard showed `liuguangxuan-portfolio` at `/workers/services/view/liuguangxuan-portfolio/...`, owned by account `fb9e2989477bd90c3b9d99973d240a74`. `wrangler deploy --dry-run` with `wrangler.jsonc` then passed.
+- **Cause:** the live project is a **Worker with static assets**, not a Pages project, and the `CLOUDFLARE_ACCOUNT_ID` secret pointed at a different (empty) account. The API token also lacked Workers permission.
+- **Fix:** corrected the account-ID secret; added `wrangler.jsonc` (`assets.directory = ./dist`, auto-trailing-slash, no 404 rewrite); switched the workflow to `wrangler deploy` (renamed `deploy-worker.yml`); removed the temporary diagnostic; the owner added `Account → Workers Scripts → Edit` to the token. Commit `3006f45`; workflow run `39725445377` succeeded.
+- **Verification:** live `/`, `/blog`, `/admin/`, `/admin/blog`, `/blog-page.js` and the internship image return 200; `/blog` renders 6 posts with the `AI` filter count 2 and both article pages; the editorial variant renders 6 cards and its image; signed-out `/admin/blog` redirects to `/admin/` with no editor form; no 404s in the rendered checks.
+- **Lesson:** verify the hosting project’s **type and owning account** in the dashboard/API before writing a deploy workflow; never infer them from the project name or an earlier assumption. Use a read-only diagnostic workflow when a deploy target is ambiguous.
+
 ## Entry template
 ### BUG-001 — [descriptive short name]
 - **Date / status:** [date] — Unconfirmed / Investigating / Fixed but unverified / Verified fixed

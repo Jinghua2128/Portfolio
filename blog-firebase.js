@@ -177,6 +177,8 @@ function resolveBlogImage(image) {
         "OIP_grp_photo.jpg": "Blogs/OIP/OIP_grp_photo.jpg",
         "GGF_grp_photo.jpg": "Blogs/GGF/GGF_grp_photo.jpg",
         "EmpireAI/photo.JPG": "Blogs/empire-ai/empire-code-reception.jpg",
+        "Blogs/ai-mv/paper-cut-mv-cover.jpg": "Blogs/ai-mv/paper-cut-mv-cover.jpg",
+        "Blogs/ai-vibeknowledge/vibe-knowledge-arrow-of-time.jpg": "Blogs/ai-vibeknowledge/vibe-knowledge-arrow-of-time.jpg",
     };
     const path = match?.[1];
     const current = Object.hasOwn(moved, path) ? moved[path] : (Object.values(moved).includes(path) ? path : "");

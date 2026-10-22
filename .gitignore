@@ -33,8 +33,8 @@ firebase-config.js
 !/deploy/package-cloudbase.ps1
 !/deploy/build-package.mjs
 
-# Publish only the nine approved existing media assets (the internship photo
-# was explicitly approved by the owner on 22 October 2026).
+# Publish only the eleven approved existing media assets (the internship photo
+# and the two AI thumbnails were explicitly approved by the owner on 22 October 2026).
 # Other media remains on this machine, including portraits, extra photos and APKs.
 /imgs/**
 !/imgs/Logo/
@@ -49,6 +49,10 @@ firebase-config.js
 !/imgs/Blogs/EchoWorks/photo.JPG
 !/imgs/Blogs/empire-ai/
 !/imgs/Blogs/empire-ai/empire-code-reception.jpg
+!/imgs/Blogs/ai-mv/
+!/imgs/Blogs/ai-mv/paper-cut-mv-cover.jpg
+!/imgs/Blogs/ai-vibeknowledge/
+!/imgs/Blogs/ai-vibeknowledge/vibe-knowledge-arrow-of-time.jpg
 !/imgs/Projects/
 !/imgs/Projects/BurntConesRevamp/
 !/imgs/Projects/BurntConesRevamp/BurntConesRevamp_HomePage.jpg

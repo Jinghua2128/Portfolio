@@ -6,7 +6,6 @@
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;",
     }[character]));
     const topic = (post) => String(post.category || "Journal").trim() || "Journal";
-    const readingTime = (post) => `${Math.max(1, Math.ceil(String(post.body || post.excerpt || "").trim().split(/\s+/).length / 200))} min read`;
 
     function dateLabel(post) {
         const date = window.PortfolioContentOrder.date(post, "post");
@@ -84,7 +83,7 @@
                             <p class="journal-card-topic">${escape(topic(post))}</p>
                             <h3 id="journal-card-title-${position}">${escape(post.title || "Untitled Post")}</h3>
                             <p class="journal-card-excerpt">${escape(post.excerpt || post.body || "")}</p>
-                            <div class="journal-card-footer"><span>${escape(date)}${date ? " · " : ""}${readingTime(post)}</span><span class="journal-read-arrow" aria-hidden="true">↗</span></div>
+                            <div class="journal-card-footer"><span>${escape(date)}</span><span class="journal-read-arrow" aria-hidden="true">↗</span></div>
                         </div>
                     </a>
                 </article>`;
@@ -195,5 +194,5 @@
         };
     }
 
-    window.PortfolioBlogPage = { create, dateLabel, readingTime, guardImages };
+    window.PortfolioBlogPage = { create, dateLabel, guardImages };
 })();

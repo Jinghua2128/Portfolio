@@ -61,9 +61,9 @@ The editor also keeps a hidden post ID (unchanged when editing) and writes `crea
   2. What you did — your specific contribution (never someone else’s).
   3. Outcome — what was made or delivered, honestly.
   4. Reflection / next step — what you learned or what comes next (optional).
-- **Media** — only approved existing files, exact path and case, e.g. `imgs/Blogs/EchoWorks/photo.JPG`. If there is no suitable approved image, leave it blank: cards show a text fallback and the article hides a failed image. Do not invent paths for missing files. (The remote Empire AI record still points at missing `imgs/EmpireAI/photo.JPG`; do not copy that.)
+- **Media** — only approved existing files, exact path and case, e.g. `imgs/Blogs/EchoWorks/photo.JPG`. If there is no suitable approved image, leave it blank: cards show a text fallback and the article hides a failed image. Do not invent paths for missing files. (The remote Empire AI record's legacy `imgs/EmpireAI/photo.JPG` path is now mapped to the installed reception photo.)
 - **Links** — related project uses the real project link `projects.html#project-<id>` (or pick it from the editor dropdown); the primary link is any `https://` or relative page path.
-- **Length** — reading time is calculated at 200 words per minute (minimum 1 min). Most entries will read “1 min read”; that is normal.
+- **Length** — aim for 120–350 words. Reading time is no longer displayed on the public blog (removed 22 October 2026); dates are still shown.
 - **Field limits** — body up to 100,000 characters; title/category/excerpt/link fields up to 4,000; comments up to 2,000.
 
 ## 5. House style and do-nots

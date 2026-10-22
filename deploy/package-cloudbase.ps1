@@ -63,7 +63,9 @@ $assetFiles = @(
     "imgs/Projects/BurntConesRevamp/BurntConesRevamp_HomePage.jpg",
     "imgs/Projects/CarbonCreative/CarbonCreative_HomePage.jpg",
     "imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg",
-    "imgs/Blogs/empire-ai/empire-code-reception.jpg"
+    "imgs/Blogs/empire-ai/empire-code-reception.jpg",
+    "imgs/Blogs/ai-mv/paper-cut-mv-cover.jpg",
+    "imgs/Blogs/ai-vibeknowledge/vibe-knowledge-arrow-of-time.jpg"
 )
 $sideFiles = @("index.html", "about.html", "projects.html", "blog.html", "contact.html", "styles.css", "script.js", "home-projects.js", "projects-firebase.js", "blog-firebase.js", "firebase-config.js") |
     ForEach-Object { "editorial-portfolio/$_" }

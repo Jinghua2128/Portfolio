@@ -206,7 +206,7 @@ function renderReadDrawer(post) {
     const body = post.body || post.excerpt || "";
     // Public reading shows each photo once; the owner/editor layout is unchanged.
     if (blogPage) images = [...new Set(images)].filter((image) => image !== coverImage);
-    const publicMeta = blogPage ? `<div class="journal-post-meta"><span>${escapeHtml(post.category || "Journal")}</span><span>${escapeHtml(PortfolioBlogPage.dateLabel(post))}</span><span>${PortfolioBlogPage.readingTime(post)}</span></div>` : "";
+    const publicMeta = blogPage ? `<div class="journal-post-meta"><span>${escapeHtml(post.category || "Journal")}</span><span>${escapeHtml(PortfolioBlogPage.dateLabel(post))}</span></div>` : "";
 
     readDrawerContent.innerHTML = `
         <article class="${blogPage ? "journal-post" : "drawer-post"}">

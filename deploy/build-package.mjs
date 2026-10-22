@@ -36,7 +36,7 @@ const sideFiles = block("sideFiles").map((file) => `editorial-portfolio/${file}`
 const adminFiles = block("adminFiles").map((file) => `admin/${file}`);
 const files = [...rootFiles, ...assetFiles, ...sideFiles, ...adminFiles];
 
-if (files.length !== 50) fail(`expected 50 allowlisted files, found ${files.length}`);
+if (files.length !== 52) fail(`expected 52 allowlisted files, found ${files.length}`);
 if (new Set(files).size !== files.length) fail("duplicate entries in the deployment allowlist");
 
 const configRelPaths = ["firebase-config.js", "editorial-portfolio/firebase-config.js"];

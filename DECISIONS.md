@@ -37,6 +37,13 @@
 - Consequences: [BLOG-POSTING-GUIDE.md](BLOG-POSTING-GUIDE.md) defines the intake template, stored fields, writing shape, house style, publish checklist and division of work. No Storage/Blaze activation, video pipeline or new asset approval is implied. Owner-only write rules remain the permission boundary; the agent must not publish without explicit approval in that turn. Edits reuse existing document IDs and URLs.
 - Related: [HANDOFF.md](HANDOFF.md), [DEC-OWNER-EDITING](#dec-owner-editing--owner-writes-visitors-read-and-comment).
 
+## DEC-BLOG-UI-20261022 — No reading time; covers from owner assets
+
+- Date / status: 2026-10-22 — Active.
+- Decision: the owner asked to stop showing “N min read” on the public blog, so cards and article metadata show only the date; the reading-time computation was removed. The AI posts use the owner's real thumbnails: AI VibeKnowledge from session `c3cc2dee-22df-4067-a325-c9a629694eb1` (`film/thumbnail.png`, “The Arrow of Time”); AI MV from the video cover on the owner's published LinkedIn post.
+- Consequences: `blog-page.js` / `blog-firebase.js` no longer render reading time. Both covers are approved media in the 52-file / eleven-media allowlist and stored in Firestore `coverImage`. No fabricated artwork; the AI MV cover is the owner's published video cover, used because that project was not present in the referenced session workspace.
+- Related: [HANDOFF.md](HANDOFF.md), [BLOG-POSTING-GUIDE.md](BLOG-POSTING-GUIDE.md).
+
 ## DEC-CI-DEPLOY-20261022 — GitHub push deploys the Cloudflare Worker (option B)
 
 - Date / status: 2026-10-22 — Active; first Worker deploy succeeded and the live site was verified on 22 October.

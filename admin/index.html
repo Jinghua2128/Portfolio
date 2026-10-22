@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <title>Portfolio Admin | Liu GuangXuan</title>
+    <link rel="icon" href="../imgs/Logo/icon.ico" />
+    <link rel="stylesheet" href="../styles.css?v=20261007-2" />
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <nav id="navbar" aria-label="Admin navigation"><a href="../index.html" class="nav-logo" aria-label="Return to portfolio"><img src="../imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a></nav>
+    <main id="main-content">
+        <section class="section page-hero compact-hero"><div class="section-inner">
+            <span class="section-tag">// private workspace</span>
+            <h1 class="page-title">Portfolio management</h1>
+            <p class="project-showcase-intro">Sign in with the configured editor account to manage projects and posts.</p>
+            <form id="admin-login" class="auth-form drawer-form admin-login" autocomplete="on">
+                <label for="admin-email">Email</label><input id="admin-email" type="email" autocomplete="username" required />
+                <label for="admin-password">Password</label><input id="admin-password" type="password" autocomplete="current-password" required />
+                <button class="btn btn-primary" type="submit">Sign in</button>
+            </form>
+            <p id="admin-status" class="auth-status" role="status" aria-live="polite"></p>
+            <div id="admin-destinations" class="admin-destinations" hidden>
+                <a class="btn btn-primary" href="projects.html">Manage projects</a>
+                <a class="btn btn-secondary" href="blog.html">Manage blog</a>
+            </div>
+            <button id="admin-logout" class="btn btn-secondary" type="button" hidden>Sign out</button>
+        </div></section>
+    </main>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="../firebase-config.js"></script>
+    <script src="../firebase-fallback.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

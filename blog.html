@@ -4,19 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Blog updates from Liu GuangXuan about projects, immersive media, creative practice, and Ngee Ann Polytechnic." />
+    <link rel="canonical" href="https://www.portfolio.liuguangxuan.com/blog.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Blog | Liu GuangXuan" />
+    <meta property="og:description" content="Notes on projects, learning and creative media practice." />
+    <meta property="og:url" content="https://www.portfolio.liuguangxuan.com/blog.html" />
+    <meta property="og:image" content="https://www.portfolio.liuguangxuan.com/imgs/Logo/logo.png" />
+    <meta name="twitter:card" content="summary" />
     <title>Blog | Liu GuangXuan</title>
     <link rel="icon" href="imgs/Logo/icon.ico" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20261007-2" />
+    <link rel="stylesheet" href="blog-page.css?v=20261018-1" />
 </head>
-<body>
+<body class="journal-page">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
         <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
             <li><a href="projects.html">Projects</a></li>
-            <li><a href="immersion.html">3D Immersion</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="immersion.html">3D Work</a></li>
             <li><a href="blog.html" class="active" aria-current="page">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -27,38 +35,63 @@
 
     <div class="mobile-menu">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
-        <a href="immersion.html">3D Immersion</a>
+        <a href="about.html">About</a>
+        <a href="immersion.html">3D Work</a>
         <a href="blog.html" aria-current="page">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
     <main id="main-content">
-        <section class="section page-hero compact-hero">
-            <div class="section-inner split-heading">
-                <div>
-                    <span class="section-tag">// journal</span>
-                    <h1 class="page-title">Short updates from projects, school, and creative practice.</h1>
-                    <div class="section-line"></div>
-                </div>
-                <div class="page-actions">
-                    <button class="btn btn-secondary" type="button" data-drawer-open="blog-login-drawer">Account</button>
-                    <button class="btn btn-primary" id="open-post-drawer" type="button" data-drawer-open="blog-post-drawer" hidden="hidden">New Post</button>
+        <section id="blog-index" class="journal-shell" aria-labelledby="journal-title">
+            <header class="journal-heading">
+                <span class="section-tag">// journal</span>
+                <h1 id="journal-title" tabindex="-1">Notes from the making.</h1>
+                <p>Short updates from projects, school, and creative practice.</p>
+            </header>
+            <div class="journal-layout">
+                <aside class="journal-sidebar" aria-label="About this journal">
+                    <div class="journal-author">
+                        <span class="journal-monogram" aria-hidden="true">&lt;LGX /&gt;</span>
+                        <h2>Liu GuangXuan</h2>
+                        <p>Creative Developer &amp; Immersive Media Designer.</p>
+                        <a href="about.html">More about me <span aria-hidden="true">↗</span></a>
+                    </div>
+                    <nav class="journal-topics" aria-label="Filter posts by topic">
+                        <h2>Explore topics</h2>
+                        <div id="blog-topics"></div>
+                    </nav>
+                    <p class="journal-sidebar-note">A record of learning, collaboration, and work in progress.</p>
+                </aside>
+                <div class="journal-feed">
+                    <div class="journal-toolbar">
+                        <h2>Latest entries <span id="blog-result-count" role="status"></span></h2>
+                        <div class="journal-search">
+                            <label for="blog-search">Search entries</label>
+                            <input id="blog-search" type="search" placeholder="Search the journal…" autocomplete="off" />
+                        </div>
+                    </div>
+                    <p id="blog-source-note" class="journal-source-note" role="status" hidden></p>
+                    <div id="blog-list" class="blog-card-grid">
+                        <p class="blog-loading" role="status">Loading posts…</p>
+                    </div>
+                    <div id="blog-empty" class="journal-empty" hidden>
+                        <h3>No matching entries</h3>
+                        <p>Try a different search or explore another topic.</p>
+                        <button id="blog-clear-filters" type="button" class="btn btn-secondary">Clear filters</button>
+                    </div>
+                    <noscript><p>JavaScript is needed to load the journal. You can still explore my <a href="projects.html">projects</a> or <a href="about.html">background</a>.</p></noscript>
                 </div>
             </div>
         </section>
-
-        <section class="section content-section">
-            <div class="section-inner">
-                <div id="blog-list" class="blog-card-grid" aria-live="polite">
-                    <div class="blog-loading">
-                        <p class="post-category">Firebase</p>
-                        <h2 class="post-title">Loading posts...</h2>
-                        <p class="post-excerpt">If Firebase is unavailable, the page will show the default portfolio blog posts.</p>
-                    </div>
-                </div>
+        <section id="blog-article" class="journal-reader" aria-labelledby="blog-read-title" hidden>
+            <div class="journal-reader-nav">
+                <button id="blog-back" class="text-action" type="button"><span aria-hidden="true">←</span> All entries</button>
+                <button id="blog-copy-link" class="text-action" type="button">Copy article link <span aria-hidden="true">↗</span></button>
             </div>
+            <p id="blog-link-status" class="journal-link-status" role="status"></p>
+            <h1 id="blog-read-title" tabindex="-1">Loading article…</h1>
+            <div id="blog-read-content"></div>
         </section>
     </main>
 
@@ -72,9 +105,9 @@
         </div>
         <p id="auth-hint" class="drawer-note">Login or create an account to comment on posts.</p>
         <div class="account-benefits compact-benefits">
-            <span>Comment on posts</span>
-            <span>Edit your own comments</span>
-            <span>Manage posts when signed in</span>
+            <span>View posts and comments</span>
+            <span>Sign in to comment</span>
+            <span>Only the site owner can edit</span>
         </div>
         <form id="auth-form" class="auth-form drawer-form">
             <label for="auth-name" hidden>Display name</label>
@@ -96,70 +129,28 @@
         </form>
     </aside>
 
-    <aside id="blog-post-drawer" class="side-drawer wide-drawer" aria-labelledby="blog-post-editor-title" hidden="hidden">
-        <div class="drawer-header">
-            <div>
-                <span class="section-tag">// admin tools</span>
-                <h2 id="blog-post-editor-title">Create Blog Post</h2>
-            </div>
-            <button class="drawer-close" type="button" aria-label="Close post editor" data-drawer-close>&times;</button>
-        </div>
-        <div id="admin-panel" hidden>
-            <p class="drawer-note">Write in plain text, preview your post, and publish when ready.</p>
-            <form id="post-form" class="post-form drawer-form">
-                <input id="post-id" type="text" placeholder="Post ID, e.g. shenzhen-oip" />
-                <input id="post-title" type="text" placeholder="Post title" required="required" />
-                <input id="post-category" type="text" placeholder="Category or tags" required="required" />
-                <div class="form-row">
-                    <input id="post-day" type="text" placeholder="Day, e.g. 05" required="required" />
-                    <input id="post-month" type="text" placeholder="Month/year, e.g. Sep 2024" required="required" />
-                </div>
-                <input id="post-cover-image" type="url" placeholder="Cover image URL or imgs/example.jpg" />
-                <input id="post-image-urls" type="text" placeholder="Content image URLs, separated by commas" />
-                <input id="post-link" type="url" placeholder="Optional project or GitHub link" />
-                <textarea id="post-excerpt" rows="3" placeholder="Short summary" required="required"></textarea>
-                <textarea id="post-body" rows="6" placeholder="Short body text for Read More"></textarea>
-                <div class="auth-actions">
-                    <button class="btn btn-primary" type="submit">Save Post</button>
-                    <button class="btn btn-secondary" id="reset-post-form" type="button">Clear</button>
-                </div>
-            </form>
-        </div>
-    </aside>
-
-    <aside id="blog-read-drawer" class="side-drawer wide-drawer" aria-labelledby="blog-read-title" hidden="hidden">
-        <div class="drawer-header">
-            <div>
-                <span class="section-tag">// read more</span>
-                <h2 id="blog-read-title">Post Details</h2>
-            </div>
-            <button class="drawer-close" type="button" aria-label="Close blog post" data-drawer-close>&times;</button>
-        </div>
-        <div id="blog-read-content"></div>
-    </aside>
-
     <footer>
         <div class="footer-socials">
-            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
-            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
-            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
-            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
-            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noopener noreferrer" aria-label="Telegram contact">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noopener noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noopener noreferrer" aria-label="ArtStation">AS</a>
         </div>
-        <p class="footer-copy">Copyright 2026 Liu GuangXuan. Notes from creative media learning.</p>
+        <p class="footer-copy">© 2026 Liu GuangXuan · Creative Developer &amp; Immersive Media Designer.</p>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20261007-1"></script>
     <script src="firebase-config.js"></script>
+    <script src="firebase-fallback.js"></script>
     <link rel="stylesheet" href="editor-tools.css" />
     <script src="editor-tools.js"></script>
-    <link rel="stylesheet" href="image-upload.css" />
-    <script src="image-upload.js"></script>
     <script src="content-order.js"></script>
-    <script src="project-catalog.js"></script>
-    <script src="blog-firebase.js"></script>
+    <script src="project-catalog.js?v=20261007-1"></script>
+    <script src="blog-page.js?v=20261018-1"></script>
+    <script src="blog-firebase.js?v=20261018-1"></script>
 </body>
 </html>

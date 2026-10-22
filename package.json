@@ -1,4 +1,8 @@
 {
+  "private": true,
+  "scripts": {
+    "build": "node deploy/build-package.mjs"
+  },
   "dependencies": {
     "firebase": "^12.15.0"
   }

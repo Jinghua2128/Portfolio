@@ -1,6 +1,35 @@
 // Shared real project records for rendering and editor selection. Keep data and order consistent.
 window.PortfolioProjectCatalog = [
     {
+        id: "multilingual-questionnaire-platform",
+        number: "20",
+        category: "Web Development / UI UX",
+        title: "Multilingual Questionnaire Platform",
+        description: "A responsive English/Chinese questionnaire with validation, database-backed responses, and reporting workflows.",
+        role: "Self-initiated full-stack development",
+        outcome: "Built a multi-step survey and response-review workflow to demonstrate form and backend development.",
+        tools: ["HTML", "CSS", "JavaScript", "Python", "Flask", "SQLAlchemy", "MySQL-compatible database"],
+        tags: ["Web", "UI/UX", "Forms", "Multilingual", "Responsive Design"],
+        featured: true,
+        caseStudyUrl: "projects.html#case-study-questionnaire",
+        link: "",
+        imageUrl: "",
+    },
+    {
+        id: "politeload-course-download-utility",
+        number: "21",
+        category: "Python / Productivity",
+        title: "PoliteLoad",
+        description: "A Python utility for archiving personal submissions and authorised course materials from POLITEMall/Brightspace.",
+        role: "Personal Python automation project",
+        tools: ["Python", "Browser Automation", "File Handling"],
+        tags: ["Web", "Python", "Automation", "Productivity"],
+        featured: true,
+        caseStudyUrl: "projects.html#case-study-politeload",
+        link: "",
+        imageUrl: "",
+    },
+    {
         id: "stickar-ar-firebase",
         number: "01",
         category: "Immersive / Web App",
@@ -37,6 +66,7 @@ window.PortfolioProjectCatalog = [
         githubUrl: "https://github.com/Jinghua2128/EchoWorks",
         liveUrl: "https://echoworks-e3b4d.web.app/",
         imageUrl: "imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg",
+        caseStudyUrl: "projects.html#case-study-echoworks",
     },
     {
         id: "personal-portfolio-website",

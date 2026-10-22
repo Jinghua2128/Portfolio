@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <base href="../" />
+    <title>Manage Blog | Liu GuangXuan</title>
+    <link rel="icon" href="imgs/Logo/icon.ico" />
+    <link rel="stylesheet" href="styles.css?v=20261007-2" />
+    <link rel="stylesheet" href="editor-tools.css" />
+    <link rel="stylesheet" href="image-upload.css" />
+</head>
+<body data-admin-editor="blog">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <nav id="navbar" aria-label="Admin navigation">
+        <a class="nav-logo" href="admin/index.html" aria-label="Admin home"><span>&lt;LGX /&gt;</span></a>
+        <a class="btn btn-secondary" href="index.html">View public site</a>
+    </nav>
+    <main id="main-content" class="section">
+        <div class="section-inner">
+            <span class="section-tag">// private workspace</span>
+            <h1 class="page-title">Manage Blog</h1>
+            <p id="admin-editor-status" role="status" aria-live="polite">Checking account…</p>
+            <div id="admin-editor-host"></div>
+        </div>
+    </main>
+    <template id="admin-editor-template">
+        <div class="page-actions">
+            <button class="btn btn-primary" id="open-post-drawer" type="button" hidden>New Post</button>
+            <a class="btn btn-secondary" href="admin/projects.html">Manage Projects</a>
+        </div>
+        <div id="blog-list" class="blog-card-grid" aria-live="polite"></div>
+        <aside id="blog-post-drawer" class="side-drawer wide-drawer" aria-labelledby="blog-post-editor-title" hidden>
+            <div class="drawer-header"><h2 id="blog-post-editor-title">Create Blog Post</h2><button class="drawer-close" type="button" aria-label="Close post editor" data-drawer-close>&times;</button></div>
+            <div id="admin-panel" hidden>
+                <p class="drawer-note">Write in plain text, preview, and publish when ready.</p>
+                <form id="post-form" class="post-form drawer-form">
+                    <input id="post-id" type="text" placeholder="Post ID" />
+                    <input id="post-title" type="text" placeholder="Title" required />
+                    <input id="post-category" type="text" placeholder="Category" required />
+                    <input id="post-day" type="text" placeholder="Day" required />
+                    <input id="post-month" type="text" placeholder="Month and year" required />
+                    <input id="post-cover-image" type="text" placeholder="Cover URL" />
+                    <input id="post-image-urls" type="text" placeholder="Body image URLs" />
+                    <input id="post-link" type="url" placeholder="Related link" />
+                    <textarea id="post-excerpt" rows="3" placeholder="Excerpt" required></textarea>
+                    <textarea id="post-body" rows="6" placeholder="Body"></textarea>
+                    <div class="auth-actions"><button class="btn btn-primary" type="submit">Save Post</button><button class="btn btn-secondary" id="reset-post-form" type="button">Clear</button></div>
+                </form>
+            </div>
+        </aside>
+        <aside id="blog-read-drawer" class="side-drawer wide-drawer" aria-labelledby="blog-read-title" hidden>
+            <div class="drawer-header"><h2 id="blog-read-title">Post Details</h2><button class="drawer-close" type="button" aria-label="Close post" data-drawer-close>&times;</button></div>
+            <div id="blog-read-content"></div>
+        </aside>
+    </template>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="firebase-fallback.js"></script>
+    <script src="admin/editor-bootstrap.js?v=20261007-2"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex,nofollow" />
+    <base href="../" />
+    <title>Manage Projects | Liu GuangXuan</title>
+    <link rel="icon" href="imgs/Logo/icon.ico" />
+    <link rel="stylesheet" href="styles.css?v=20261007-2" />
+    <link rel="stylesheet" href="editor-tools.css" />
+    <link rel="stylesheet" href="image-upload.css" />
+    <link rel="stylesheet" href="project-highlights.css" />
+</head>
+<body data-admin-editor="projects">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <nav id="navbar" aria-label="Admin navigation">
+        <a class="nav-logo" href="admin/index.html" aria-label="Admin home"><span>&lt;LGX /&gt;</span></a>
+        <a class="btn btn-secondary" href="index.html">View public site</a>
+    </nav>
+    <main id="main-content" class="section">
+        <div class="section-inner">
+            <span class="section-tag">// private workspace</span>
+            <h1 class="page-title">Manage Projects</h1>
+            <p id="admin-editor-status" role="status" aria-live="polite">Checking account…</p>
+            <div id="admin-editor-host"></div>
+        </div>
+    </main>
+    <template id="admin-editor-template">
+        <div class="page-actions project-showcase-actions">
+            <button class="btn btn-primary" id="open-project-drawer" type="button" hidden>New Project</button>
+            <a class="btn btn-secondary" href="admin/blog.html">Manage Blog</a>
+        </div>
+        <section class="featured-projects-panel project-feature-stage" aria-label="Project highlights">
+            <div class="featured-copy"><h2>Featured Work</h2><p>Up to three selected highlights.</p></div>
+            <div id="featured-projects" class="project-showcase-feature-grid" aria-live="polite"></div>
+        </section>
+        <section class="project-library-panel" aria-label="Project records">
+            <div class="grid-heading interactive-heading"><h2>Project Records</h2><p id="project-result-count" aria-live="polite"></p></div>
+            <div class="project-tools">
+                <div class="project-filter-buttons" role="tablist" aria-label="Filter projects">
+                    <button class="filter-chip is-active" type="button" role="tab" aria-selected="true" data-project-filter="all">All</button>
+                    <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="interactive">Interactive</button>
+                    <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="3d">3D</button>
+                    <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="motion">Motion</button>
+                    <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="ux">UI/UX</button>
+                    <button class="filter-chip" type="button" role="tab" aria-selected="false" data-project-filter="branding">Branding</button>
+                </div>
+                <label class="project-search"><span>Search</span><input id="project-search" type="search" autocomplete="off" /></label>
+            </div>
+            <div id="projects-grid" class="projects-grid project-showcase-grid"></div>
+        </section>
+        <aside id="project-detail-drawer" class="side-drawer wide-drawer" aria-labelledby="project-detail-title" hidden>
+            <div class="drawer-header"><h2 id="project-detail-title">Project Details</h2><button class="drawer-close" type="button" aria-label="Close project details" data-drawer-close>&times;</button></div>
+            <div id="project-detail-content"></div>
+        </aside>
+        <aside id="project-editor-drawer" class="side-drawer wide-drawer" aria-labelledby="project-editor-title" hidden>
+            <div class="drawer-header"><h2 id="project-editor-title">Add or Edit Project</h2><button class="drawer-close" type="button" aria-label="Close project editor" data-drawer-close>&times;</button></div>
+            <div id="project-admin-panel" hidden>
+                <p class="drawer-note">Review a local draft before publishing changes.</p>
+                <form id="project-form" class="post-form drawer-form">
+                    <input id="project-id" type="text" placeholder="Project ID" />
+                    <input id="project-number" type="text" placeholder="Order" required />
+                    <input id="project-title" type="text" placeholder="Title" required />
+                    <input id="project-category" type="text" placeholder="Category" required />
+                    <textarea id="project-description" rows="4" placeholder="Short description" required></textarea>
+                    <input id="project-tags" type="text" placeholder="Tags" />
+                    <input id="project-link" type="url" placeholder="Project link" />
+                    <input id="project-image" type="text" placeholder="Image URL" />
+                    <input id="project-featured" type="checkbox" />
+                    <div class="auth-actions"><button class="btn btn-primary" type="submit">Save Project</button><button class="btn btn-secondary" id="reset-project-form" type="button">Clear</button></div>
+                </form>
+            </div>
+        </aside>
+    </template>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="firebase-fallback.js"></script>
+    <script src="admin/editor-bootstrap.js?v=20261007-2"></script>
+</body>
+</html>

@@ -3,9 +3,9 @@
     function mount(container, render) {
         let projects = [], active = 'featured';
         const groups = [
-            ['featured', 'Featured', 'Featured Work', 'Choose up to three highlights using Featured project in the editor.'],
-            ['progress', 'In Progress', 'In Progress', 'No public projects are marked In progress yet.'],
-            ['latest', 'Latest', 'Latest Projects', 'No dated projects yet. Add a project date in the editor to include it here.'],
+            ['featured', 'Featured', 'Featured Work', 'Explore the full project library below.'],
+            ['progress', 'In Progress', 'In Progress', 'No work in progress is listed here. Explore Featured or browse the full library below.'],
+            ['latest', 'Latest', 'Latest Projects', 'Dated updates will appear here. Explore Featured or browse the full library below.'],
         ];
         const host = container.closest('.project-feature-stage, .featured-projects-section');
         const heading = host?.querySelector('h2');
@@ -41,7 +41,7 @@
                 button.classList.toggle('is-active', selected);
             });
             if (heading) heading.textContent = title;
-            if (description) description.textContent = active === 'latest' ? 'Up to three projects, newest dated work first.' : active === 'progress' ? 'Up to three projects currently marked In progress.' : 'Up to three selected highlights.';
+            if (description) description.textContent = active === 'latest' ? 'The most recent dated work.' : active === 'progress' ? 'A look at work currently in development.' : 'Selected applications and interactive experiences.';
             container.setAttribute('aria-labelledby', `highlight-${active}`);
             const items = select(active);
             render(items);

@@ -50,6 +50,9 @@ $rootFiles = @(
     "project-management.js",
     "projects-firebase.js",
     "blog-firebase.js",
+    "blog-page.js",
+    "blog-page.css",
+    "firebase-fallback.js",
     "firebase-config.js"
 )
 
@@ -59,11 +62,14 @@ $assetFiles = @(
     "imgs/Blogs/OIP/OIP_grp_photo.jpg", "imgs/Blogs/EchoWorks/photo.JPG",
     "imgs/Projects/BurntConesRevamp/BurntConesRevamp_HomePage.jpg",
     "imgs/Projects/CarbonCreative/CarbonCreative_HomePage.jpg",
-    "imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg"
+    "imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg",
+    "imgs/Blogs/empire-ai/empire-code-reception.jpg"
 )
 $sideFiles = @("index.html", "about.html", "projects.html", "blog.html", "contact.html", "styles.css", "script.js", "home-projects.js", "projects-firebase.js", "blog-firebase.js", "firebase-config.js") |
     ForEach-Object { "editorial-portfolio/$_" }
-$deploymentFiles = @($rootFiles) + @($assetFiles) + @($sideFiles)
+$adminFiles = @("index.html", "admin.js", "editor-bootstrap.js", "projects.html", "blog.html") |
+    ForEach-Object { "admin/$_" }
+$deploymentFiles = @($rootFiles) + @($assetFiles) + @($sideFiles) + @($adminFiles)
 
 foreach ($relativePath in $deploymentFiles) {
     if (-not (Test-Path -LiteralPath (Join-Path $projectRoot $relativePath))) {
@@ -81,11 +87,17 @@ $deploymentFiles | ForEach-Object { [void]$allowedPaths.Add($_.Replace('\', '/')
 foreach ($relativePath in $deploymentFiles | Where-Object { $_ -like '*.html' }) {
     $sourcePath = Join-Path $projectRoot $relativePath
     $content = Get-Content -Raw -LiteralPath $sourcePath
-    foreach ($match in [regex]::Matches($content, '(?:src|href)\s*=\s*["'']([^"'']+)["'']')) {
+    $baseMatch = [regex]::Match($content, '<base\s+href\s*=\s*["'']([^"'']+)["'']', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    $referenceRoot = Split-Path -Parent $sourcePath
+    if ($baseMatch.Success) {
+        $referenceRoot = [System.IO.Path]::GetFullPath((Join-Path $referenceRoot $baseMatch.Groups[1].Value))
+    }
+    $contentWithoutBase = [regex]::Replace($content, '<base\b[^>]*>', '', [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
+    foreach ($match in [regex]::Matches($contentWithoutBase, '(?:src|href)\s*=\s*["'']([^"'']+)["'']')) {
         $reference = $match.Groups[1].Value
         if ($reference -match '^(?:[a-z]+:|//|#)' -or [string]::IsNullOrWhiteSpace($reference)) { continue }
         $reference = ($reference -split '[?#]')[0]
-        $resolved = [System.IO.Path]::GetFullPath((Join-Path (Split-Path -Parent $sourcePath) $reference))
+        $resolved = [System.IO.Path]::GetFullPath((Join-Path $referenceRoot $reference))
         $archiveReference = [System.IO.Path]::GetRelativePath($projectRoot, $resolved).Replace('\', '/')
         if (-not $allowedPaths.Contains($archiveReference)) { throw "Unpackaged reference in ${relativePath}: $reference" }
     }

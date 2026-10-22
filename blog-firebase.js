@@ -62,6 +62,7 @@ const postBodyInput = document.querySelector("#post-body");
 const resetPostButton = document.querySelector("#reset-post-form");
 const readDrawerContent = document.querySelector("#blog-read-content");
 const readDrawerTitle = document.querySelector("#blog-read-title");
+const managementPage = Boolean(postForm);
 
 let currentUser = null;
 let isAdmin = false;
@@ -69,22 +70,25 @@ let unsubscribePosts = null;
 let activeCommentsUnsubscribe = null;
 let activePost = null;
 let latestPosts = [];
-const postEditor = PortfolioEditor.mount(postForm, "post");
-const postImageUploads = PortfolioImageUpload.mount({ form: postForm, kind: "post" });
+const postEditor = managementPage ? PortfolioEditor.mount(postForm, "post") : null;
+const postImageUploads = managementPage ? PortfolioImageUpload.mount({ form: postForm, kind: "post" }) : null;
+const blogPage = !managementPage && window.PortfolioBlogPage ? PortfolioBlogPage.create({
+    onRead: openPost,
+    onLeave: () => {
+        activeCommentsUnsubscribe?.();
+        activeCommentsUnsubscribe = null;
+        activePost = null;
+    },
+    resolveImage: (post) => PortfolioEditor.safeURL(resolveBlogImage(post.coverImage || firstImage(post.imageUrls))),
+}) : null;
 
 function isConfiguredAdmin(user) {
-    if (!user) {
+    if (!managementPage || !user) {
         return false;
     }
 
-    if (ALLOW_ANY_SIGNED_IN_USER_TO_EDIT) {
-        return true;
-    }
-
-    const emailList = Array.isArray(ADMIN_EMAILS) ? ADMIN_EMAILS : [];
     const uidList = Array.isArray(ADMIN_UIDS) ? ADMIN_UIDS : [];
-
-    return emailList.includes(user.email) || uidList.includes(user.uid);
+    return !ALLOW_ANY_SIGNED_IN_USER_TO_EDIT && uidList.includes(user.uid);
 }
 
 function getDisplayName(user) {
@@ -92,6 +96,7 @@ function getDisplayName(user) {
 }
 
 function setMessage(message, type = "") {
+    if (!authStatus) return;
     authStatus.textContent = message;
     authStatus.className = `auth-status ${type}`.trim();
 }
@@ -127,9 +132,13 @@ function mergePosts(firebasePosts = []) {
     return PortfolioContentOrder.newest(Array.from(postMap.values()), "post");
 }
 
-function renderPosts(posts) {
+function renderPosts(posts, options = {}) {
     posts = PortfolioContentOrder.newest(posts.filter((post) => post.publicationState !== "draft" && post.state !== "draft"), "post");
     latestPosts = posts;
+    if (blogPage) {
+        blogPage.setPosts(posts, options);
+        return;
+    }
     blogList.innerHTML = "";
 
     posts.forEach((post) => {
@@ -167,6 +176,7 @@ function resolveBlogImage(image) {
         "EchoWorks/photo.JPG": "Blogs/EchoWorks/photo.JPG",
         "OIP_grp_photo.jpg": "Blogs/OIP/OIP_grp_photo.jpg",
         "GGF_grp_photo.jpg": "Blogs/GGF/GGF_grp_photo.jpg",
+        "EmpireAI/photo.JPG": "Blogs/empire-ai/empire-code-reception.jpg",
     };
     const path = match?.[1];
     const current = Object.hasOwn(moved, path) ? moved[path] : (Object.values(moved).includes(path) ? path : "");
@@ -186,29 +196,34 @@ function openPost(post) {
     activePost = post;
     readDrawerTitle.textContent = post.title || "Post Details";
     renderReadDrawer(post);
-    PortfolioUI.openDrawer("blog-read-drawer");
+    if (!blogPage) PortfolioUI.openDrawer("blog-read-drawer");
     watchComments(post.id);
 }
 
 function renderReadDrawer(post) {
-    const images = normalizeImageList(post.imageUrls).map(resolveBlogImage).filter(PortfolioEditor.safeURL);
+    let images = normalizeImageList(post.imageUrls).map(resolveBlogImage).filter(PortfolioEditor.safeURL);
     const coverImage = PortfolioEditor.safeURL(resolveBlogImage(post.coverImage));
     const body = post.body || post.excerpt || "";
+    // Public reading shows each photo once; the owner/editor layout is unchanged.
+    if (blogPage) images = [...new Set(images)].filter((image) => image !== coverImage);
+    const publicMeta = blogPage ? `<div class="journal-post-meta"><span>${escapeHtml(post.category || "Journal")}</span><span>${escapeHtml(PortfolioBlogPage.dateLabel(post))}</span><span>${PortfolioBlogPage.readingTime(post)}</span></div>` : "";
 
     readDrawerContent.innerHTML = `
-        <article class="drawer-post">
+        <article class="${blogPage ? "journal-post" : "drawer-post"}">
+            ${publicMeta}
+            ${blogPage && post.excerpt && post.excerpt !== body ? `<p class="journal-post-intro">${escapeHtml(post.excerpt)}</p>` : ""}
             ${coverImage ? `<img class="drawer-cover" src="${escapeHtml(coverImage)}" alt="${escapeHtml(post.title || "Blog cover image")}" loading="lazy" />` : ""}
-            <p class="post-category">${escapeHtml(post.category || "Journal")}</p>
+            ${!blogPage ? `<p class="post-category">${escapeHtml(post.category || "Journal")}</p>
             <h3>${escapeHtml(post.title || "Untitled Post")}</h3>
-            <p class="drawer-date">${escapeHtml([post.day, post.month].filter(Boolean).join(" "))}</p>
-            ${renderPostBody(body)}
-            ${PortfolioEditor.safeURL(post.link) ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.link)}" target="_blank" rel="noreferrer">Open Link</a>` : ""}
+            <p class="drawer-date">${escapeHtml([post.day, post.month].filter(Boolean).join(" "))}</p>` : ""}
+            ${blogPage ? `<div class="journal-prose">${renderPostBody(body)}</div>` : renderPostBody(body)}
+            ${PortfolioEditor.safeURL(post.link) ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.link)}" target="_blank" rel="noopener noreferrer">Open Link</a>` : ""}
             ${PortfolioEditor.safeURL(post.relatedProject) ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.relatedProject)}">Related project</a>` : ""}
             ${images.length ? `<div class="content-image-grid">${images.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(post.title || "Blog image")} ${index + 1}" loading="lazy" />`).join("")}</div>` : ""}
             <div class="post-actions admin-post-actions"></div>
             <section class="comments-block" aria-label="Comments">
                 <div class="comments-header">
-                    <h3>Comments</h3>
+                    ${blogPage ? "<h2>Comments</h2>" : "<h3>Comments</h3>"}
                     <span class="comment-count">Loading...</span>
                 </div>
                 <div class="comment-list"></div>
@@ -216,6 +231,7 @@ function renderReadDrawer(post) {
             </section>
         </article>
     `;
+    if (blogPage) PortfolioBlogPage.guardImages(readDrawerContent);
 
     const adminActions = readDrawerContent.querySelector(".admin-post-actions");
     if (isAdmin) {
@@ -253,7 +269,7 @@ function renderCommentEntry(postId) {
 
     entry.innerHTML = `
         <form class="comment-form" data-post-id="${escapeHtml(postId)}">
-            <textarea name="comment" rows="3" placeholder="Write a thoughtful comment" required="required"></textarea>
+            <textarea name="comment" rows="3" maxlength="2000" placeholder="Write a thoughtful comment" required="required"></textarea>
             <button class="btn btn-primary" type="submit">Post Comment</button>
         </form>
     `;
@@ -267,7 +283,7 @@ function watchPosts() {
     }
 
     // Keep the existing journal entries visible while Firestore connects.
-    renderPosts(mergePosts());
+    renderPosts(mergePosts(), { settled: !db, offline: !db });
 
     if (!db) {
         setMessage("Firebase is unavailable. Showing local blog content.", "error");
@@ -277,8 +293,8 @@ function watchPosts() {
     unsubscribePosts = db.collection("posts").onSnapshot((snapshot) => {
         const firebasePosts = snapshot.empty ? [] : snapshot.docs.map(formatPostData);
         const posts = mergePosts(firebasePosts);
-        renderPosts(posts);
-        if (activePost) {
+        renderPosts(posts, { settled: true });
+        if (activePost && !blogPage) {
             const refreshed = posts.find((post) => post.id === activePost.id);
             if (refreshed) {
                 activePost = refreshed;
@@ -287,7 +303,7 @@ function watchPosts() {
             }
         }
     }, () => {
-        renderPosts(mergePosts());
+        renderPosts(mergePosts(), { settled: true, offline: true });
         setMessage("Could not load Firebase posts. Showing local blog content.", "error");
     });
 }
@@ -326,7 +342,7 @@ function watchComments(postId) {
 function createCommentElement(postId, comment) {
     const item = document.createElement("div");
     item.className = "comment-item";
-    const canEdit = currentUser && (isAdmin || comment.uid === currentUser.uid);
+    const canEdit = currentUser && isAdmin;
 
     item.innerHTML = `
         <div class="comment-meta">
@@ -478,7 +494,7 @@ async function savePost(event) {
     finally { postEditor.setBusy(false); }
 }
 
-authForm.addEventListener("submit", async (event) => {
+authForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!auth) {
         setMessage("Firebase login is temporarily unavailable. Local posts are still visible.", "error");
@@ -503,13 +519,13 @@ authForm.addEventListener("submit", async (event) => {
     }
 });
 
-logoutButton.addEventListener("click", () => {
+logoutButton?.addEventListener("click", () => {
     auth?.signOut();
 });
 
-postForm.addEventListener("submit", savePost);
-resetPostButton.addEventListener("click", resetPostForm);
-openPostDrawerButton.addEventListener("click", (event) => {
+postForm?.addEventListener("submit", savePost);
+resetPostButton?.addEventListener("click", resetPostForm);
+openPostDrawerButton?.addEventListener("click", (event) => {
     event.preventDefault(); event.stopPropagation();
     if (isAdmin && postEditor.startNew()) PortfolioUI.openDrawer("blog-post-drawer");
 });
@@ -517,8 +533,8 @@ openPostDrawerButton.addEventListener("click", (event) => {
 function applyBlogAuthState(user) {
     currentUser = user;
     isAdmin = isConfiguredAdmin(user);
-    postImageUploads.setUser(isAdmin ? user : null);
-    postEditor.setUser(isAdmin ? user : null);
+    postImageUploads?.setUser(isAdmin ? user : null);
+    postEditor?.setUser(isAdmin ? user : null);
     if (!isAdmin && document.querySelector("#blog-post-drawer.is-open")) PortfolioUI.closeDrawer();
     if (isAdmin && db) {
         const listedChoices = (projects) => projects
@@ -534,22 +550,27 @@ function applyBlogAuthState(user) {
     }
 
     if (user) {
-        authHint.textContent = isAdmin
+        if (authHint) authHint.textContent = isAdmin
             ? `Logged in as admin: ${getDisplayName(user)}`
             : `Logged in as ${getDisplayName(user)}. You can comment on posts.`;
-        logoutButton.hidden = false;
+        if (logoutButton) logoutButton.hidden = false;
     } else {
-        authHint.textContent = "Login or create an account to comment on posts.";
-        logoutButton.hidden = true;
+        if (authHint) authHint.textContent = "Login or create an account to comment on posts.";
+        if (logoutButton) logoutButton.hidden = true;
     }
 
-    adminPanel.hidden = !isAdmin;
-    openPostDrawerButton.hidden = !isAdmin;
-    watchPosts();
+    if (adminPanel) adminPanel.hidden = !isAdmin;
+    if (openPostDrawerButton) openPostDrawerButton.hidden = !isAdmin;
+    // Keep the public subscription stable across auth changes so an open article
+    // and its draft comment are not replaced by the temporary fallback list.
+    if (!blogPage || !unsubscribePosts) watchPosts();
 
     if (activePost) {
-        renderReadDrawer(activePost);
-        watchComments(activePost.id);
+        if (blogPage) renderCommentEntry(activePost.id);
+        else {
+            renderReadDrawer(activePost);
+            watchComments(activePost.id);
+        }
     }
 }
 
@@ -597,7 +618,7 @@ function escapeHtml(value) {
 }
 
 function formatTimestamp(timestamp) {
-    if (!timestamp || !timestamp.toDate) {
+    if (!timestamp || typeof timestamp.toDate !== "function") {
         return "Just now";
     }
 

@@ -62,6 +62,7 @@ const postBodyInput = document.querySelector("#post-body");
 const resetPostButton = document.querySelector("#reset-post-form");
 const readDrawerContent = document.querySelector("#blog-read-content");
 const readDrawerTitle = document.querySelector("#blog-read-title");
+const managementPage = Boolean(postForm);
 
 let currentUser = null;
 let isAdmin = false;
@@ -69,23 +70,17 @@ let unsubscribePosts = null;
 let activeCommentsUnsubscribe = null;
 let activePost = null;
 let latestPosts = [];
-const postImageUpload = window.PortfolioImageUpload?.mount({ form: postForm, kind: "post" });
+const postImageUpload = managementPage ? window.PortfolioImageUpload?.mount({ form: postForm, kind: "post" }) : null;
 let loadedPostDate = "", loadedPostDay = "", loadedPostMonth = "";
-postForm.addEventListener("reset", () => { loadedPostDate = loadedPostDay = loadedPostMonth = ""; });
+postForm?.addEventListener("reset", () => { loadedPostDate = loadedPostDay = loadedPostMonth = ""; });
 
 function isConfiguredAdmin(user) {
-    if (!user) {
+    if (!managementPage || !user) {
         return false;
     }
 
-    if (ALLOW_ANY_SIGNED_IN_USER_TO_EDIT) {
-        return true;
-    }
-
-    const emailList = Array.isArray(ADMIN_EMAILS) ? ADMIN_EMAILS : [];
     const uidList = Array.isArray(ADMIN_UIDS) ? ADMIN_UIDS : [];
-
-    return emailList.includes(user.email) || uidList.includes(user.uid);
+    return !ALLOW_ANY_SIGNED_IN_USER_TO_EDIT && uidList.includes(user.uid);
 }
 
 function getDisplayName(user) {
@@ -93,6 +88,7 @@ function getDisplayName(user) {
 }
 
 function setMessage(message, type = "") {
+    if (!authStatus) return;
     authStatus.textContent = message;
     authStatus.className = `auth-status ${type}`.trim();
 }
@@ -168,6 +164,7 @@ function resolveBlogImage(image) {
         "EchoWorks/photo.JPG": "Blogs/EchoWorks/photo.JPG",
         "OIP_grp_photo.jpg": "Blogs/OIP/OIP_grp_photo.jpg",
         "GGF_grp_photo.jpg": "Blogs/GGF/GGF_grp_photo.jpg",
+        "EmpireAI/photo.JPG": "Blogs/empire-ai/empire-code-reception.jpg",
     };
     const path = match?.[1];
     const current = Object.hasOwn(moved, path) ? moved[path] : (Object.values(moved).includes(path) ? path : "");
@@ -203,7 +200,7 @@ function renderReadDrawer(post) {
             <h3>${escapeHtml(post.title || "Untitled Post")}</h3>
             <p class="drawer-date">${escapeHtml([post.day, post.month].filter(Boolean).join(" "))}</p>
             ${renderPostBody(body)}
-            ${post.link ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.link)}" target="_blank" rel="noreferrer">Open Link</a>` : ""}
+            ${post.link ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(post.link)}" target="_blank" rel="noopener noreferrer">Open Link</a>` : ""}
             ${images.length ? `<div class="content-image-grid">${images.map((image, index) => `<img src="${escapeHtml(image)}" alt="${escapeHtml(post.title || "Blog image")} ${index + 1}" loading="lazy" />`).join("")}</div>` : ""}
             <div class="post-actions admin-post-actions"></div>
             <section class="comments-block" aria-label="Comments">
@@ -248,7 +245,7 @@ function renderCommentEntry(postId) {
 
     entry.innerHTML = `
         <form class="comment-form" data-post-id="${escapeHtml(postId)}">
-            <textarea name="comment" rows="3" placeholder="Write a thoughtful comment" required="required"></textarea>
+            <textarea name="comment" rows="3" maxlength="2000" placeholder="Write a thoughtful comment" required="required"></textarea>
             <button class="btn btn-primary" type="submit">Post Comment</button>
         </form>
     `;
@@ -322,7 +319,7 @@ function watchComments(postId) {
 function createCommentElement(postId, comment) {
     const item = document.createElement("div");
     item.className = "comment-item";
-    const canEdit = currentUser && (isAdmin || comment.uid === currentUser.uid);
+    const canEdit = currentUser && isAdmin;
 
     item.innerHTML = `
         <div class="comment-meta">
@@ -497,8 +494,8 @@ logoutButton.addEventListener("click", () => {
     auth?.signOut();
 });
 
-postForm.addEventListener("submit", savePost);
-resetPostButton.addEventListener("click", resetPostForm);
+postForm?.addEventListener("submit", savePost);
+resetPostButton?.addEventListener("click", resetPostForm);
 
 function applyBlogAuthState(user) {
     currentUser = user;
@@ -515,8 +512,8 @@ function applyBlogAuthState(user) {
         logoutButton.hidden = true;
     }
 
-    adminPanel.hidden = !isAdmin;
-    openPostDrawerButton.hidden = !isAdmin;
+    if (adminPanel) adminPanel.hidden = !isAdmin;
+    if (openPostDrawerButton) openPostDrawerButton.hidden = !isAdmin;
     const editorDrawer = document.querySelector("#blog-post-drawer");
     if (!isAdmin && editorDrawer?.getAttribute("aria-modal") === "true") {
         PortfolioUI.closeDrawer();
@@ -573,7 +570,7 @@ function escapeHtml(value) {
 }
 
 function formatTimestamp(timestamp) {
-    if (!timestamp || !timestamp.toDate) {
+    if (!timestamp || typeof timestamp.toDate !== "function") {
         return "Just now";
     }
 

@@ -1,0 +1,44 @@
+// Portfolio Firestore rules for the existing aboutMe project.
+// Public reads are intentionally retained for compatibility with current unfiltered listeners;
+// hidden/draft records are NOT private until the data/query model is migrated.
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.uid == 'Q6EYoSaAdBQDCJ8BIO9U0CIA7fq2';
+    }
+
+    function validCommentText() {
+      return request.resource.data.text is string
+        && request.resource.data.text.size() > 0
+        && request.resource.data.text.size() <= 2000;
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /posts/{postId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.auth != null
+          && request.resource.data.keys().hasOnly([
+            'text', 'uid', 'authorName', 'authorEmail', 'createdAt', 'updatedAt'
+          ])
+          && request.resource.data.keys().hasAll([
+            'text', 'uid', 'authorName', 'authorEmail', 'createdAt', 'updatedAt'
+          ])
+          && request.resource.data.uid == request.auth.uid
+          && request.resource.data.authorEmail == request.auth.token.email
+          && request.resource.data.authorName is string
+          && validCommentText();
+        allow update, delete: if isAdmin();
+      }
+    }
+  }
+}

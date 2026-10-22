@@ -4,9 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Portfolio projects by Liu GuangXuan across Unity, AR, 3D environments, motion graphics, UI/UX, branding, and web development." />
+    <link rel="canonical" href="https://www.portfolio.liuguangxuan.com/projects.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Projects | Liu GuangXuan" />
+    <meta property="og:description" content="Selected web applications and interactive media, including project roles, tools and case studies." />
+    <meta property="og:url" content="https://www.portfolio.liuguangxuan.com/projects.html" />
+    <meta property="og:image" content="https://www.portfolio.liuguangxuan.com/imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <title>Projects | Liu GuangXuan</title>
     <link rel="icon" href="imgs/Logo/icon.ico" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20261007-2" />
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -14,9 +21,9 @@
         <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
             <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
             <li><a href="projects.html" class="active" aria-current="page">Projects</a></li>
-            <li><a href="immersion.html">3D Immersion</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="immersion.html">3D Work</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -27,9 +34,9 @@
 
     <div class="mobile-menu">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="projects.html" aria-current="page">Projects</a>
-        <a href="immersion.html">3D Immersion</a>
+        <a href="about.html">About</a>
+        <a href="immersion.html">3D Work</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
@@ -40,12 +47,8 @@
                 <div class="project-showcase-top">
                     <div class="project-showcase-copy">
                         <span class="section-tag">// project showcase</span>
-                        <h1 class="page-title project-showcase-title">Project Showcase</h1>
-                        <p class="project-showcase-intro">A curated selection of interactive, game, 3D, motion, and web projects built with creative technology.</p>
-                    </div>
-                    <div class="page-actions project-showcase-actions">
-                        <button class="btn btn-secondary" type="button" data-drawer-open="project-login-drawer">Account</button>
-                        <button class="btn btn-primary" id="open-project-drawer" type="button" data-drawer-open="project-editor-drawer" hidden="hidden">New Project</button>
+                        <h1 class="page-title project-showcase-title">Projects</h1>
+                        <p class="project-showcase-intro">Selected work across web development, interactive media, game development, UI/UX, 3D and creative technology.</p>
                     </div>
                 </div>
 
@@ -53,7 +56,7 @@
                     <div class="featured-copy">
                         <span class="section-tag">// selected highlights</span>
                         <h2>Featured Work</h2>
-                        <p>A few strongest pieces, shown first for quick review.</p>
+                        <p>Selected applications, with my role and the decisions behind each build.</p>
                     </div>
                     <div id="featured-projects" class="project-showcase-feature-grid" aria-live="polite"></div>
                 </div>
@@ -82,49 +85,73 @@
                     </div>
                     <div id="projects-grid" class="projects-grid project-showcase-grid">
                         <div class="blog-loading">
-                            <p class="card-tag">Firebase</p>
-                            <h2 class="card-title">Loading projects...</h2>
-                            <p class="card-desc">If Firebase is unavailable, the page will show local portfolio cards.</p>
+                            <p class="card-tag">Project library</p>
+                            <h2 class="card-title">Loading projects…</h2>
+                            <p class="card-desc">You can also explore the three case studies below.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-    </main>
 
-    <aside id="project-login-drawer" class="side-drawer" aria-labelledby="project-login-title" hidden="hidden">
-        <div class="drawer-header">
-            <div>
-                <span class="section-tag">// project manager</span>
-                <h2 id="project-login-title">Project Account</h2>
+        <section class="section case-studies-section" aria-labelledby="case-studies-title">
+            <div class="section-inner">
+                <span class="section-tag">// behind the work</span>
+                <h2 class="section-title" id="case-studies-title">Project Case Studies</h2>
+                <p class="case-studies-intro">A closer look at the problems, responsibilities and tools behind three selected builds.</p>
+                <nav class="case-study-nav" aria-label="Jump to a case study">
+                    <a href="#case-study-questionnaire">01 / Questionnaire</a>
+                    <a href="#case-study-echoworks">02 / EchoWorks</a>
+                    <a href="#case-study-politeload">03 / PoliteLoad</a>
+                </nav>
+
+                <article id="case-study-questionnaire" class="case-study">
+                    <div class="case-study-heading"><p class="card-tag">Self-initiated / Full-stack Web</p><h3>Multilingual Questionnaire Platform</h3><p>A responsive survey application demonstrating multilingual form design, validation and database-backed response handling.</p></div>
+                    <div class="case-study-grid">
+                        <div><h4>Problem</h4><p>Online questionnaires need to guide people through required questions clearly while keeping submitted responses organised for review.</p></div>
+                        <div><h4>My Role</h4><p>Independent design and full-stack development of this self-initiated application, from the survey interface to response storage and export.</p></div>
+                        <div><h4>Solution</h4><p>An English/Chinese multi-step interface with a progress indicator, required-field validation, rating questions, an NPS-style scale and optional feedback. A Flask backend stores responses through SQLAlchemy in a MySQL-compatible database.</p></div>
+                        <div><h4>Response Workflow</h4><p>The platform includes an admin response viewer and CSV export for reviewing collected answers. The interface is designed for desktop and mobile.</p></div>
+                        <div><h4>Technologies</h4><p>HTML, CSS, JavaScript, Python, Flask, SQLAlchemy, MySQL-compatible database and responsive web design.</p></div>
+                        <div><h4>Technical Considerations</h4><p>Form progress, required answers, language switching and backend storage must remain consistent through a multi-step response.</p></div>
+                    </div>
+                    <p class="case-study-note">The focus: a clear path from completing a multilingual form to reviewing structured responses.</p>
+                    <!-- Add screenshots or public source/demo links only after the specific assets and destinations are approved. -->
+                </article>
+
+                <article id="case-study-echoworks" class="case-study">
+                    <div class="case-study-heading"><p class="card-tag">Year 3 Major Design Capstone / Team Project</p><h3>EchoWorks</h3><p>An interactive training experience developed with Singapore Red Cross as the industry partner.</p></div>
+                    <div class="case-study-grid">
+                        <div><h4>Problem</h4><p>The project explored how interactive scenarios could support workplace communication training and feedback.</p></div>
+                        <div><h4>My Role</h4><p>Web development and full-site revamp, Firebase integration, AR quick-reference and interface improvements within a multidisciplinary team.</p></div>
+                        <div><h4>Technical Architecture</h4><p>The browser-based experience uses Firebase Authentication and Firestore for account-backed progress, with scenario progression/gating and an admin dashboard.</p></div>
+                        <div><h4>Key Features</h4><p>Responsive training UI, user progress tracking, scenario flow, backend integration and an AR quick-reference experience.</p></div>
+                        <div><h4>Collaboration</h4><p>UI work was contributed by Gracie, and the first scenario scene by KaiMing. My work focused on the web, Firebase and AR portions described here.</p></div>
+                        <div><h4>Technical Considerations</h4><p>Connecting account state, training progress and scenario access required a consistent flow across the interface and backend.</p></div>
+                    </div>
+                    <div class="case-study-links"><a class="btn btn-secondary" href="https://echoworks-e3b4d.web.app/" target="_blank" rel="noopener noreferrer">Live Site</a><a class="btn btn-secondary" href="https://github.com/Jinghua2128/EchoWorks" target="_blank" rel="noopener noreferrer">GitHub</a></div>
+                </article>
+
+                <article id="case-study-politeload" class="case-study">
+                    <div class="case-study-heading"><p class="card-tag">Personal Project / Python</p><h3>PoliteLoad</h3><p>A Python utility for archiving personal submissions and authorised course materials from POLITEMall/Brightspace.</p></div>
+                    <div class="case-study-grid">
+                        <div><h4>Problem</h4><p>Collecting personal submissions and course files one at a time can make it difficult to keep a local archive organised.</p></div>
+                        <div><h4>My Role</h4><p>I developed this as a personal automation tool focused on materials accessible through the user's own account.</p></div>
+                        <div><h4>Solution</h4><p>The Python workflow focuses on browser automation, login/session handling, course and material discovery, file downloads and large-file handling.</p></div>
+                        <div><h4>Scope</h4><p>It is intended for the user's own authorised educational files. It does not bypass access controls or grant access to someone else's materials.</p></div>
+                        <div><h4>Technologies</h4><p>Python, browser automation and file handling.</p></div>
+                        <div><h4>Technical Considerations</h4><p>Reliable downloads depend on maintaining an authorised session and handling file sizes without losing the user's place in the course workflow.</p></div>
+                    </div>
+                    <p class="case-study-note">Next iteration: refine the interface and packaging to make the workflow easier to use.</p>
+                    <!-- No verified public source/demo URL has been supplied for this entry. -->
+                </article>
+                <div class="home-next-step">
+                    <p>Interested in working together?</p>
+                    <a class="btn btn-secondary" href="contact.html">Start a conversation <span aria-hidden="true">↗</span></a>
+                </div>
             </div>
-            <button class="drawer-close" type="button" aria-label="Close project login" data-drawer-close>&times;</button>
-        </div>
-        <p id="project-auth-hint" class="drawer-note">Login to add, edit, or delete project cards saved in Firebase.</p>
-        <div class="account-benefits compact-benefits">
-            <span>Add new projects</span>
-            <span>Mark top 3 featured work</span>
-            <span>Save portfolio content online</span>
-        </div>
-        <form id="project-auth-form" class="auth-form drawer-form">
-            <label for="project-auth-name" hidden>Display name</label>
-            <input id="project-auth-name" type="text" placeholder="For new accounts" hidden disabled />
-            <label for="project-auth-email">Email</label>
-            <input id="project-auth-email" type="email" placeholder="Email" required="required" data-autofocus />
-            <label for="project-auth-password">Password</label>
-            <input id="project-auth-password" type="password" placeholder="Password" required="required" />
-            <label for="project-auth-mode">Action</label>
-            <select id="project-auth-mode" aria-label="Login mode">
-                <option value="login">Login</option>
-                <option value="register">Create account</option>
-            </select>
-            <div class="auth-actions">
-                <button class="btn btn-primary" type="submit">Continue</button>
-                <button class="btn btn-secondary" id="project-logout-button" type="button" hidden="hidden">Logout</button>
-            </div>
-            <p id="project-auth-status" class="auth-status" aria-live="polite"></p>
-        </form>
-    </aside>
+        </section>
+    </main>
 
     <aside id="project-detail-drawer" class="side-drawer wide-drawer" aria-labelledby="project-detail-title" hidden="hidden">
         <div class="drawer-header">
@@ -136,62 +163,29 @@
         </div>
         <div id="project-detail-content"></div>
     </aside>
-    <aside id="project-editor-drawer" class="side-drawer wide-drawer" aria-labelledby="project-editor-title" hidden="hidden">
-        <div class="drawer-header">
-            <div>
-                <span class="section-tag">// firebase editor</span>
-                <h2 id="project-editor-title">Add or Edit Project</h2>
-            </div>
-            <button class="drawer-close" type="button" aria-label="Close project editor" data-drawer-close>&times;</button>
-        </div>
-        <div id="project-admin-panel" hidden>
-            <p class="drawer-note">Manage your real project details. Review a local draft before publishing changes.</p>
-            <form id="project-form" class="post-form drawer-form">
-                <input id="project-id" type="text" placeholder="Project ID, e.g. sundrop-farm" />
-                <input id="project-number" type="text" placeholder="Card number, e.g. 05" required="required" />
-                <input id="project-title" type="text" placeholder="Project title" required="required" />
-                <input id="project-category" type="text" placeholder="Category" required="required" />
-                <textarea id="project-description" rows="4" placeholder="1-2 sentence project description" required="required"></textarea>
-                <input id="project-tags" type="text" placeholder="Tags separated by commas, e.g. Unity, C#, Game Design" />
-                <input id="project-link" type="url" placeholder="Optional project or GitHub link" />
-                <input id="project-image" type="url" placeholder="Optional preview image URL" />
-                <label class="checkbox-row" for="project-featured">
-                    <input id="project-featured" type="checkbox" />
-                    <span>Feature this project in the top section</span>
-                </label>
-                <div class="auth-actions">
-                    <button class="btn btn-primary" type="submit">Save Project</button>
-                    <button class="btn btn-secondary" id="reset-project-form" type="button">Clear</button>
-                </div>
-            </form>
-        </div>
-    </aside>
-
     <footer>
         <div class="footer-socials">
-            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
-            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
-            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
-            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
-            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noopener noreferrer" aria-label="Telegram contact">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noopener noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noopener noreferrer" aria-label="ArtStation">AS</a>
         </div>
-        <p class="footer-copy">Copyright 2026 Liu GuangXuan. Projects shaped through learning and iteration.</p>
+        <p class="footer-copy">© 2026 Liu GuangXuan · Creative Developer &amp; Immersive Media Designer.</p>
     </footer>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <script src="script.js"></script>
+    <script src="script.js?v=20261007-1"></script>
     <script src="firebase-config.js"></script>
+    <script src="firebase-fallback.js"></script>
     <link rel="stylesheet" href="editor-tools.css" />
     <script src="editor-tools.js"></script>
-    <link rel="stylesheet" href="image-upload.css" />
-    <script src="image-upload.js"></script>
     <link rel="stylesheet" href="project-highlights.css" />
     <script src="content-order.js"></script>
-    <script src="project-highlights.js"></script>
-    <script src="project-catalog.js"></script>
-    <script src="project-management.js"></script>
-    <script src="projects-firebase.js"></script>
+    <script src="project-highlights.js?v=20261007-1"></script>
+    <script src="project-catalog.js?v=20261007-1"></script>
+    <script src="projects-firebase.js?v=20261007-2"></script>
 </body>
 </html>

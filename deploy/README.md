@@ -1,12 +1,27 @@
 # Deployment packages
 
+## Cloudflare Pages via GitHub Actions — 22 October 2026
+
+The owner chose **GitHub → Cloudflare Pages (option B)**: keep the existing Direct Upload project `liuguangxuan-portfolio` and its custom domain, and let a GitHub Actions workflow deploy on every push to `main`.
+
+- `deploy/build-package.mjs` reads the same explicit **50-file** allowlist from `deploy/package-cloudbase.ps1`, writes `dist/`, generates both `firebase-config.js` files from build secrets (or copies the ignored local config for local builds), and validates every local HTML reference and cross-page anchor before deploy.
+- `.github/workflows/pages-deployment.yml` runs `node deploy/build-package.mjs` and `wrangler pages deploy dist --project-name=liuguangxuan-portfolio` on push to `main`.
+- Required repository secrets: `CLOUDFLARE_API_TOKEN` (Account → Cloudflare Pages → Edit), `CLOUDFLARE_ACCOUNT_ID`, and the `FIREBASE_*` values (`API_KEY`, `AUTH_DOMAIN`, `DATABASE_URL`, `PROJECT_ID`, `STORAGE_BUCKET`, `MESSAGING_SENDER_ID`, `APP_ID`, `ADMIN_EMAILS`, `ADMIN_UIDS`). Never commit them.
+- Status: the pipeline was tested locally (50 files, 258 references, six anchors, env-based config generation). The workflow has **not run yet** and nothing has been deployed through it. `dist/` is ignored; never commit `firebase-config.js` or `dist/`.
+
+## Current Mac source work — 18 October 2026
+
+The portfolio, admin routes and package allowlist are being updated locally. **Do not upload the September ZIP as the current site**: it predates the public/admin separation, case studies and current Blog. No replacement ZIP has been built or audited on this Mac, and nothing has been deployed. The **50-file** allowlist explicitly includes `firebase-fallback.js`, the five `admin/` runtime files, the root-only `blog-page.js` / `blog-page.css` presentation files and nine approved media files (the internship reception photo was added on 22 October). The 22 October independent source audit passed all 50 files, 258 local HTML references and six cross-page anchors; it is not a ZIP or deployment test. Build a new, descriptively dated package only after the owner editor has been credential-tested and a full reference/private-file audit passes. The PowerShell recipe still requires a supported PowerShell runtime and has not been executed on this Mac.
+
+`firebase.json` no longer points Firebase Hosting at the repository root; the intended website deployment remains Cloudflare Pages. Publishing Firestore rules, enabling Storage/billing and deploying the site are separate operations.
+
 ## GitHub / Mac transfer — 22 September 2026
 
 Only this README and `package-cloudbase.ps1` are tracked from `deploy/`. ZIPs, checksums, extracted sites and `archive/` remain local on Windows; a Git clone will not contain them. The package details below describe that existing Windows artifact. See `../MAC-HANDOFF.md` for restoring the two ignored Firebase configs before rebuilding. The PowerShell packager has not been verified on macOS. Source publication does not deploy the website or create a GitHub Release.
 
 ## Latest Windows runtime package
 
-Upload **14-September-2026-phone-image-uploads-newest-blog-project-views.zip** only.
+Historical artifact: **14-September-2026-phone-image-uploads-newest-blog-project-views.zip**. It was the latest verified Windows package for that stage, but is not current for the 4 October source work.
 
 This full-site update adds phone/computer image selection, preview and Firebase Storage upload to Blog and Projects on both site variants. Blog posts now appear newest first. The existing project highlight area switches between Featured, In Progress and Latest, with up to three matching projects per view; the complete library remains below. Dates/statuses are not invented, so undated/unmarked views may be empty until you update their fields.
 

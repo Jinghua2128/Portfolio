@@ -49,6 +49,7 @@ const projectSearchInput = document.querySelector("#project-search");
 const projectResultCount = document.querySelector("#project-result-count");
 const projectDetailContent = document.querySelector("#project-detail-content");
 const projectDetailTitle = document.querySelector("#project-detail-title");
+const managementPage = Boolean(projectForm);
 
 let projectUser = null;
 let projectIsAdmin = false;
@@ -56,25 +57,21 @@ let unsubscribeProjects = null;
 let latestProjects = [];
 let activeProjectFilter = "all";
 let projectSearchTerm = "";
-const projectEditor = PortfolioEditor.mount(projectForm, "project");
-const projectImageUploads = PortfolioImageUpload.mount({ form: projectForm, kind: "project" });
+const projectEditor = managementPage ? PortfolioEditor.mount(projectForm, "project") : null;
+const projectImageUploads = managementPage ? PortfolioImageUpload.mount({ form: projectForm, kind: "project" }) : null;
 const projectHighlights = PortfolioHighlights.mount(featuredProjects, renderFeaturedProjects);
 
 function isProjectAdmin(user) {
-    if (!user) {
+    if (!managementPage || !user) {
         return false;
     }
 
-    if (ALLOW_ANY_SIGNED_IN_USER_TO_EDIT) {
-        return true;
-    }
-
-    const emailList = Array.isArray(ADMIN_EMAILS) ? ADMIN_EMAILS : [];
     const uidList = Array.isArray(ADMIN_UIDS) ? ADMIN_UIDS : [];
-    return emailList.includes(user.email) || uidList.includes(user.uid);
+    return !ALLOW_ANY_SIGNED_IN_USER_TO_EDIT && uidList.includes(user.uid);
 }
 
 function setProjectMessage(message, type = "") {
+    if (!projectAuthStatus) return;
     projectAuthStatus.textContent = message;
     projectAuthStatus.className = `auth-status ${type}`.trim();
 }
@@ -183,17 +180,67 @@ function updateProjectCount(count, total) {
     projectResultCount.textContent = count === total ? label : `${label} / ${total}`;
 }
 
+function projectDisplayRank(project) {
+    if (project.id === "multilingual-questionnaire-platform") return 0;
+    if (getProjectDedupeKey(project) === "echoworks") return 1;
+    if (project.id === "politeload-course-download-utility") return 2;
+    return 3;
+}
+
+function enrichProjectForDisplay(project) {
+    if (getProjectDedupeKey(project) !== "echoworks") return project;
+    const approved = defaultProjects.find((item) => item.id === "echoworks-training-platform");
+    if (!approved) return project;
+    const vagueDescription = /^currently working on it[.!]?$/i.test(String(project.description || "").trim());
+    return {
+        ...project,
+        description: vagueDescription ? approved.description : project.description,
+        role: project.role || approved.role,
+        tools: PortfolioEditor.list(project.tools).length ? project.tools : approved.tools,
+        imageUrl: project.imageUrl || project.coverImage || approved.imageUrl,
+        caseStudyUrl: project.caseStudyUrl || approved.caseStudyUrl,
+        featured: true,
+    };
+}
+
+// On arrival from Home, async project cards can move the case-study anchor.
+// Keep that initial destination aligned only until the visitor takes control.
+const initialCaseStudy = /^#case-study-(questionnaire|echoworks|politeload)$/.test(window.location.hash)
+    ? document.getElementById(window.location.hash.slice(1)) : null;
+let keepInitialCaseStudyAligned = Boolean(initialCaseStudy);
+
+function alignInitialCaseStudy() {
+    if (!keepInitialCaseStudyAligned) return;
+    window.requestAnimationFrame(() => {
+        if (keepInitialCaseStudyAligned) {
+            initialCaseStudy.scrollIntoView({ behavior: "instant", block: "start" });
+        }
+    });
+}
+
+if (initialCaseStudy) {
+    const releaseInitialAnchor = () => { keepInitialCaseStudyAligned = false; };
+    ["wheel", "touchstart", "pointerdown", "keydown", "hashchange"].forEach((event) => {
+        window.addEventListener(event, releaseInitialAnchor, { once: true, passive: true });
+    });
+    window.addEventListener("load", alignInitialCaseStudy, { once: true });
+    document.fonts?.ready.then(alignInitialCaseStudy);
+}
+
 function renderProjects(projects) {
     latestProjects = projects;
     window.PortfolioProjectManagement?.refresh({ projects: latestProjects, isAdmin: projectIsAdmin, user: projectUser, db, edit: fillProjectForm });
-    projects = projects.filter(PortfolioProjectPolicy.isListed);
+    projects = projects.filter(PortfolioProjectPolicy.isListed).map(enrichProjectForDisplay)
+        .sort((a, b) => projectDisplayRank(a) - projectDisplayRank(b));
     const featured = chooseFeaturedProjects(projects);
     projectHighlights.update(projects);
     renderProjectGrid(projects, featured);
+    alignInitialCaseStudy();
 }
 
 function chooseFeaturedProjects(projects) {
-    return projects.filter(project => project.featured).slice(0, 3);
+    return [...projects].sort((a, b) => projectDisplayRank(a) - projectDisplayRank(b))
+        .filter(project => project.featured).slice(0, 3);
 }
 
 function renderFeaturedProjects(projects) {
@@ -244,6 +291,8 @@ function renderProjectGrid(projects, featured) {
     const featuredIds = new Set(featured.map((project) => project.id));
 
     filteredProjects.forEach((project) => {
+        const explicitTools = PortfolioEditor.list(project.tools);
+        const cardTools = explicitTools.length ? explicitTools : PortfolioEditor.list(project.tags).slice(0, 4);
         const card = document.createElement("article");
         card.className = `project-card is-filtered-in${featuredIds.has(project.id) ? " is-featured" : ""}`;
         card.id = `project-${project.id}`;
@@ -252,7 +301,8 @@ function renderProjectGrid(projects, featured) {
             <div class="card-body">
                 <h2 class="card-title">${escapeHtml(getProjectDisplayTitle(project))}</h2>
                 <p class="card-desc">${escapeHtml(getProjectCardDescription(project))}</p>
-                ${project.role || project.tools?.length ? `<p class="project-card-meta">${escapeHtml([project.role, PortfolioEditor.list(project.tools).join(" · ")].filter(Boolean).join(" / "))}</p>` : ""}
+                ${project.role ? `<p class="project-card-meta"><strong>Role:</strong> ${escapeHtml(project.role)}</p>` : ""}
+                ${cardTools.length ? `<p class="project-card-meta"><strong>${explicitTools.length ? "Technologies" : "Tools &amp; focus"}:</strong> ${escapeHtml(cardTools.join(" · "))}</p>` : ""}
                 <div class="post-actions project-card-actions">
                     ${renderProjectAction(project, "btn btn-secondary project-view-button")}
                     ${PortfolioEditor.safeURL(project.link) ? `<button class="text-action" type="button" data-project-open>Details</button>` : ""}
@@ -375,7 +425,7 @@ async function deleteProject(projectId) {
     catch (error) { window.alert(`Could not delete the saved project. ${error.message}`); }
 }
 
-projectAuthForm.addEventListener("submit", async (event) => {
+projectAuthForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!auth) {
         setProjectMessage("Firebase login is temporarily unavailable. Local projects are still visible.", "error");
@@ -400,13 +450,13 @@ projectAuthForm.addEventListener("submit", async (event) => {
     }
 });
 
-projectLogoutButton.addEventListener("click", () => {
+projectLogoutButton?.addEventListener("click", () => {
     auth?.signOut();
 });
 
-projectForm.addEventListener("submit", saveProject);
-resetProjectButton.addEventListener("click", resetProjectForm);
-openProjectDrawerButton.addEventListener("click", (event) => {
+projectForm?.addEventListener("submit", saveProject);
+resetProjectButton?.addEventListener("click", resetProjectForm);
+openProjectDrawerButton?.addEventListener("click", (event) => {
     event.preventDefault(); event.stopPropagation();
     if (projectIsAdmin && projectEditor.startNew()) PortfolioUI.openDrawer("project-editor-drawer");
 });
@@ -431,22 +481,22 @@ projectSearchInput?.addEventListener("input", () => {
 function applyProjectAuthState(user) {
     projectUser = user;
     projectIsAdmin = isProjectAdmin(user);
-    projectImageUploads.setUser(projectIsAdmin ? user : null);
-    projectEditor.setUser(projectIsAdmin ? user : null);
+    projectImageUploads?.setUser(projectIsAdmin ? user : null);
+    projectEditor?.setUser(projectIsAdmin ? user : null);
     if (!projectIsAdmin && document.querySelector("#project-editor-drawer.is-open")) PortfolioUI.closeDrawer();
 
     if (user) {
-        projectAuthHint.textContent = projectIsAdmin
+        if (projectAuthHint) projectAuthHint.textContent = projectIsAdmin
             ? `Logged in as editor: ${user.displayName || user.email}`
             : `Logged in as ${user.displayName || user.email}.`;
-        projectLogoutButton.hidden = false;
+        if (projectLogoutButton) projectLogoutButton.hidden = false;
     } else {
-        projectAuthHint.textContent = "Login to add, edit, or delete project cards saved in Firebase.";
-        projectLogoutButton.hidden = true;
+        if (projectAuthHint) projectAuthHint.textContent = "Only the site owner can manage projects. Sign in on the Blog to comment.";
+        if (projectLogoutButton) projectLogoutButton.hidden = true;
     }
 
-    projectAdminPanel.hidden = !projectIsAdmin;
-    openProjectDrawerButton.hidden = !projectIsAdmin;
+    if (projectAdminPanel) projectAdminPanel.hidden = !projectIsAdmin;
+    if (openProjectDrawerButton) openProjectDrawerButton.hidden = !projectIsAdmin;
     watchProjects();
 }
 
@@ -474,7 +524,7 @@ function openProjectDetails(project) {
             <p>${escapeHtml(body)}</p>
             <dl class="project-facts">${[["Role", project.role], ["Tools", PortfolioEditor.list(project.tools).join(", ")], ["Date", project.date], ["Status", project.status], ["Outcome", project.outcome], ["Credits", project.credits]].filter(([, value]) => value).map(([label, value]) => `<dt>${label}</dt><dd>${escapeHtml(value)}</dd>`).join("")}</dl>
             ${tags.length ? `<div class="tag-list detail-tags">${renderTags(tags)}</div>` : ""}
-            <div class="post-actions">${[["Open Project", project.link], ["GitHub", project.githubUrl], ["Live site", project.liveUrl], ["Portfolio", project.portfolioUrl], ["Model", project.modelUrl]].filter(([, url]) => PortfolioEditor.safeURL(url)).map(([label, url]) => `<a class="btn btn-secondary drawer-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`).join("")}</div>
+            <div class="post-actions">${[["Case Study", project.caseStudyUrl], ["Open Project", project.link], ["GitHub", project.githubUrl], ["Live site", project.liveUrl], ["Portfolio", project.portfolioUrl], ["Model", project.modelUrl]].filter(([, url]) => PortfolioEditor.safeURL(url)).map(([label, url]) => `<a class="btn btn-secondary drawer-link" href="${escapeHtml(url)}"${/^https?:/i.test(url) ? ' target="_blank" rel="noopener noreferrer"' : ""}>${label}</a>`).join("")}</div>
         </article>
     `;
     PortfolioUI.openDrawer("project-detail-drawer");
@@ -487,8 +537,11 @@ function bindProjectOpeners(card, project) {
 }
 
 function renderProjectAction(project, className) {
+    if (PortfolioEditor.safeURL(project.caseStudyUrl)) {
+        return `<a class="${className}" href="${escapeHtml(project.caseStudyUrl)}">View Case Study</a>`;
+    }
     if (PortfolioEditor.safeURL(project.link)) {
-        return `<a class="${className}" href="${escapeHtml(project.link)}" target="_blank" rel="noreferrer">View Project</a>`;
+        return `<a class="${className}" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">View Project</a>`;
     }
 
     return `<button class="${className}" type="button" data-project-open="${escapeHtml(project.id)}">View Project</button>`;
@@ -525,11 +578,8 @@ function trimProjectSentence(value) {
     }
 
     const firstSentence = cleaned.match(/^.*?[.!?](?=\s|$)/)?.[0] || cleaned;
-    if (firstSentence.length <= 112) {
-        return firstSentence;
-    }
-
-    return `${firstSentence.slice(0, 109).trim().replace(/[\s,;:.-]+$/, "")}...`;
+    // Let the card's CSS line clamp handle layout without cutting a word in half.
+    return firstSentence;
 }
 
 function getProjectInitials(project) {
@@ -547,11 +597,6 @@ function portfolioCopy(value) {
         .replace(/\bassignments\b/gi, "projects")
         .replace(/\bassignment\b/gi, "project")
         .replace(/\bcoursework\b/gi, "portfolio work")
-        .replace(/\bcourse submissions\b/gi, "finished pieces")
-        .replace(/\bcourse submission\b/gi, "finished piece")
-        .replace(/\bsubmissions\b/gi, "finished pieces")
-        .replace(/\bsubmission\b/gi, "finished piece")
-        .replace(/\bsubmitted\b/gi, "completed")
         .replace(/\bASGs\b/g, "projects")
         .replace(/\bASG\b/g, "project")
         .replace(/\bCAs\b/g, "projects")

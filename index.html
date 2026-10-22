@@ -3,10 +3,17 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Portfolio of Liu GuangXuan, an Immersive Media student at Ngee Ann Polytechnic." />
-    <title>Liu GuangXuan | Immersive Media Portfolio</title>
+    <meta name="description" content="Liu GuangXuan is a creative developer and immersive media designer building web applications, interactive experiences and digital media." />
+    <link rel="canonical" href="https://www.portfolio.liuguangxuan.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Liu GuangXuan | Creative Developer &amp; Immersive Media Designer" />
+    <meta property="og:description" content="Web applications, interactive experiences and digital media built with design and code." />
+    <meta property="og:url" content="https://www.portfolio.liuguangxuan.com/" />
+    <meta property="og:image" content="https://www.portfolio.liuguangxuan.com/imgs/Logo/logo.png" />
+    <meta name="twitter:card" content="summary" />
+    <title>Liu GuangXuan | Creative Developer &amp; Immersive Media Designer</title>
     <link rel="icon" href="imgs/Logo/icon.ico" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=20261007-2" />
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -14,9 +21,9 @@
         <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
         <ul class="nav-links">
             <li><a href="index.html" class="active" aria-current="page">Home</a></li>
-            <li><a href="about.html">About</a></li>
             <li><a href="projects.html">Projects</a></li>
-            <li><a href="immersion.html">3D Immersion</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="immersion.html">3D Work</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -27,9 +34,9 @@
 
     <div class="mobile-menu">
         <a href="index.html" aria-current="page">Home</a>
-        <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
-        <a href="immersion.html">3D Immersion</a>
+        <a href="about.html">About</a>
+        <a href="immersion.html">3D Work</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
@@ -38,46 +45,87 @@
         <section class="hero">
             <div class="hero-grid" aria-hidden="true"></div>
             <div class="hero-content">
-                <p class="hero-eyebrow">Immersive Media Student &amp; Creative Technologist</p>
-                <h1 class="hero-title">
-                    Hello, I'm <span class="highlight">Liu GuangXuan</span>
-                </h1>
+                <p class="hero-eyebrow">Creative Developer &amp; Immersive Media Designer</p>
+                <h1 class="hero-title"><span class="highlight">Liu GuangXuan</span></h1>
                 <p class="hero-subtitle">
-                    Year 3 Diploma student in Immersive Media at Ngee Ann Polytechnic, creating work across game design, interactive media, motion graphics, video production, UI/UX, and 3D design.
+                    I build web applications, interactive experiences and digital media using JavaScript, Firebase, Python, Unity and modern design tools.
                 </p>
+                <p class="hero-disciplines">Web Development <span aria-hidden="true">·</span> Interactive Media <span aria-hidden="true">·</span> Game Development <span aria-hidden="true">·</span> UI/UX <span aria-hidden="true">·</span> 3D &amp; Motion</p>
                 <div class="hero-cta">
                     <a class="btn btn-primary" href="projects.html">View Projects</a>
-                    <a class="btn btn-secondary" href="about.html">About Me</a>
+                    <!-- TODO: Add an approved resume PDF before replacing this contact CTA with View Resume. -->
+                    <a class="btn btn-secondary" href="contact.html">Contact Me</a>
                 </div>
-                <div class="hero-lab" data-focus-lab>
-                    <div class="hero-lab-tabs" role="tablist" aria-label="Creative focus areas">
-                        <button class="hero-lab-tab is-active" type="button" role="tab" aria-selected="true" data-focus-key="interactive">Interactive</button>
-                        <button class="hero-lab-tab" type="button" role="tab" aria-selected="false" data-focus-key="motion">Motion</button>
-                        <button class="hero-lab-tab" type="button" role="tab" aria-selected="false" data-focus-key="threeD">3D</button>
-                        <button class="hero-lab-tab" type="button" role="tab" aria-selected="false" data-focus-key="ux">UI/UX</button>
-                    </div>
-                    <article class="hero-lab-card" aria-live="polite">
-                        <p class="card-tag" data-focus-label>Interactive Development</p>
-                        <h2 data-focus-title>Playable systems, web tools, and AR ideas.</h2>
-                        <p data-focus-copy>I enjoy building experiences where people can click, explore, test, and respond instead of only watching from the outside.</p>
-                        <div class="hero-lab-meter" aria-hidden="true"><span data-focus-meter style="width: 86%"></span></div>
-                        <div class="tag-list compact-tags" data-focus-tools>
-                            <span>Unity</span><span>Firebase</span><span>JavaScript</span><span>C#</span>
+            </div>
+        </section>
+
+        <section class="section home-featured" aria-labelledby="home-featured-title">
+            <div class="section-inner">
+                <span class="section-tag">// selected work</span>
+                <div class="section-heading-row">
+                    <h2 class="section-title" id="home-featured-title">Featured Projects</h2>
+                    <a class="text-action" href="projects.html">Browse all projects <span aria-hidden="true">↗</span></a>
+                </div>
+                <p class="home-featured-intro">Three projects that bring together interface design, application development and practical automation.</p>
+                <div class="home-featured-grid">
+                    <article class="home-featured-card">
+                        <div class="home-featured-media" aria-hidden="true">MQ</div>
+                        <div class="home-featured-body">
+                            <p class="card-tag">Full-stack Web / UI/UX</p>
+                            <h3>Multilingual Questionnaire Platform</h3>
+                            <p>A responsive English/Chinese survey that validates answers and stores responses for review and export.</p>
+                            <p class="home-featured-fact"><strong>My contribution:</strong> Self-initiated full-stack development</p>
+                            <p class="home-featured-fact"><strong>Technologies:</strong> JavaScript · Flask · SQLAlchemy · MySQL-compatible database</p>
+                            <a class="btn btn-secondary" href="projects.html#case-study-questionnaire" aria-label="View Questionnaire case study">View Case Study <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                    <article class="home-featured-card">
+                        <div class="home-featured-media has-image"><img src="imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg" alt="EchoWorks training platform homepage" loading="lazy" /></div>
+                        <div class="home-featured-body">
+                            <p class="card-tag">Interactive Training / Web</p>
+                            <h3>EchoWorks</h3>
+                            <p>A team-built training experience for workplace communication with Singapore Red Cross as industry partner.</p>
+                            <p class="home-featured-fact"><strong>My contribution:</strong> Web development, Firebase integration and AR quick-reference</p>
+                            <p class="home-featured-fact"><strong>Technologies:</strong> JavaScript · Firebase Auth · Firestore · AR</p>
+                            <a class="btn btn-secondary" href="projects.html#case-study-echoworks" aria-label="View EchoWorks case study">View Case Study <span aria-hidden="true">↗</span></a>
+                        </div>
+                    </article>
+                    <article class="home-featured-card">
+                        <div class="home-featured-media" aria-hidden="true">PL</div>
+                        <div class="home-featured-body">
+                            <p class="card-tag">Python / Productivity</p>
+                            <h3>PoliteLoad</h3>
+                            <p>A Python utility for archiving personal submissions and authorised course materials from POLITEMall/Brightspace.</p>
+                            <p class="home-featured-fact"><strong>My contribution:</strong> Personal Python automation project</p>
+                            <p class="home-featured-fact"><strong>Technologies:</strong> Python · Browser automation · File handling</p>
+                            <a class="btn btn-secondary" href="projects.html#case-study-politeload" aria-label="View PoliteLoad case study">View Case Study <span aria-hidden="true">↗</span></a>
                         </div>
                     </article>
                 </div>
-            </div>
-            <div class="scroll-indicator" aria-hidden="true">
-                <div class="scroll-line"></div>
-                <span>Portfolio</span>
             </div>
         </section>
 
         <section class="section home-overview" aria-label="Portfolio overview">
             <div class="section-inner">
                 <span class="section-tag">// overview</span>
-                <h2 class="section-title">Building thoughtful media experiences across design, code, and storytelling.</h2>
+                <h2 class="section-title">Design, code and interaction.</h2>
                 <div class="section-line"></div>
+                <div class="hero-lab" data-focus-lab>
+                    <div class="hero-lab-tabs" role="tablist" aria-label="Creative focus areas">
+                        <button id="focus-interactive" class="hero-lab-tab is-active" type="button" role="tab" aria-selected="true" aria-controls="focus-panel" data-focus-key="interactive">Interactive</button>
+                        <button id="focus-motion" class="hero-lab-tab" type="button" role="tab" aria-selected="false" aria-controls="focus-panel" data-focus-key="motion">Motion</button>
+                        <button id="focus-threeD" class="hero-lab-tab" type="button" role="tab" aria-selected="false" aria-controls="focus-panel" data-focus-key="threeD">3D</button>
+                        <button id="focus-ux" class="hero-lab-tab" type="button" role="tab" aria-selected="false" aria-controls="focus-panel" data-focus-key="ux">UI/UX</button>
+                    </div>
+                    <div id="focus-panel" class="hero-lab-card" role="tabpanel" aria-labelledby="focus-interactive" tabindex="0">
+                        <p class="card-tag" data-focus-label>Interactive Development</p>
+                        <h3 data-focus-title>Playable systems, web tools and AR experiences.</h3>
+                        <p data-focus-copy>I build interfaces and interactive systems that let people explore, practise and respond.</p>
+                        <div class="tag-list compact-tags" data-focus-tools>
+                            <span>Unity</span><span>Firebase</span><span>JavaScript</span><span>C#</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="overview-grid">
                     <article class="info-card">
                         <p class="card-tag">Focus</p>
@@ -95,21 +143,25 @@
                         <p>Bringing leadership, event planning, cultural activities, and multimedia storytelling into creative team environments.</p>
                     </article>
                 </div>
+                <div class="home-next-step">
+                    <p>Have a project in mind?</p>
+                    <a class="btn btn-secondary" href="contact.html">Let’s talk <span aria-hidden="true">↗</span></a>
+                </div>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="footer-socials">
-            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noreferrer">GH</a>
-            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noreferrer">IN</a>
-            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noreferrer">TG</a>
-            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noreferrer" aria-label="Sketchfab">SF</a>
-            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noreferrer" aria-label="ArtStation">AS</a>
+            <a class="footer-social-link" href="https://github.com/Jinghua2128" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile">GH</a>
+            <a class="footer-social-link" href="https://www.linkedin.com/in/liuguangxuan/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile">IN</a>
+            <a class="footer-social-link" href="https://t.me/longmai2128" target="_blank" rel="noopener noreferrer" aria-label="Telegram contact">TG</a>
+            <a class="footer-social-link" href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noopener noreferrer" aria-label="Sketchfab">SF</a>
+            <a class="footer-social-link" href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noopener noreferrer" aria-label="ArtStation">AS</a>
         </div>
-        <p class="footer-copy">Copyright 2026 Liu GuangXuan. Built for immersive media opportunities.</p>
+        <p class="footer-copy">© 2026 Liu GuangXuan · Creative Developer &amp; Immersive Media Designer.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="script.js?v=20261007-1"></script>
 </body>
 </html>

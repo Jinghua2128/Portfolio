@@ -52,6 +52,7 @@ const projectSearchInput = document.querySelector("#project-search");
 const projectResultCount = document.querySelector("#project-result-count");
 const projectDetailContent = document.querySelector("#project-detail-content");
 const projectDetailTitle = document.querySelector("#project-detail-title");
+const managementPage = Boolean(projectForm);
 
 let projectUser = null;
 let projectIsAdmin = false;
@@ -60,34 +61,30 @@ let latestProjects = [];
 let activeProjectFilter = "all";
 let projectSearchTerm = "";
 let hasOpenedHashedProject = false;
-const projectImageUpload = window.PortfolioImageUpload?.mount({ form: projectForm, kind: "project" });
+const projectImageUpload = managementPage ? window.PortfolioImageUpload?.mount({ form: projectForm, kind: "project" }) : null;
 const projectHighlights = PortfolioHighlights.mount(featuredProjects, renderFeaturedProjects);
 const dateStatusFields = document.createElement("div");
 dateStatusFields.className = "project-date-status-fields";
 dateStatusFields.innerHTML = '<label for="project-date">Project date (for Latest)<input id="project-date" type="date" /></label><label for="project-status">Project status<select id="project-status"><option value="">Not specified</option><option value="in-progress">In progress</option><option value="completed">Completed</option><option value="launched">Launched</option><option value="archived">Archived</option></select></label>';
-projectImageInput.before(dateStatusFields);
+projectImageInput?.before(dateStatusFields);
 const projectDateInput = dateStatusFields.querySelector("#project-date");
 const projectStatusInput = dateStatusFields.querySelector("#project-status");
 let loadedProjectDate = "";
 let projectDateTouched = false;
 projectDateInput.addEventListener("input", () => { projectDateTouched = true; });
-projectForm.addEventListener("reset", () => { loadedProjectDate = ""; projectDateTouched = false; });
+projectForm?.addEventListener("reset", () => { loadedProjectDate = ""; projectDateTouched = false; });
 
 function isProjectAdmin(user) {
-    if (!user) {
+    if (!managementPage || !user) {
         return false;
     }
 
-    if (ALLOW_ANY_SIGNED_IN_USER_TO_EDIT) {
-        return true;
-    }
-
-    const emailList = Array.isArray(ADMIN_EMAILS) ? ADMIN_EMAILS : [];
     const uidList = Array.isArray(ADMIN_UIDS) ? ADMIN_UIDS : [];
-    return emailList.includes(user.email) || uidList.includes(user.uid);
+    return !ALLOW_ANY_SIGNED_IN_USER_TO_EDIT && uidList.includes(user.uid);
 }
 
 function setProjectMessage(message, type = "") {
+    if (!projectAuthStatus) return;
     projectAuthStatus.textContent = message;
     projectAuthStatus.className = `auth-status ${type}`.trim();
 }
@@ -404,7 +401,7 @@ async function deleteProject(projectId) {
     await db.collection("projects").doc(projectId).delete();
 }
 
-projectAuthForm.addEventListener("submit", async (event) => {
+projectAuthForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
     if (!auth) {
         setProjectMessage("Firebase login is temporarily unavailable. Local projects are still visible.", "error");
@@ -429,12 +426,12 @@ projectAuthForm.addEventListener("submit", async (event) => {
     }
 });
 
-projectLogoutButton.addEventListener("click", () => {
+projectLogoutButton?.addEventListener("click", () => {
     auth?.signOut();
 });
 
-projectForm.addEventListener("submit", saveProject);
-resetProjectButton.addEventListener("click", resetProjectForm);
+projectForm?.addEventListener("submit", saveProject);
+resetProjectButton?.addEventListener("click", resetProjectForm);
 
 projectFilterButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -458,18 +455,18 @@ function applyProjectAuthState(user) {
     projectIsAdmin = isProjectAdmin(user);
     projectImageUpload?.setUser(projectIsAdmin ? user : null);
 
-    if (user) {
+    if (user && projectAuthHint) {
         projectAuthHint.textContent = projectIsAdmin
             ? `Logged in as editor: ${user.displayName || user.email}`
             : `Logged in as ${user.displayName || user.email}.`;
-        projectLogoutButton.hidden = false;
-    } else {
-        projectAuthHint.textContent = "Login to add, edit, or delete project cards saved in Firebase.";
-        projectLogoutButton.hidden = true;
+        if (projectLogoutButton) projectLogoutButton.hidden = false;
+    } else if (projectAuthHint) {
+        projectAuthHint.textContent = "Only the site owner can manage projects. Sign in on the Journal to comment.";
+        if (projectLogoutButton) projectLogoutButton.hidden = true;
     }
 
-    projectAdminPanel.hidden = !projectIsAdmin;
-    openProjectDrawerButton.hidden = !projectIsAdmin;
+    if (projectAdminPanel) projectAdminPanel.hidden = !projectIsAdmin;
+    if (openProjectDrawerButton) openProjectDrawerButton.hidden = !projectIsAdmin;
     const editorDrawer = document.querySelector("#project-editor-drawer");
     if (!projectIsAdmin && editorDrawer?.getAttribute("aria-modal") === "true") {
         PortfolioUI.closeDrawer();
@@ -511,7 +508,7 @@ function openProjectDetails(project) {
                 ${credits ? `<div><dt>Collaborators & credits</dt><dd>${escapeHtml(credits)}</dd></div>` : ""}
                 ${outcome ? `<div><dt>Outcome</dt><dd>${escapeHtml(outcome)}</dd></div>` : ""}
             </dl>
-            ${projectLink ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(projectLink)}" target="_blank" rel="noreferrer">Open Project</a>` : ""}
+            ${projectLink ? `<a class="btn btn-secondary drawer-link" href="${escapeHtml(projectLink)}" target="_blank" rel="noopener noreferrer">Open Project</a>` : ""}
         </article>
     `;
     PortfolioUI.openDrawer("project-detail-drawer");
@@ -580,11 +577,6 @@ function portfolioCopy(value) {
         .replace(/\bassignments\b/gi, "projects")
         .replace(/\bassignment\b/gi, "project")
         .replace(/\bcoursework\b/gi, "portfolio work")
-        .replace(/\bcourse submissions\b/gi, "finished pieces")
-        .replace(/\bcourse submission\b/gi, "finished piece")
-        .replace(/\bsubmissions\b/gi, "finished pieces")
-        .replace(/\bsubmission\b/gi, "finished piece")
-        .replace(/\bsubmitted\b/gi, "completed")
         .replace(/\bASGs\b/g, "projects")
         .replace(/\bASG\b/g, "project")
         .replace(/\bCAs\b/g, "projects")

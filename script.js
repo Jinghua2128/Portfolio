@@ -239,30 +239,26 @@ document.querySelectorAll("a[href]").forEach((link) => {
 const focusPanels = {
     interactive: {
         label: "Interactive Development",
-        title: "Playable systems, web tools, and AR ideas.",
-        copy: "I enjoy building experiences where people can click, explore, test, and respond instead of only watching from the outside.",
-        meter: "86%",
+        title: "Playable systems, web tools and AR experiences.",
+        copy: "I build interfaces and interactive systems that let people explore, practise and respond.",
         tools: ["Unity", "Firebase", "JavaScript", "C#"],
     },
     motion: {
         label: "Motion & Video",
         title: "Edited stories with rhythm, timing, and polish.",
         copy: "I shape motion pieces, video edits, logo animation, and compositing work so the visuals feel clear and intentional.",
-        meter: "84%",
         tools: ["After Effects", "Premiere Pro", "Compositing", "Storyboards"],
     },
     threeD: {
         label: "3D Design",
         title: "Scenes, assets, and real-time walkthroughs.",
         copy: "I work with 3D environments, modular assets, materials, and camera walkthroughs for interactive and media experiences.",
-        meter: "80%",
         tools: ["Blender", "Maya", "Substance", "Unity"],
     },
     ux: {
         label: "UI/UX Thinking",
         title: "Research-led interfaces that people can understand.",
         copy: "I use personas, empathy maps, wireframes, and usability testing to make creative ideas easier to use.",
-        meter: "82%",
         tools: ["Figma", "Wireframes", "Usability", "Prototypes"],
     },
 };
@@ -331,7 +327,7 @@ document.querySelectorAll("[data-focus-lab]").forEach((lab) => {
     const label = lab.querySelector("[data-focus-label]");
     const title = lab.querySelector("[data-focus-title]");
     const copy = lab.querySelector("[data-focus-copy]");
-    const meter = lab.querySelector("[data-focus-meter]");
+    const tabPanel = lab.querySelector('[role="tabpanel"]');
     const tools = lab.querySelector("[data-focus-tools]");
 
     buttons.forEach((button) => {
@@ -344,7 +340,7 @@ document.querySelectorAll("[data-focus-lab]").forEach((lab) => {
             label.textContent = panel.label;
             title.textContent = panel.title;
             copy.textContent = panel.copy;
-            meter.style.width = panel.meter;
+            tabPanel?.setAttribute("aria-labelledby", button.id);
             renderInlineTags(tools, panel.tools);
         });
     });

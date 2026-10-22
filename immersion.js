@@ -1,6 +1,6 @@
 // Only the three user-approved embeds. No thumbnails or invented descriptions.
 const models = [
-    { id: "6fbc704037754126ae66f0604db4d62b", title: "Chess pices - Knight", tools: ["Maya", "Substance Painter"] },
+    { id: "6fbc704037754126ae66f0604db4d62b", title: "Chess Pieces – Knight", tools: ["Maya", "Substance Painter"] },
     { id: "30e4d2f5ffda42718012338c096c9cc5", title: "hologram", tools: ["Maya", "Substance Painter"] },
     { id: "9daa1337b6704d8cb0d3a6ce90513fea", title: "Crystals", tools: ["Maya", "Substance Painter", "ZBrush"] },
 ];

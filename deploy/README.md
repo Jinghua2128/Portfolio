@@ -1,13 +1,14 @@
 # Deployment packages
 
-## Cloudflare Pages via GitHub Actions — 22 October 2026
+## Cloudflare Workers deployment via GitHub Actions — 22 October 2026
 
-The owner chose **GitHub → Cloudflare Pages (option B)**: keep the existing Direct Upload project `liuguangxuan-portfolio` and its custom domain, and let a GitHub Actions workflow deploy on every push to `main`.
+The owner chose **GitHub → Cloudflare (option B)** and confirmed the live project name `liuguangxuan-portfolio`. Dashboard inspection on 22 October corrected one assumption: it is a **Cloudflare Worker with static assets**, not a Pages project (the Workers & Pages URL is `/workers/services/view/liuguangxuan-portfolio/...`). The Worker keeps the custom domain `www.portfolio.liuguangxuan.com`.
 
-- `deploy/build-package.mjs` reads the same explicit **50-file** allowlist from `deploy/package-cloudbase.ps1`, writes `dist/`, generates both `firebase-config.js` files from build secrets (or copies the ignored local config for local builds), and validates every local HTML reference and cross-page anchor before deploy.
-- `.github/workflows/pages-deployment.yml` runs `node deploy/build-package.mjs` and `wrangler pages deploy dist --project-name=liuguangxuan-portfolio` on push to `main`.
-- Required repository secrets: `CLOUDFLARE_API_TOKEN` (Account → Cloudflare Pages → Edit), `CLOUDFLARE_ACCOUNT_ID`, and the `FIREBASE_*` values (`API_KEY`, `AUTH_DOMAIN`, `DATABASE_URL`, `PROJECT_ID`, `STORAGE_BUCKET`, `MESSAGING_SENDER_ID`, `APP_ID`, `ADMIN_EMAILS`, `ADMIN_UIDS`). Never commit them.
-- Status: the pipeline was tested locally (50 files, 258 references, six anchors, env-based config generation). The workflow has **not run yet** and nothing has been deployed through it. `dist/` is ignored; never commit `firebase-config.js` or `dist/`.
+- `deploy/build-package.mjs` reads the explicit **50-file** allowlist from `deploy/package-cloudbase.ps1`, writes `dist/`, generates both `firebase-config.js` files from build secrets (or copies the ignored local config for local builds), and validates every local HTML reference and cross-page anchor before deploy.
+- `wrangler.jsonc` deploys the Worker `liuguangxuan-portfolio` with `assets.directory = ./dist`, `html_handling = auto-trailing-slash` and `not_found_handling = none` (matching the live behaviour).
+- `.github/workflows/deploy-worker.yml` runs `node deploy/build-package.mjs` then `wrangler deploy` on push to `main` (or manual dispatch).
+- Required repository secrets: `CLOUDFLARE_API_TOKEN` (Account → **Workers Scripts → Edit**; Pages permission alone is not enough), `CLOUDFLARE_ACCOUNT_ID` (`fb9e2989477bd90c3b9d99973d240a74`), and the `FIREBASE_*` values (`API_KEY`, `AUTH_DOMAIN`, `DATABASE_URL`, `PROJECT_ID`, `STORAGE_BUCKET`, `MESSAGING_SENDER_ID`, `APP_ID`, `ADMIN_EMAILS`, `ADMIN_UIDS`). Never commit them.
+- Status: local `dist` build **PASS** (50 files, 258 references, six anchors, env-based config generation) and `wrangler deploy --dry-run` **PASS** (assets read from `dist/`). The first workflow run built successfully but its deploy step failed because it used `wrangler pages deploy` against the wrong account ID; the pipeline was corrected and the account ID secret replaced. The Worker deploy has **not yet succeeded** pending the token's Workers permission. `dist/` is ignored; never commit `firebase-config.js` or `dist/`.
 
 ## Current Mac source work — 18 October 2026
 

@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy to Cloudflare Workers
 
 on:
   push:
@@ -34,10 +34,10 @@ jobs:
           FIREBASE_ADMIN_EMAILS: ${{ secrets.FIREBASE_ADMIN_EMAILS }}
           FIREBASE_ADMIN_UIDS: ${{ secrets.FIREBASE_ADMIN_UIDS }}
 
-      - name: Deploy to Cloudflare Pages
+      - name: Deploy Worker with static assets
         uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=liuguangxuan-portfolio
+          command: deploy
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}

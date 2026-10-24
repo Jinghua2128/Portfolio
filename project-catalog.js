@@ -1,21 +1,6 @@
 // Shared real project records for rendering and editor selection. Keep data and order consistent.
 window.PortfolioProjectCatalog = [
     {
-        id: "multilingual-questionnaire-platform",
-        number: "20",
-        category: "Web Development / UI UX",
-        title: "Multilingual Questionnaire Platform",
-        description: "A responsive English/Chinese questionnaire with validation, database-backed responses, and reporting workflows.",
-        role: "Self-initiated full-stack development",
-        outcome: "Built a multi-step survey and response-review workflow to demonstrate form and backend development.",
-        tools: ["HTML", "CSS", "JavaScript", "Python", "Flask", "SQLAlchemy", "MySQL-compatible database"],
-        tags: ["Web", "UI/UX", "Forms", "Multilingual", "Responsive Design"],
-        featured: true,
-        caseStudyUrl: "projects.html#case-study-questionnaire",
-        link: "",
-        imageUrl: "",
-    },
-    {
         id: "politeload-course-download-utility",
         number: "21",
         category: "Python / Productivity",

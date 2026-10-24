@@ -23,10 +23,10 @@ Open [the main site](http://127.0.0.1:8765/) or [the editorial site](http://127.
 
 ## Current functionality
 
-- Eight public built-in projects and 21 retained catalog records; visibility controls preserve hidden records. Existing remote records can supplement the catalog.
+- Seven public built-in projects and 20 retained catalog records; visibility controls preserve hidden records. Existing remote records can supplement the catalog.
 - Public Projects and Blog are read-only apart from signed-in comment creation. Owner editing is on `/admin/`; editor markup mounts only after the configured owner UID is authenticated. Firestore rules, not client UI checks, enforce write access.
 - Main-site editors retain validation, preview, chips and admin-account-scoped recoverable drafts. The editorial site's public pages also omit editor controls.
-- Static homepage highlights and three case studies present project roles, tools and technical decisions without depending on Firebase. The interactive focus panel follows the work; case-study navigation and contact calls to action connect the pages.
+- Static homepage highlights and two case studies present project roles, tools and technical decisions without depending on Firebase. The interactive focus panel follows the work; case-study navigation and contact calls to action connect the pages.
 - Explicit image selection, preview and Storage upload in owner editors; Upload and Save/Publish remain separate actions. Live Storage remains unprovisioned/unverified.
 - Newest-first Blog ordering and Featured / In Progress / Latest project views, with at most three projects per view.
 - The root Blog combines the selected Linear/Fuwari references with the existing dark-grid identity: rounded cards, topic counts, search, an author sidebar and full-page reading with comments underneath. `blog-page.js` / `blog-page.css` contain the public presentation; `blog-firebase.js` still owns data and comment operations. The editorial variant and owner editor retain their existing layouts.

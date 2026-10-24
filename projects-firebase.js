@@ -181,10 +181,9 @@ function updateProjectCount(count, total) {
 }
 
 function projectDisplayRank(project) {
-    if (project.id === "multilingual-questionnaire-platform") return 0;
-    if (getProjectDedupeKey(project) === "echoworks") return 1;
-    if (project.id === "politeload-course-download-utility") return 2;
-    return 3;
+    if (getProjectDedupeKey(project) === "echoworks") return 0;
+    if (project.id === "politeload-course-download-utility") return 1;
+    return 2;
 }
 
 function enrichProjectForDisplay(project) {
@@ -205,7 +204,7 @@ function enrichProjectForDisplay(project) {
 
 // On arrival from Home, async project cards can move the case-study anchor.
 // Keep that initial destination aligned only until the visitor takes control.
-const initialCaseStudy = /^#case-study-(questionnaire|echoworks|politeload)$/.test(window.location.hash)
+const initialCaseStudy = /^#case-study-(echoworks|politeload)$/.test(window.location.hash)
     ? document.getElementById(window.location.hash.slice(1)) : null;
 let keepInitialCaseStudyAligned = Boolean(initialCaseStudy);
 

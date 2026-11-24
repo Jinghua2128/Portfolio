@@ -4,7 +4,7 @@
 
 The owner chose **GitHub → Cloudflare (option B)** and confirmed the live project name `liuguangxuan-portfolio`. Dashboard inspection on 22 October corrected one assumption: it is a **Cloudflare Worker with static assets**, not a Pages project (the Workers & Pages URL is `/workers/services/view/liuguangxuan-portfolio/...`). The Worker keeps the custom domain `www.portfolio.liuguangxuan.com`.
 
-- `deploy/build-package.mjs` reads the explicit **52-file** allowlist from `deploy/package-cloudbase.ps1`, writes `dist/`, generates both `firebase-config.js` files from build secrets (or copies the ignored local config for local builds), and validates every local HTML reference and cross-page anchor before deploy.
+- `deploy/build-package.mjs` reads the explicit **50-file** allowlist from `deploy/package-cloudbase.ps1`, writes `dist/`, generates both `firebase-config.js` files from build secrets (or copies the ignored local config for local builds), and validates every local HTML reference and cross-page anchor before deploy.
 - `wrangler.jsonc` deploys the Worker `liuguangxuan-portfolio` with `assets.directory = ./dist`, `html_handling = auto-trailing-slash` and `not_found_handling = none` (matching the live behaviour).
 - `.github/workflows/deploy-worker.yml` runs `node deploy/build-package.mjs` then `wrangler deploy` on push to `main` (or manual dispatch).
 - Required repository secrets: `CLOUDFLARE_API_TOKEN` (Account → **Workers Scripts → Edit**; Pages permission alone is not enough), `CLOUDFLARE_ACCOUNT_ID` (`fb9e2989477bd90c3b9d99973d240a74`), and the `FIREBASE_*` values (`API_KEY`, `AUTH_DOMAIN`, `DATABASE_URL`, `PROJECT_ID`, `STORAGE_BUCKET`, `MESSAGING_SENDER_ID`, `APP_ID`, `ADMIN_EMAILS`, `ADMIN_UIDS`). Never commit them.

@@ -37,8 +37,6 @@ $rootFiles = @(
     "immersion.html",
     "styles.css",
     "script.js",
-    "immersion.css",
-    "immersion.js",
     "editor-tools.css",
     "editor-tools.js",
     "image-upload.css",

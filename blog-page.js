@@ -88,6 +88,14 @@
                     </a>
                 </article>`;
             }).join("");
+            if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                Array.from(list.querySelectorAll(".journal-card")).forEach((card, index) => {
+                    card.animate([
+                        { opacity: 0, transform: "translateY(16px)" },
+                        { opacity: 1, transform: "none" },
+                    ], { duration: 440, delay: Math.min(index, 8) * 40, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
+                });
+            }
             guardImages(list);
         }
 

@@ -21,7 +21,7 @@ Initial setup inventory: 2026-10-09 11:30 SGT; root Blog/allowlist reconciled on
 | `styles.css`, `script.js` | Shared root appearance, navigation, drawers and interactions. | Referenced by root pages; JS syntax checked |
 | `project-catalog.js`, `content-order.js`, `project-highlights.js`, `project-highlights.css` | Catalog/display policy, ordering and featured/status views. | Root/shared helpers; 20 retained/seven public built-ins after the Questionnaire removal on 24 October |
 | `editor-tools.js`, `editor-tools.css`, `image-upload.js`, `image-upload.css`, `project-management.js` | Editor validation/drafts, explicit uploads and record management. | Existing shared helpers; Storage/live writes still pending |
-| `immersion.html`, `immersion.js`, `immersion.css` | Opt-in Sketchfab 3D Work page. | Existing route; preserve approved embeds |
+| `immersion.html` | Legacy 3D URL kept as a bridge page to ArtStation and Sketchfab; no longer in navigation. | Static bridge; no embedded viewer |
 | `admin/index.html`, `admin/admin.js` | Owner sign-in entry and client gate. | Paths and references inspected; rules are the real write boundary |
 | `admin/projects.html`, `admin/blog.html`, `admin/editor-bootstrap.js` | Inert editor templates, owner-gated bootstrap and shared script loading. | Editor pages use `<base href="../">`; auth was previously mock-tested only |
 | `editorial-portfolio/` | Separate five-page site; own styles/scripts and `home-projects.js`; shares root helpers/media. | Preserve variant and case-sensitive relative references |
@@ -31,8 +31,8 @@ Initial setup inventory: 2026-10-09 11:30 SGT; root Blog/allowlist reconciled on
 | `firestore.rules`, `firebase.json` | Local Firestore rule source and CLI rules declaration. | JSON has no Hosting target; live state not rechecked today |
 | `storage.rules.example`, `FIREBASE-STORAGE-SETUP.md` | Storage setup guidance/example rules. | Not an applied cloud configuration |
 | `imgs/` | Approved media at exact paths listed below. | Inventory only today; preserve other local/ignored media |
-| `deploy/package-cloudbase.ps1`, `deploy/README.md` | Explicit runtime allowlist recipe (single source of truth) and release notes; deployed as a Cloudflare Worker despite the legacy script name. | 52-file (eleven media) / 258-reference / six-anchor audit re-run 22 October; PowerShell recipe not executed on this Mac |
-| `deploy/build-package.mjs`, `wrangler.jsonc`, `.github/workflows/deploy-worker.yml` | Reads the 52-file allowlist, builds `dist/` with build-time Firebase config, validates references, and deploys the `liuguangxuan-portfolio` Worker (static assets) on push to `main`. | Added 22 October; local build + dry-run PASS; **deployed and live-verified 22 October** (run `39725445377`) |
+| `deploy/package-cloudbase.ps1`, `deploy/README.md` | Explicit runtime allowlist recipe (single source of truth) and release notes; deployed as a Cloudflare Worker despite the legacy script name. | 50-file (eleven media) / 231-reference / four-anchor audit re-run 24 November; PowerShell recipe not executed on this Mac |
+| `deploy/build-package.mjs`, `wrangler.jsonc`, `.github/workflows/deploy-worker.yml` | Reads the 50-file allowlist, builds `dist/` with build-time Firebase config, validates references, and deploys the `liuguangxuan-portfolio` Worker (static assets) on push to `main`. | Added 22 October; local build + dry-run PASS; **deployed and live-verified 22 October** (run `39725445377`) |
 | `MAC-HANDOFF.md` | Historical September Mac transfer/setup guide. | Later counts/configuration are superseded in HANDOFF/README |
 | `README.md`, `package.json` | Current run instructions and dependency declaration. | `npm run build` now builds the audited `dist/` package; no test script |
 | `AGENTS.md`, `HANDOFF.md` | Working agreement and live resume point. | Pre-existing records preserved; workflow reminder merged by setup |
@@ -60,7 +60,7 @@ Preserve spelling, case and bytes; this is the approved tracked-media subset, no
 ## Available commands
 
 - Preview: use the root-bound Python command above; live-configured pages can contact production even when served locally.
-- Build/deploy package: `node deploy/build-package.mjs` (or `npm run build`) → validates the 52-file allowlist and writes `dist/`; run from the repository root. In CI it requires the `FIREBASE_*` secrets; locally it falls back to the ignored `firebase-config.js`.
+- Build/deploy package: `node deploy/build-package.mjs` (or `npm run build`) → validates the 50-file allowlist and writes `dist/`; run from the repository root. In CI it requires the `FIREBASE_*` secrets; locally it falls back to the ignored `firebase-config.js`.
 - Syntax: `for file in ./*.js ./editorial-portfolio/*.js ./admin/*.js; do node --check "$file" || exit 1; done`.
 - Whitespace: `git diff --check`. No committed `npm test` command exists; browser/live integration checks must be recorded separately.
 

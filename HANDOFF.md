@@ -777,3 +777,164 @@ D:\Portfolio\HANDOFF.md
 - Files moved/renamed/deleted: none. Application code, assets, credentials, settings and schedules are outside this setup.
 - Verification: filesystem/Git inventory completed; PASS: all 40 installed file hashes match prepared content, all eight original documents remain intact as prefixes, four templates match their originals, and Git HEAD/index/diffs outside workflow files are unchanged. Command: `python3 work/setup_handoff.py verify` from the setup workspace. Application tests, builds, browser/editor checks and live integrations: NOT RUN (documentation-only setup).
 - Exact next action: read `PROJECT_MAP.md`, this handoff and the current user request; recheck the actual working tree before starting that requested task. Historical next steps are context, not a new authorization.
+
+## Skills + design review — 2026-11-04 12:00 SGT
+
+- Request: install three GitHub skills, audit the portfolio for improvement, show a concrete example, and hand over an implementation prompt for review only. No changes to the live site were requested yet.
+- Skills installed project-scope with `npx skills add` (sandbox blocks writing `~/.agents/skills`; project install is what DSH loads for this workspace):
+  - `greensock/gsap-skills` → `.agents/skills/gsap-core`, `gsap-scrolltrigger`, `gsap-timeline`, `gsap-plugins`, `gsap-performance`, `gsap-utils`, `gsap-react`, `gsap-frameworks`.
+  - `Leonxlnx/taste-skill` → `.agents/skills/design-taste-frontend`.
+  - `DavidHDev/react-bits` ships no upstream `SKILL.md` (it is a React component library), so a curated skill was written at `.agents/skills/react-bits/SKILL.md` with `references/catalog.md` generated from the repo's own `llms.txt` (215 free components). It is a motion/interaction reference, not an installable package.
+  - `.agents/` is already gitignored; `skills-lock.json` and `.claude/` are new untracked artifacts from the CLI.
+- Review artifacts (untracked, not deployed):
+  - `review/AUDIT.md` — ten grounded issues + open questions.
+  - `review/prototype.html` — self-contained homepage direction: work-first hero, project rows with pointer-follow preview, select-to-fill detail stage, trimmed copy. GSAP 3.13 CDN + ScrollTrigger, reduced-motion and no-JS fallbacks.
+  - `review/IMPLEMENTATION-PROMPT.md` — copy-paste prompt for the full implementation pass.
+  - `review/screenshots/` — current site (home desktop/mobile, live projects) and prototype (desktop/mobile).
+- Verification actually run:
+  - Skill catalog in-session now lists `gsap-core`, `gsap-scrolltrigger`, `gsap-timeline`, `gsap-plugins`, `gsap-performance`, `gsap-utils`, `gsap-react`, `gsap-frameworks`, `design-taste-frontend`, `react-bits`.
+  - Prototype served on `http://127.0.0.1:8766/review/prototype.html` and checked with headless Chrome/Playwright: 0 console/page errors; `scrollWidth === innerWidth` at 1440×900 and 390×844; row hover preview, stage crossfade, text-only PoliteLoad tile (no link), keyboard tab order and Enter on rows, reduced-motion (`opacity: 1` everywhere), and JavaScript-disabled render (h1, 4 rows, stage visible).
+  - Current site reviewed from live `www.portfolio.liuguangxuan.com` captures; `liuguangxuan.com` (apex) did not resolve while `www.portfolio.liuguangxuan.com` returned 200.
+- Site source files: unchanged (`git status` shows only `.claude/`, `review/`, `skills-lock.json`). Not committed, not deployed, no `dist/` rebuild.
+- Next action: wait for owner review of `review/prototype.html` + `review/IMPLEMENTATION-PROMPT.md` and answers to the open questions in `review/AUDIT.md`; only then implement on the real pages (Home → Projects → About → Blog → Contact), keeping Firebase and the admin editor intact.
+- Pitfalls: do not run the GSAP/React Bits skills as a licence to add React or extra libraries; do not reintroduce `//` eyebrow labels, gradient name, 1px card boxes or six-field case studies in the implementation unless the owner asks; keep project copy factual (no invented years/clients).
+
+## Interaction pass 2 — 2026-11-04 13:20 SGT
+
+- User feedback on the review: keep the current visual style, add more interactivity/animations like the prototype, and treat photo-less projects as intentional (the single/double letters are expected).
+- Scope kept deliberately narrow: motion and media-fallback only. No layout, copy, colour, content or navigation changes. No GSAP/React dependency was added — `script.js` already contains a native motion layer (rAF + WAAPI + CSS variables), so the new work extends that one system instead of introducing a second animation library. Skills remain installed for future, larger scroll-scene work.
+- Changed files:
+  - `script.js` — new "Motion layer 2" block: hero entrance choreography (title blur/rise + staggered siblings after the page wipe), section/page heading clip-wipe reveal with a viewport-aware fail-safe, floating project preview that follows the pointer for `.project-card` (cloned cover or monogram plate + title tag), magnetic pull on `.btn-primary` via the independent `translate` property, tab-panel crossfade, stronger card tilt (2.4° → 4.2°) with pointer glow + image pan variables.
+  - `styles.css` — cursor preview styles, pointer glow overlays on card media, monogram plate styles, magnetic button transition, reduced-motion/touch guards.
+  - `projects-firebase.js` — monogram plates now carry the project category plus a camel-case monogram (`PoliteLoad` → PL, `StickAR` → SA); FLIP-style reflow animation when filtering/searching and a staggered first render; initials fallback for single-word titles.
+  - `index.html` — the static PoliteLoad home card media became a matching monogram plate (category + PL).
+- Verification actually run:
+  - `node --check` passed for every root/admin/editorial JS file; `git diff --check` clean; no new deploy files, so `deploy/package-cloudbase.ps1` and `deploy/build-package.mjs` allowlist/count unchanged.
+  - Playwright/Chrome on index, projects, about, contact, blog, immersion: no console or page errors, `scrollWidth === innerWidth` at 1440×900 and 390×844, no visible heading left at opacity 0, keyboard focus reaches card actions, drawer opens/closes.
+  - Reduced motion: no preview node, headings visible, no motion setup; JS disabled: headings/hero/cards visible, monogram renders; mobile 390px no overflow.
+  - Screenshots: `review/screenshots/after-*.png` (home, projects, project preview hover, mobile, drawer).
+- Decisions / risks:
+  - Floating preview is limited to `.project-card` (Projects library) — on Home the cards already show full images and the preview would cover their copy.
+  - The preview hides while the pointer is over buttons/links so it cannot block a click.
+  - Heading reveal pre-hides headings and recovers after 3s for anything already in the viewport; headings further down animate when scrolled to.
+  - Not deployed, not committed, no live-write testing.
+- Next action: owner review of the interaction pass; optional follow-ups if wanted: preview on Home featured cards, GSAP ScrollTrigger scenes for longer storytelling, or the content trims from `review/IMPLEMENTATION-PROMPT.md`.
+
+## Interaction pass 3 — 2026-11-04 14:20 SGT
+
+- User feedback: the home page loading/reveal effect felt repetitive; add the Projects-style hover interaction to the Blog cards (or a better idea).
+- Changes:
+  - Repetition removed: the per-section heading clip-wipe is gone (only one `.page-title` reveal remains on inner pages); the hero name now uses a single mask reveal and starts under the page wipe instead of after it; featured cards, the focus lab and info cards are folded into the existing one-time reveal system. The white page-wipe flash no longer runs on direct loads/reloads — it only plays for in-site navigations and is now a dark curtain (`#171b23`) instead of near-white. `sessionStorage["lgx-page-transition"]` marks in-site navigation; direct loads remove `is-loading` immediately.
+  - Blog hover: `.journal-card` now gets the floating preview, but as a richer article mini-card (cover, topic · date, title, two-line excerpt) on an opaque surface; card hover also gets the pointer glow + image pan + tilt via the existing motion card selector. Blog list re-renders (topic filter/search) stagger the cards in.
+- Files: `script.js`, `styles.css`, `blog-page.js` (stagger + no other behaviour changes), plus earlier pass-2 files.
+- Validation: Playwright across index/projects/about/contact/blog/immersion — no console/page errors, no overflow at 1440 and 390, keyboard focusable card actions, direct load shows the page immediately (no wipe), internal nav still plays the dark wipe, project + blog previews both appear on real pointer movement, reduced-motion has no preview and all content visible, JS-disabled pages render headings/hero/cards. Screenshots: `review/screenshots/pass2-*.png`.
+- Not deployed or committed. No new deploy files.
+- Next: owner review; if "repetitive loading" meant the page transition itself rather than scroll reveals, the wipe can be removed entirely or shortened.
+
+## 3D display preview — 2026-11-05 09:45 SGT
+
+- User asked whether there is a better way to display the 3D models, then asked for a view of the proposed design.
+- Created `review/3d-page-demo.html`: a layout preview for the 3D page, not wired to the live page. Uses the site stylesheet/nav/footer, the real Sketchfab thumbnails (downloaded to `review/assets/3d/`), a large poster-first stage with a title/tools scrim and actions, and three selectable model cards. Switching cards crossfades the stage render; the render has a pointer-depth effect; reduced-motion falls back to static. "View in 3D" is a mock control (shows a short note) because no `.glb` exports exist locally.
+- Recommendation unchanged: self-host `.glb` + `<model-viewer>` with poster-first stage, custom controls, AR; this preview shows that layout. If exports are unavailable, the same layout can be kept with Sketchfab embeds behind the "View in 3D" button.
+- Validation: layout demo renders with no console errors, no horizontal overflow at 1440×1000 and 390×844; mobile stage stacks image above a dark info panel; card switching updates title/tools/link/image.
+- Screenshots: `review/screenshots/3d-layout-desktop.png`, `3d-layout-mobile.png`, `3d-layout-hologram.png`, plus current page `3d-current.png`.
+- Live `immersion.html`/`immersion.js` untouched. Next action: owner review of the layout; if approved, request `.glb` exports (and optional `.usdz` for iOS AR) to wire the real model-viewer stage.
+
+## 3D page — route 2 implemented — 2026-11-05 10:35 SGT
+
+- User chose route 2 (keep Sketchfab, improve presentation) after reviewing the layout demo.
+- Changed:
+  - `immersion.html` — rebuilt the page around a poster-first stage: render/poster, "Interactive preview" chip, title/tools/actions overlay, close-view button, status/instructions, then a three-card model picker. Cards are real links to the Sketchfab originals (JS intercepts for in-page selection, so no-JS still works). Removed the old left text list, placeholder box, prev/next controls and unused ids.
+  - `immersion.js` — rewritten around the new structure. Keeps the opt-in Sketchfab SDK load, 45s timeout/failure copy, camera helpers, generation token, hash deep links, reduced-motion and visibility handling. Selecting a card releases any loaded iframe, swaps poster/title/tools/source and updates the hash; `View in 3D` swaps the poster for the iframe; `Close 3D view` restores the render.
+  - `immersion.css` — new stage/card styles with desktop (16:9 overlay) and mobile (stacked poster + dark info panel) layouts, loaded-state rules, reduced-motion and touch rules.
+  - `imgs/3D/{knight,hologram,crystals}.jpg` — local copies of the models' Sketchfab poster thumbnails (17 KB, 14 KB, 10 KB).
+  - `deploy/package-cloudbase.ps1` — three images added to `$assetFiles`; `deploy/build-package.mjs` expected count 52 → 55. Updated the 52-file references in `PROJECT_MAP.md`, `README.md`, `deploy/README.md` and added the new media to the approved list.
+- Verification:
+  - `npm run build` → PASS: 55 files, 14 HTML documents, 260 local references, 4 cross-page anchors, local Firebase config.
+  - Playwright 1440×950 and 390×844: poster stage renders, model cards select (title/tools/hash/source all update), deep link `#<model-id>` selects the right model, cards are keyboard-focusable, `View in 3D` loads the Sketchfab iframe and reports ready, `Close 3D view` removes the iframe and restores the poster, mobile has no horizontal overflow, reduced-motion keeps the poster and never auto-loads 3D.
+  - No page errors. The only console messages are Sketchfab iframe permission-policy notices (accelerometer), which come from the third-party embed.
+  - Not deployed, not committed.
+- Next: owner review of the live page with the sample models. Route 1 (self-hosted `.glb` + model-viewer) remains available later if exports are provided; the poster/card layout is already compatible.
+
+## .glb / model-viewer test — 2026-11-05 10:50 SGT
+
+- User asked to "try using .glb" after the route-2 implementation.
+- Blocker: the three Sketchfab models are not downloadable through the public API (`isDownloadable: false`), so their `.glb` files cannot be pulled automatically. Their owner can download them from the Sketchfab account dashboard or re-export from Maya/Blender.
+- Built a viewer test at `review/glb-viewer.html` using `<model-viewer>` 4.0.0 (CDN module) and a CC0 stand-in model (`review/assets/3d/statue-horse.glb`, 120 KB, Quaternius Modular Dungeon pack). It shows the intended final experience: stage fills with the model, no iframe/Sketchfab chrome, orbit/pinch/keyboard controls, Reset view, AR attributes, custom overlay. Desktop and mobile layouts match the implemented 3D page; mobile stacks the model above the info panel.
+- Verified in Chrome/Playwright: model loads (`loaded`, `modelIsVisible` true), drag orbits the camera, reset restores orbit theta 0 / phi 75° / fov 30°, no console or page errors, no horizontal overflow at 1440 and 390. The viewer bundle is ~257 KB gzip on demand; the stand-in glb is 120 KB.
+- Live `immersion.html` remains on route 2 (Sketchfab embed). No deploy files or allowlist changes for this test; the stand-in glb lives under `review/` only.
+- Screenshots: `review/screenshots/glb-demo-desktop.png`, `glb-demo-mobile.png`, `glb-demo-rotated.png`.
+- Next: obtain the three `.glb` exports (plus optional `.usdz` for iOS AR), place them next to the posters, then switch the live stage to model-viewer. The current page structure already has the poster, card picker and loaded-state hooks needed for the swap.
+
+## 3D page — all six models, .glb idea removed — 2026-11-05 12:50 SGT
+
+- User dropped the .glb/model-viewer route: keep the current thumbnail-first stage and use Sketchfab for the interactive view. Asked to add all remaining models.
+- Sketchfab profile `LiuGuangXuan` has exactly six public models (API search, no next page): Knight, hologram, Crystals, Chibi Majin Fat Buu (`b99825041ac04ed8bbfdbc10dc9388bd`), Engine (`12214ceea5fa48d5b7e64f9015588a2f`), Mazinger Z (`15adfb3faa574ceb89bd116199e078e3`).
+- Changed:
+  - `immersion.js` — models array extended to six (titles, Sketchfab ids, local poster paths, alt text). Tools were only known for the original three; the new three use `tools: []` and the tools line is hidden instead of inventing Maya/Substance. Selecting any card, deep links and the inline Sketchfab loader work for all six.
+  - `immersion.html` — three new cards added (04–06), counter now `1 / 6`, picker note changed to "Thumbnails are static. Open a model on Sketchfab for the full interactive version."
+  - `immersion.css` — card grid now 3 columns on desktop, 2 at ≤900px, single row-style cards at ≤620px; empty tools lines collapse.
+  - `imgs/3D/chibi-majin-buu.jpg`, `engine.jpg`, `mazinger-z.jpg` — poster thumbnails downloaded from the models' Sketchfab oEmbed data.
+  - `deploy/package-cloudbase.ps1` asset list + `deploy/build-package.mjs` expected count 55 → 58; updated the file-count references in `PROJECT_MAP.md`, `README.md`, `deploy/README.md`.
+  - Removed the .glb experiment artifacts: `review/glb-viewer.html`, `review/assets/3d/statue-horse.glb`, and its three screenshots. The CC0 stand-in model is no longer referenced anywhere.
+- Verification: `npm run build` PASS — 58 files, 14 HTML documents, 263 local references, 4 cross-page anchors. Playwright 1440/820/390: 6 cards render, selection updates title/tools/source/hash/counter, Engine loads the Sketchfab iframe and reports ready, no overflow, no page errors, no-JS shows all six cards as Sketchfab links. Screenshots: `review/screenshots/3d-six-models-*.png`.
+- Not deployed or committed.
+- Open item: the three new models have no tools listed on the page. Ask the owner for the tool lists (or say they use the same Maya/Substance workflow) if those lines should show.
+
+## 3D page — tools removed — 2026-11-05 12:55 SGT
+
+- User: don't show the tools; just keep the models.
+- Removed every tool reference from the 3D page: stage tools line, all card tools lines, the `tools` fields in `immersion.js` and the related CSS. Card heights are now identical (240 px each at 1440), the overlay shows only the model title, and the picker note still says thumbnails are static with Sketchfab for the interactive view.
+- Updated `immersion.html` meta/og descriptions so they no longer name Maya/Substance/ZBrush.
+- Validation: 6 cards, zero tool nodes, page body contains no Maya/Substance/ZBrush text, selection + deep links + inline Sketchfab load still work (tested Chibi Majin Fat Buu), no overflow at 1440/390, no page errors. `npm run build` PASS (58 files, 263 references). Screenshots refreshed at `review/screenshots/3d-six-models-*.png`.
+- Not deployed or committed.
+
+## 3D page — stale-cache fix — 2026-11-05 13:20 SGT
+
+- Owner screenshot showed a broken 3D layout at 127.0.0.1:8766/immersion.html. Local server log for that load (13:08:30) shows HTML + images requested but **no CSS/JS requests** — the browser reused cached `immersion.css`, `immersion.js`, `styles.css` and `script.js` from before the rewrite, while the HTML was new. New HTML + old CSS produced the narrow stage / floating chip.
+- Fix: cache-busting version bump to `v=20261105-1` for `styles.css`, `script.js`, `projects-firebase.js`, `blog-page.js`, `immersion.css`, `immersion.js` across root and admin HTML. A normal reload now fetches fresh assets (verified 200s for all four on the 3D page).
+- Verified at 1045px and 600px: stage spans full container (981px at 1045), mobile stack correct, no overflow. Screenshot: `review/screenshots/3d-fixed-1045.png`. `npm run build` PASS (58 files, 263 references).
+- No content/behaviour changes beyond the version strings; not deployed or committed. If a stale copy still appears, a hard reload (Cmd+Shift+R) clears it.
+
+## React Bits homepage drafts — 2026-11-24 10:20 SGT
+
+- Request: scan reactbits.dev, pick elements that fit the existing portfolio theme, and produce draft homepages — visually aligned, clean, "fancy but not too much". Live site must stay untouched.
+- Scanned the installed react-bits catalogue (`review`-independent skill copy) and the upstream registry JSON for DotGrid, SplitText, SpotlightCard, GlareHover, RotatingText, Threads, plus catalogue entries for Beams, LightRays, Magnet, ShinyText, Marquee etc. Selected only elements that can be recreated in vanilla HTML/CSS/JS with no new dependency and that stay within the monochrome dark theme.
+- Created `review/reactbits/` (review artifacts only):
+  - `index.html` — hub comparing the three drafts with thumbnails and component lists.
+  - `draft-1.html` ("Quiet", safest) — interactive canvas dot grid replaces the hero cells; blur-in hero copy; split-word section headings; pointer spotlight + edge light on cards.
+  - `draft-2.html` ("Editorial", balanced) — full-width infinite disciplines ticker, rotating hero phrase (3D flip with width easing), shiny eyebrow sweep, split headings, spotlight cards.
+  - `draft-3.html` ("Currents", most atmosphere) — canvas thread lines that part around the cursor, rotating phrase, scroll-reveal unblur for sections/cards, glare sweep + magnetic primary CTA, spotlight cards.
+  - `drafts.css` / `drafts.js` — shared vanilla implementations (canvas physics, split text, rotator, marquee, spotlight/glare/magnet, reveal observers, nav/tab behaviour). No libraries, no build step.
+  - `screenshots/` — hero/full-page/mobile captures for the hub and review.
+- Kept exactly the current design: same palette, Inter + Space Mono, gradients, section tags, card structure, copy and links. Only atmosphere/motion changes. Draft badge marks review pages; pages are `noindex`.
+- Verification: Playwright at 1440 and 390 on all three drafts + hub — no console/page errors, no horizontal overflow, canvas ready states fine, split headings reveal on scroll, rotator swaps, marquee runs, spotlight/glare respond to pointer; reduced-motion renders all text with no canvas motion, no rotator, no reveals; JS-off still shows all content and links. Hub light/dark theme matches site.
+- Live site untouched: no changes to `index.html`, `styles.css`, `script.js`, deploy allowlist or Firebase files this pass. Not deployed or committed.
+- Next: owner picks a draft or components; then implement the chosen treatment in the real Home page (and optionally Projects/About) with the same theme, keeping reduced-motion and no-JS fallbacks.
+
+## React Bits — Draft 2 background + contact page draft — 2026-11-24 10:45 SGT
+
+- User picked Draft 02 and asked for an obviously interactive background; then asked for a better Contact page view.
+- Draft 02 now has a page-wide reactive dot grid (`review/reactbits/draft-2.html`): fixed canvas at z-index 0, dots aligned to the 70px page grid, pulled toward the cursor with velocity flick, brightening and growing on interaction; clicking empty background sends a visible expanding ripple and pushes dots outward. Content sits above it (`main/master/footer` z-index 1, nav 1000). Halts under reduced motion (static dots) and when the tab is hidden; pointer-events stay off the canvas.
+- Verified Draft 02 background: canvas present at viewport size, no overflow, no console errors; screenshots with hover displacement and click ring saved under `review/reactbits/screenshots/` (idle/move/click captured to /tmp; hub still uses hero shot).
+- Contact page draft: `review/contact/contact-draft.html` (+ `contact-draft.css`, reusing `drafts.css/js` for the background and nav). Replaces the old single panel with: large two-tone statement, one-line offering, two direct channels (LinkedIn / Telegram) as large text links, an "Elsewhere" split section with four compact link rows (GitHub, Sketchfab, ArtStation, Earlier Portfolio), no duplicated icon cards or preview box, and a minimal footer. Page-wide interactive dot background carries the Draft 02 treatment. Content comes only from existing verified copy/links.
+- Validation: contact draft at 1440 (height ~1081) and 390, no overflow, no console/page errors, rows/links keyboard reachable, reduced-motion static; screenshots in `review/contact/screenshots/`.
+- Live site untouched (only `review/` files added this pass). Not deployed or committed.
+- Next: owner review of the contact draft; if approved, implement into `contact.html` (keep the footer socials decision explicit) and finish integrating Draft 02 into the real Home page.
+
+## Site-wide redesign pass — 2026-11-24 11:50 SGT
+
+- User approved the Contact draft and asked to redesign About and the other pages with the same clean, organised, motion-led direction; then asked to remove the 3D section and point to ArtStation/Sketchfab instead.
+- Shared layer:
+  - Added a page-wide reactive dot background to index/about/projects/blog/contact/immersion (`<canvas class="site-canvas">` + fixed canvas CSS + `main/footer` stacking). Dots follow the existing 70px grid, pull toward the cursor, flick with speed and send a click ripple; static under reduced motion, paused when hidden/off-screen. Implemented in `script.js`.
+  - Bumped asset cache versions to `v=20261124-2`.
+- Contact page: replaced the single panel/icon grid/preview box with the approved draft — large two-tone statement, offering line, LinkedIn/Telegram as direct text links, "Elsewhere" split section with four compact rows, minimal footer. Styles added to `styles.css` under `.contact-page`.
+- About page: rebuilt `about.html` as a motion-led page — hero statement and one-line bio, tools ticker, interactive practice console (existing `data-skills-console` tabs, restyled), five-stage scroll-revealed timeline, compact experience + selected-work section with ArtStation/Sketchfab links. About-specific styles appended to `styles.css`; timeline reveal added to `script.js`. Sections set to content height to avoid the old 100vh gaps.
+- Home: applied the chosen Draft 02 treatment — rotating hero phrase, full-width discipline ticker, shiny eyebrow, split-word section headings, pointer spotlight cards. Hero tile grid removed; page-wide reactive background carries the hero. Home-specific CSS/JS appended to `styles.css`/`script.js`.
+- 3D section removed:
+  - Removed "3D Work" from every nav/mobile menu.
+  - Deleted `immersion.css`, `immersion.js`, `imgs/3D/*` (six posters). `immersion.html` is now a small noindex bridge page with direct ArtStation + Sketchfab links (not in navigation).
+  - `deploy/package-cloudbase.ps1` asset list and `deploy/build-package.mjs` expected count reduced 58 → 50; PROJECT_MAP/README/deploy README counts updated. About links 3D work to ArtStation/Sketchfab; Contact already lists both.
+- Validation: `npm run build` PASS (50 files, 231 references, 4 anchors). Playwright 1440/390 on index/about/contact/projects/blog/immersion — no console/page errors, no horizontal overflow; nav now Home/Projects/About/Blog/Contact; reduced-motion variants static; home rotator/marquee/spotlight/split and about timeline/practice console verified; bridge page renders.
+- Still old layout: `projects.html` and `blog.html` (and their dynamic Firebase lists). They need the same clean/organised/motion pass next: Projects → remove duplicated Featured panel and collapse case-study text into short blocks; Blog → remove the duplicate sidebar profile and give the feed a cleaner list/grid. Not deployed or committed.
+- Screenshots: `review/screenshots/redesign-about-desktop.png`, `redesign-contact-desktop.png`, `redesign-home-hero.png`, `redesign-home-full.png`, plus mobile captures.

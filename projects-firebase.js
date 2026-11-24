@@ -226,14 +226,54 @@ if (initialCaseStudy) {
     document.fonts?.ready.then(alignInitialCaseStudy);
 }
 
+function captureGridRects() {
+    const rects = new Map();
+    projectsGrid?.querySelectorAll(".project-card").forEach((card) => {
+        rects.set(card.id, card.getBoundingClientRect());
+    });
+    return rects;
+}
+
+function playGridReflow(rects) {
+    if (!projectsGrid || !rects.size || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+    }
+
+    const cards = Array.from(projectsGrid.querySelectorAll(".project-card"));
+    cards.forEach((card, index) => {
+        const previous = rects.get(card.id);
+        const current = card.getBoundingClientRect();
+        if (previous) {
+            const dx = previous.left - current.left;
+            const dy = previous.top - current.top;
+            if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+            card.animate([
+                { transform: `translate(${dx}px, ${dy}px)` },
+                { transform: "translate(0, 0)" },
+            ], { duration: 460, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
+            return;
+        }
+
+        card.animate([
+            { opacity: 0, transform: "translateY(18px) scale(0.985)" },
+            { opacity: 1, transform: "none" },
+        ], { duration: 420, delay: Math.min(index, 8) * 32, easing: "cubic-bezier(0.16, 1, 0.3, 1)" });
+    });
+}
+
+let animateNextGrid = false;
+
 function renderProjects(projects) {
     latestProjects = projects;
     window.PortfolioProjectManagement?.refresh({ projects: latestProjects, isAdmin: projectIsAdmin, user: projectUser, db, edit: fillProjectForm });
     projects = projects.filter(PortfolioProjectPolicy.isListed).map(enrichProjectForDisplay)
         .sort((a, b) => projectDisplayRank(a) - projectDisplayRank(b));
     const featured = chooseFeaturedProjects(projects);
+    const gridRects = animateNextGrid ? captureGridRects() : null;
+    animateNextGrid = false;
     projectHighlights.update(projects);
     renderProjectGrid(projects, featured);
+    if (gridRects) playGridReflow(gridRects);
     alignInitialCaseStudy();
 }
 
@@ -339,6 +379,7 @@ function watchProjects() {
     }
 
     // Keep the real local project list visible while Firestore connects.
+    animateNextGrid = true;
     renderProjects(getStarterProjects());
 
     if (!db) {
@@ -468,12 +509,14 @@ projectFilterButtons.forEach((button) => {
             item.classList.toggle("is-active", isActive);
             item.setAttribute("aria-selected", String(isActive));
         });
+        animateNextGrid = true;
         renderProjects(latestProjects);
     });
 });
 
 projectSearchInput?.addEventListener("input", () => {
     projectSearchTerm = projectSearchInput.value.trim().toLowerCase();
+    animateNextGrid = true;
     renderProjects(latestProjects);
 });
 
@@ -552,7 +595,11 @@ function renderProjectPreview(project, className = "card-thumb") {
         return `<div class="${className} has-image"><img src="${escapeHtml(image)}" alt="${escapeHtml(getProjectDisplayTitle(project))} preview" loading="lazy" /></div>`;
     }
 
-    return `<div class="${className}"><span>${escapeHtml(getProjectInitials(project))}</span></div>`;
+    const category = String(project.category || "").trim();
+    return `<div class="${className} card-thumb--monogram" aria-hidden="true">
+        ${category ? `<span class="monogram-category">${escapeHtml(category)}</span>` : ""}
+        <span class="monogram-mark">${escapeHtml(getProjectInitials(project))}</span>
+    </div>`;
 }
 
 function getProjectCopyProfile(project) {
@@ -585,6 +632,13 @@ function getProjectInitials(project) {
     const words = getProjectDisplayTitle(project).match(/[A-Za-z0-9]+/g) || [];
     if (!words.length) {
         return String(project.number || "P").slice(0, 2).toUpperCase();
+    }
+    if (words.length === 1) {
+        const capitals = words[0].match(/[A-Z]/g) || [];
+        if (capitals.length >= 2) {
+            return capitals.slice(0, 2).join("").toUpperCase();
+        }
+        return words[0].slice(0, 2).toUpperCase();
     }
 
     return words.slice(0, 2).map((word) => word[0]).join("").toUpperCase();

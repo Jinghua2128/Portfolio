@@ -13,9 +13,11 @@
     <meta name="twitter:card" content="summary" />
     <title>Liu GuangXuan | Creative Developer &amp; Immersive Media Designer</title>
     <link rel="icon" href="imgs/Logo/icon.ico" />
-    <link rel="stylesheet" href="styles.css?v=20261007-2" />
+    <link rel="stylesheet" href="styles.css?v=20261124-2" />
 </head>
 <body>
+    <canvas class="site-canvas" data-site-canvas aria-hidden="true"></canvas>
+
     <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
         <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
@@ -23,7 +25,6 @@
             <li><a href="index.html" class="active" aria-current="page">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="about.html">About</a></li>
-            <li><a href="immersion.html">3D Work</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -36,21 +37,24 @@
         <a href="index.html" aria-current="page">Home</a>
         <a href="projects.html">Projects</a>
         <a href="about.html">About</a>
-        <a href="immersion.html">3D Work</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
     <main id="main-content">
         <section class="hero">
-            <div class="hero-grid" aria-hidden="true"></div>
             <div class="hero-content">
-                <p class="hero-eyebrow">Creative Developer &amp; Immersive Media Designer</p>
+                <p class="hero-eyebrow shiny-text">Creative Developer &amp; Immersive Media Designer</p>
                 <h1 class="hero-title"><span class="highlight">Liu GuangXuan</span></h1>
                 <p class="hero-subtitle">
-                    I build web applications, interactive experiences and digital media using JavaScript, Firebase, Python, Unity and modern design tools.
+                    I build <span class="hero-rotator" data-rotator='["web applications","interactive experiences","3D scenes","motion pieces"]'>web applications</span> with JavaScript, Firebase, Python, Unity and modern design tools.
                 </p>
-                <p class="hero-disciplines">Web Development <span aria-hidden="true">·</span> Interactive Media <span aria-hidden="true">·</span> Game Development <span aria-hidden="true">·</span> UI/UX <span aria-hidden="true">·</span> 3D &amp; Motion</p>
+                <div class="hero-marquee" aria-label="Disciplines">
+                    <div class="hero-marquee-track">
+                        <span class="hero-marquee-group">Web Development <i>·</i> Interactive Media <i>·</i> Game Development <i>·</i> UI/UX <i>·</i> 3D &amp; Motion <i>·</i></span>
+                        <span class="hero-marquee-group" aria-hidden="true">Web Development <i>·</i> Interactive Media <i>·</i> Game Development <i>·</i> UI/UX <i>·</i> 3D &amp; Motion <i>·</i></span>
+                    </div>
+                </div>
                 <div class="hero-cta">
                     <a class="btn btn-primary" href="projects.html">View Projects</a>
                     <!-- TODO: Add an approved resume PDF before replacing this contact CTA with View Resume. -->
@@ -63,12 +67,12 @@
             <div class="section-inner">
                 <span class="section-tag">// selected work</span>
                 <div class="section-heading-row">
-                    <h2 class="section-title" id="home-featured-title">Featured Projects</h2>
+                    <h2 class="section-title split-title" id="home-featured-title">Featured Projects</h2>
                     <a class="text-action" href="projects.html">Browse all projects <span aria-hidden="true">↗</span></a>
                 </div>
                 <p class="home-featured-intro">Selected projects that bring together interactive web development and practical automation.</p>
                 <div class="home-featured-grid">
-                    <article class="home-featured-card">
+                    <article class="home-featured-card spot-card">
                         <div class="home-featured-media has-image"><img src="imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg" alt="EchoWorks training platform homepage" loading="lazy" /></div>
                         <div class="home-featured-body">
                             <p class="card-tag">Interactive Training / Web</p>
@@ -79,8 +83,11 @@
                             <a class="btn btn-secondary" href="projects.html#case-study-echoworks" aria-label="View EchoWorks case study">View Case Study <span aria-hidden="true">↗</span></a>
                         </div>
                     </article>
-                    <article class="home-featured-card">
-                        <div class="home-featured-media" aria-hidden="true">PL</div>
+                    <article class="home-featured-card spot-card">
+                        <div class="home-featured-media card-thumb--monogram" aria-hidden="true">
+                            <span class="monogram-category">Python / Productivity</span>
+                            <span class="monogram-mark">PL</span>
+                        </div>
                         <div class="home-featured-body">
                             <p class="card-tag">Python / Productivity</p>
                             <h3>PoliteLoad</h3>
@@ -97,7 +104,7 @@
         <section class="section home-overview" aria-label="Portfolio overview">
             <div class="section-inner">
                 <span class="section-tag">// overview</span>
-                <h2 class="section-title">Design, code and interaction.</h2>
+                <h2 class="section-title split-title">Design, code and interaction.</h2>
                 <div class="section-line"></div>
                 <div class="hero-lab" data-focus-lab>
                     <div class="hero-lab-tabs" role="tablist" aria-label="Creative focus areas">
@@ -116,17 +123,17 @@
                     </div>
                 </div>
                 <div class="overview-grid">
-                    <article class="info-card">
+                    <article class="info-card spot-card">
                         <p class="card-tag">Focus</p>
                         <h3>Immersive Media</h3>
                         <p>Exploring games, interaction, motion, video, UI/UX, and 3D art through focused builds and independent practice.</p>
                     </article>
-                    <article class="info-card">
+                    <article class="info-card spot-card">
                         <p class="card-tag">Tools</p>
                         <h3>Creative Production</h3>
                         <p>Working with Unity, HTML, CSS, JavaScript, Python, C#, After Effects, Premiere Pro, Blender, Maya, Substance Painter, Figma, and GitHub.</p>
                     </article>
-                    <article class="info-card">
+                    <article class="info-card spot-card">
                         <p class="card-tag">Strength</p>
                         <h3>Collaboration</h3>
                         <p>Bringing leadership, event planning, cultural activities, and multimedia storytelling into creative team environments.</p>
@@ -151,6 +158,6 @@
         <p class="footer-copy">© 2026 Liu GuangXuan · Creative Developer &amp; Immersive Media Designer.</p>
     </footer>
 
-    <script src="script.js?v=20261007-1"></script>
+    <script src="script.js?v=20261124-2"></script>
 </body>
 </html>

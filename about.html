@@ -13,9 +13,11 @@
     <meta name="twitter:card" content="summary" />
     <title>About | Liu GuangXuan</title>
     <link rel="icon" href="imgs/Logo/icon.ico" />
-    <link rel="stylesheet" href="styles.css?v=20261007-2" />
+    <link rel="stylesheet" href="styles.css?v=20261124-2" />
 </head>
 <body class="about-page">
+    <canvas class="site-canvas" data-site-canvas aria-hidden="true"></canvas>
+
     <a class="skip-link" href="#main-content">Skip to content</a>
     <nav id="navbar" aria-label="Main navigation">
         <a href="index.html" class="nav-logo" aria-label="Liu GuangXuan home"><img src="imgs/Logo/logo.png" alt="" class="nav-logo-mark" /><span>&lt;LGX /&gt;</span></a>
@@ -23,7 +25,6 @@
             <li><a href="index.html">Home</a></li>
             <li><a href="projects.html">Projects</a></li>
             <li><a href="about.html" class="active" aria-current="page">About</a></li>
-            <li><a href="immersion.html">3D Work</a></li>
             <li><a href="blog.html">Blog</a></li>
             <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -36,170 +37,111 @@
         <a href="index.html">Home</a>
         <a href="projects.html">Projects</a>
         <a href="about.html" aria-current="page">About</a>
-        <a href="immersion.html">3D Work</a>
         <a href="blog.html">Blog</a>
         <a href="contact.html">Contact</a>
     </div>
 
     <main id="main-content">
-        <section class="section page-hero">
+        <section class="about-hero">
             <div class="section-inner">
-                <span class="section-tag">// who I am</span>
-                <h1 class="page-title">About Me</h1>
-                <div class="section-line"></div>
-                <p class="about-intro">I am a Year 3 Immersive Media student at Ngee Ann Polytechnic focused on creative development, interactive technology and digital experiences.</p>
+                <span class="section-tag">// about</span>
+                <h1 class="about-title">Making things feel alive.</h1>
+                <p class="about-lede">Year 3 Immersive Media student at Ngee Ann Polytechnic. I work across web, games, 3D and motion.</p>
             </div>
-        </section>
-
-        <section class="section about-professional" aria-labelledby="about-work-heading">
-            <div class="section-inner">
-                <span class="section-tag">// practice</span>
-                <h2 class="section-title" id="about-work-heading">What I Do</h2>
-                <div class="about-focus-grid">
-                    <article><h3>Web Development</h3><p>Responsive websites, application interfaces and data-backed workflows.</p></article>
-                    <article><h3>Interactive Media</h3><p>Experiences that invite people to explore, respond and learn.</p></article>
-                    <article><h3>Game Development</h3><p>Playable systems and scenario-driven experiences in Unity.</p></article>
-                    <article><h3>UI/UX</h3><p>Clear navigation, form flows and visual feedback across devices.</p></article>
-                    <article><h3>3D &amp; Motion</h3><p>Models, animation and moving-image work that support the experience.</p></article>
-                </div>
-                <div class="about-evidence-grid">
-                    <div>
-                        <h2 class="section-title">Technical Skills</h2>
-                        <h3>Development</h3><p>HTML · CSS · JavaScript · Python · C# · Firebase</p>
-                        <h3>Creative &amp; Interactive</h3><p>Unity · Blender · Maya · Figma · After Effects · Premiere Pro</p>
-                        <h3>Workflow</h3><p>GitHub · Cloudflare</p>
-                    </div>
-                    <div>
-                        <h2 class="section-title">Experience &amp; Education</h2>
-                        <p>Year 3 Immersive Media student at Ngee Ann Polytechnic.</p>
-                        <p>Coding and robotics teaching internship at Empire AI, with reflections shared on my <a href="blog.html">blog</a>.</p>
-                        <h2 class="section-title">Selected Work</h2>
-                        <ul class="about-work-links">
-                            <li><a href="projects.html#case-study-echoworks">EchoWorks <span aria-hidden="true">↗</span></a></li>
-                            <li><a href="projects.html#case-study-politeload">PoliteLoad <span aria-hidden="true">↗</span></a></li>
-                        </ul>
-                    </div>
+            <div class="toolkit-marquee" aria-label="Tools I work with">
+                <div class="toolkit-track">
+                    <span class="toolkit-group">HTML <i>·</i> CSS <i>·</i> JavaScript <i>·</i> Python <i>·</i> C# <i>·</i> Firebase <i>·</i> Unity <i>·</i> Blender <i>·</i> Maya <i>·</i> Figma <i>·</i> After Effects <i>·</i> Premiere Pro <i>·</i> GitHub <i>·</i> Cloudflare <i>·</i></span>
+                    <span class="toolkit-group" aria-hidden="true">HTML <i>·</i> CSS <i>·</i> JavaScript <i>·</i> Python <i>·</i> C# <i>·</i> Firebase <i>·</i> Unity <i>·</i> Blender <i>·</i> Maya <i>·</i> Figma <i>·</i> After Effects <i>·</i> Premiere Pro <i>·</i> GitHub <i>·</i> Cloudflare <i>·</i></span>
                 </div>
             </div>
         </section>
 
-        <section class="section">
-            <div class="section-inner about-grid">
-                <aside class="about-profile-card" aria-label="My Journey life stage carousel">
-                    <div class="profile-snapshot-frame life-carousel" data-life-carousel tabindex="0">
-                        <div class="life-carousel-header">
-                            <span class="profile-kicker">Life Stages</span>
-                            <span class="life-counter" data-life-counter>1 / 5</span>
-                        </div>
-                        <div class="life-carousel-track" aria-live="polite">
-                            <article class="life-slide is-active" data-life-slide aria-hidden="false">
-                                <div class="life-visual" aria-hidden="true">
-                                    <span class="life-stage-mark">0</span>
-                                    <span class="life-place">Puyang, Henan</span>
-                                </div>
-                                <div class="life-content">
-                                    <span class="life-date">2007</span>
-                                    <h2>Stage 0</h2>
-                                    <p>I was born in Puyang, Henan, and grew up with family, cartoons, games, and simple childhood moments.</p>
-                                </div>
-                            </article>
-                            <article class="life-slide" data-life-slide aria-hidden="true">
-                                <div class="life-visual" aria-hidden="true">
-                                    <span class="life-stage-mark">1</span>
-                                    <span class="life-place">Childhood</span>
-                                </div>
-                                <div class="life-content">
-                                    <span class="life-date">Early years</span>
-                                    <h2>Stage 1</h2>
-                                    <p>My early years gave me strong family values, curiosity, and a quiet desire to explore more.</p>
-                                </div>
-                            </article>
-                            <article class="life-slide" data-life-slide aria-hidden="true">
-                                <div class="life-visual" aria-hidden="true">
-                                    <span class="life-stage-mark">2</span>
-                                    <span class="life-place">Primary</span>
-                                </div>
-                                <div class="life-content">
-                                    <span class="life-date">West Spring Primary</span>
-                                    <h2>Stage 2</h2>
-                                    <p>Primary school helped me grow in confidence, curiosity, friendship, and gratitude.</p>
-                                </div>
-                            </article>
-                            <article class="life-slide" data-life-slide aria-hidden="true">
-                                <div class="life-visual" aria-hidden="true">
-                                    <span class="life-stage-mark">3</span>
-                                    <span class="life-place">Secondary</span>
-                                </div>
-                                <div class="life-content">
-                                    <span class="life-date">Chua Chu Kang Secondary</span>
-                                    <h2>Stage 3</h2>
-                                    <p>Secondary school helped me build teamwork, resilience, communication, and confidence through events and CCAs.</p>
-                                </div>
-                            </article>
-                            <article class="life-slide" data-life-slide aria-hidden="true">
-                                <div class="life-visual" aria-hidden="true">
-                                    <span class="life-stage-mark">Now</span>
-                                    <span class="life-place">Ngee Ann Polytechnic</span>
-                                </div>
-                                <div class="life-content">
-                                    <span class="life-date">Current stage</span>
-                                    <h2>Now</h2>
-                                    <p>I study Immersive Media at Ngee Ann Polytechnic, exploring games, interaction, motion, UI/UX, video, and 3D.</p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="life-carousel-controls" aria-label="Life stage controls">
-                            <button class="life-arrow life-arrow-prev" type="button" data-life-prev aria-label="Previous life stage"></button>
-                            <div class="life-dots" role="tablist" aria-label="Life stage slides">
-                                <button class="life-dot is-active" type="button" role="tab" aria-selected="true" data-life-dot aria-label="Show Stage 0"></button>
-                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show Stage 1"></button>
-                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show Stage 2"></button>
-                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show Stage 3"></button>
-                                <button class="life-dot" type="button" role="tab" aria-selected="false" data-life-dot aria-label="Show current stage"></button>
-                            </div>
-                            <button class="life-arrow life-arrow-next" type="button" data-life-next aria-label="Next life stage"></button>
-                        </div>
+        <section class="section about-practice" aria-labelledby="about-practice-title">
+            <div class="section-inner about-practice-grid">
+                <div class="about-practice-aside">
+                    <span class="section-tag">// practice</span>
+                    <h2 class="section-title" id="about-practice-title">What I do.</h2>
+                    <p>Pick a discipline. Each one is a different way into the same question: how should this feel to use?</p>
+                </div>
+                <div class="skills-console about-console" data-skills-console>
+                    <div class="about-tabs" role="tablist" aria-label="Skill categories">
+                        <button class="skill-tab is-active" type="button" role="tab" aria-selected="true" data-skill-key="frontend">Frontend</button>
+                        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="game">Game</button>
+                        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="motion">Motion</button>
+                        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="threeD">3D</button>
+                        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="ux">UI/UX</button>
+                        <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="soft">Soft Skills</button>
                     </div>
-                    <div class="profile-summary-card">
-                        <h2>Liu GuangXuan</h2>
-                        <p>Year 3 Immersive Media student creating work across games, motion, UI/UX, video, and 3D.</p>
-                        <div class="profile-highlights" aria-label="Portfolio focus areas">
-                            <span>Game Design</span>
-                            <span>Motion</span>
-                            <span>3D</span>
-                            <span>UI/UX</span>
+                    <article class="skill-detail about-detail" aria-live="polite">
+                        <p class="card-tag" data-skill-label>Frontend Development</p>
+                        <h3 data-skill-title>Responsive websites and interactive UI.</h3>
+                        <p data-skill-copy>Clean layouts, UI states, and Firebase-connected features for desktop and mobile.</p>
+                        <div class="skill-tool-grid" data-skill-tools>
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Firebase</span><span>GitHub</span>
                         </div>
-                    </div>
-                </aside>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section about-journey" aria-labelledby="about-journey-title">
+            <div class="section-inner">
+                <div class="about-section-head">
+                    <span class="section-tag">// journey</span>
+                    <h2 class="section-title" id="about-journey-title">How I got here.</h2>
+                </div>
+                <ol class="about-timeline">
+                    <li class="timeline-item">
+                        <span class="timeline-year">2007</span>
+                        <h3>Born in Puyang</h3>
+                        <p>Grew up with family, cartoons, games and simple childhood moments.</p>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">Early years</span>
+                        <h3>Curiosity first</h3>
+                        <p>Family values and a quiet desire to explore more.</p>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">West Spring Primary</span>
+                        <h3>Confidence</h3>
+                        <p>Growing through curiosity, friendship and gratitude.</p>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">Chua Chu Kang Secondary</span>
+                        <h3>Teamwork</h3>
+                        <p>Resilience and communication built through events and CCAs.</p>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-year">Now · Ngee Ann Polytechnic</span>
+                        <h3>Immersive Media</h3>
+                        <p>Games, interaction, motion, UI/UX, video and 3D.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section about-close" aria-labelledby="about-experience-title">
+            <div class="section-inner about-close-grid">
                 <div>
-                    <span class="section-tag">// personal perspective</span>
-                    <h2 class="section-title">My Journey</h2>
-                    <div class="section-line"></div>
-                    <p class="about-bio">
-                        I came to creative development through games, storytelling and a curiosity about how people interact with technology.
-                    </p>
-                    <p class="about-bio">
-                        I enjoy combining storytelling, creativity, and technology. I also bring leadership, event planning, cultural activities, and multimedia storytelling experience.
-                    </p>
-
-                    <p class="skills-title">// Core Skills</p>
-                    <div class="skills-console" data-skills-console>
-                        <div class="skills-tabs" role="tablist" aria-label="Skill categories">
-                            <button class="skill-tab is-active" type="button" role="tab" aria-selected="true" data-skill-key="frontend">Frontend</button>
-                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="game">Game</button>
-                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="motion">Motion</button>
-                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="threeD">3D</button>
-                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="ux">UI/UX</button>
-                            <button class="skill-tab" type="button" role="tab" aria-selected="false" data-skill-key="soft">Soft Skills</button>
-                        </div>
-                        <article class="skill-detail" aria-live="polite">
-                            <p class="card-tag" data-skill-label>Frontend Development</p>
-                            <h3 data-skill-title>Responsive websites and interactive UI.</h3>
-                            <p data-skill-copy>Clean layouts, UI states, and Firebase-connected features for desktop and mobile.</p>
-                            <div class="skill-tool-grid" data-skill-tools>
-                                <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Firebase</span><span>GitHub</span>
-                            </div>
-                        </article>
+                    <span class="section-tag">// experience</span>
+                    <h2 class="section-title" id="about-experience-title">Teaching &amp; making.</h2>
+                    <p>Coding and robotics teaching internship at Empire AI, with reflections shared on the blog.</p>
+                    <a class="text-action" href="blog.html">Read the reflections <span aria-hidden="true">↗</span></a>
+                    <p class="about-external">3D work lives on <a href="https://www.artstation.com/liuguangxuan" target="_blank" rel="noopener noreferrer">ArtStation ↗</a> and <a href="https://sketchfab.com/LiuGuangXuan" target="_blank" rel="noopener noreferrer">Sketchfab ↗</a>.</p>
+                </div>
+                <div>
+                    <span class="section-tag">// selected work</span>
+                    <div class="about-work-rows">
+                        <a class="contact-row" href="projects.html#case-study-echoworks">
+                            <span class="row-name">EchoWorks</span>
+                            <span class="row-note">Interactive training</span>
+                            <span class="row-arrow" aria-hidden="true">↗</span>
+                        </a>
+                        <a class="contact-row" href="projects.html#case-study-politeload">
+                            <span class="row-name">PoliteLoad</span>
+                            <span class="row-note">Python automation</span>
+                            <span class="row-arrow" aria-hidden="true">↗</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -217,6 +159,6 @@
         <p class="footer-copy">© 2026 Liu GuangXuan · Creative Developer &amp; Immersive Media Designer.</p>
     </footer>
 
-    <script src="script.js?v=20261007-1"></script>
+    <script src="script.js?v=20261124-2"></script>
 </body>
 </html>

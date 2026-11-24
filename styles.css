@@ -3766,3 +3766,42 @@ footer {
     .spot-card::before,
     .spot-card::after { display: none; }
 }
+
+/* Home closing CTA */
+.home-contact {
+    padding: clamp(3.5rem, 8vh, 6rem) 0 clamp(4rem, 9vh, 6.5rem);
+}
+
+.home-contact .home-contact-title {
+    max-width: 16ch;
+    margin: 0.7rem 0 0;
+    font-size: clamp(2.4rem, 5.4vw, 4.6rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.98;
+}
+
+.home-contact .home-contact-lede {
+    max-width: 46ch;
+    margin-top: 1.2rem;
+    color: var(--text-muted);
+    font-size: clamp(0.95rem, 1.3vw, 1.06rem);
+    line-height: 1.7;
+}
+
+.home-contact .home-contact-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1.2rem 2rem;
+    margin-top: 2rem;
+}
+
+.home-contact .home-contact-links .text-action {
+    font-size: 0.9rem;
+}
+
+.home-contact .section-inner {
+    padding-top: 0;
+    padding-bottom: 0;
+}

@@ -938,3 +938,17 @@ D:\Portfolio\HANDOFF.md
 - Validation: `npm run build` PASS (50 files, 231 references, 4 anchors). Playwright 1440/390 on index/about/contact/projects/blog/immersion — no console/page errors, no horizontal overflow; nav now Home/Projects/About/Blog/Contact; reduced-motion variants static; home rotator/marquee/spotlight/split and about timeline/practice console verified; bridge page renders.
 - Still old layout: `projects.html` and `blog.html` (and their dynamic Firebase lists). They need the same clean/organised/motion pass next: Projects → remove duplicated Featured panel and collapse case-study text into short blocks; Blog → remove the duplicate sidebar profile and give the feed a cleaner list/grid. Not deployed or committed.
 - Screenshots: `review/screenshots/redesign-about-desktop.png`, `redesign-contact-desktop.png`, `redesign-home-hero.png`, `redesign-home-full.png`, plus mobile captures.
+
+## Deployment — 2026-11-24 12:10 SGT
+
+- Owner said "deploy it". Committed the redesign (Contact, About, Home Draft 02, shared reactive background, 3D section removal) as `374b345` ("Redesign site pages and remove 3D section") and pushed to `origin/main`.
+- GitHub Actions workflow `Deploy to Cloudflare Workers` run `45324195134` completed successfully in 41s (build audited dist + wrangler deploy). 50-file allowlist / 231 references / 4 anchors.
+- Live verification on `https://www.portfolio.liuguangxuan.com/` after deploy:
+  - `/` — new rotator, disciplinary ticker, split headings, page-wide reactive dots; nav now Home/Projects/About/Blog/Contact.
+  - `/about` — new "Making things feel alive." layout, practice console, scroll timeline, external ArtStation/Sketchfab links.
+  - `/contact` — approved redesign with direct LinkedIn/Telegram links and compact rows.
+  - `/projects`, `/blog` — load without errors, still the previous layouts (redesign pending).
+  - `/immersion` — bridge page to ArtStation/Sketchfab; no longer in navigation. `.html` URLs redirect to extensionless paths per worker `auto-trailing-slash`.
+  - No console/page errors on home/contact/about/projects/blog; no horizontal overflow at 1440 or 390.
+- Review artifacts (`review/`) and `.claude/`, `skills-lock.json` remain untracked/local and are not part of the deployed allowlist.
+- Next: redesign Projects and Blog with the same system (remove duplicated Featured panel / case-study walls; clean the Blog sidebar), then build + push again.

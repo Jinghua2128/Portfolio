@@ -61,6 +61,7 @@ $assetFiles = @(
     "imgs/Projects/BurntConesRevamp/BurntConesRevamp_HomePage.jpg",
     "imgs/Projects/CarbonCreative/CarbonCreative_HomePage.jpg",
     "imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg",
+    "imgs/Projects/EmpireAI-TeacherHub/empire-ai-teacher-hub.jpg",
     "imgs/Blogs/empire-ai/empire-code-reception.jpg",
     "imgs/Blogs/ai-mv/paper-cut-mv-cover.jpg",
     "imgs/Blogs/ai-vibeknowledge/vibe-knowledge-arrow-of-time.jpg"

@@ -23,7 +23,7 @@ const projectCopyProfiles = [
     {
         terms: ["empire ai teacher hub", "teacher hub", "empireai"],
         title: "Empire AI Teacher Hub",
-        description: "A teacher hub built during the Empire AI teaching internship.",
+        description: "A teacher hub with class scheduling and a browser-based Python workspace, built during the Empire AI teaching internship.",
     },
     {
         terms: ["yl clothes", "tailor"],
@@ -190,6 +190,7 @@ function updateProjectCount(count, total) {
 }
 
 function projectDisplayRank(project) {
+    if (project.id === "empire-ai-teacher-hub" || getProjectDedupeKey(project) === "empire-ai-teacher-hub") return -1;
     if (getProjectDedupeKey(project) === "echoworks") return 0;
     if (getProjectDedupeKey(project) === "coursecarry" || project.id === "politeload-course-download-utility") return 1;
     return 2;

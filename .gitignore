@@ -33,7 +33,7 @@ firebase-config.js
 !/deploy/package-cloudbase.ps1
 !/deploy/build-package.mjs
 
-# Publish only the eleven approved existing media assets (the internship photo
+# Publish only the twelve approved existing media assets (the internship photo
 # and the two AI thumbnails were explicitly approved by the owner on 22 October 2026).
 # Other media remains on this machine, including portraits, extra photos and APKs.
 /imgs/**
@@ -60,3 +60,5 @@ firebase-config.js
 !/imgs/Projects/CarbonCreative/CarbonCreative_HomePage.jpg
 !/imgs/Projects/EchoWorks/
 !/imgs/Projects/EchoWorks/EchoWorks_HomePage.jpg
+!/imgs/Projects/EmpireAI-TeacherHub/
+!/imgs/Projects/EmpireAI-TeacherHub/empire-ai-teacher-hub.jpg

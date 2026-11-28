@@ -1009,3 +1009,11 @@ D:\Portfolio\HANDOFF.md
 - Deployed the local rename/privacy/Teacher Hub changes: commit `2e4ef1b`, workflow run `46120502870` completed successfully.
 - Live verification at `https://www.portfolio.liuguangxuan.com/projects`: `PoliteLoad` absent; `CourseCarry` and `Empire AI Teacher Hub` present; eight cards listed; teammate names absent. If a stale tab still shows the old name, hard-refresh; project script version is `20261128-1`.
 - Teacher Hub has no Firebase document and no fabricated links/tools; it renders from the catalog as a monogram card. No Firebase writes were made or possible without owner credentials.
+
+## Teacher Hub ordering / image — 2026-11-28 15:50 SGT
+
+- Owner: make Empire AI Teacher Hub the most recent project and add a picture of it.
+- Ranking updated locally: `projectDisplayRank()` now returns -1 for `empire-ai-teacher-hub`, so it sorts before EchoWorks/CourseCarry in the public Projects grid. Local check: first card is `WEB / EDUCATION / TH / Empire AI Teacher Hub`.
+- No Teacher Hub screenshot exists in the portfolio repo, approved media, or linked Browser/asset folders. Do **not** use the private Firebase admin key found outside the repo or expose TeacherHub/student data. The entry still has no image/link; a safe, non-student screenshot or a public URL is required from the owner.
+- Not deployed yet; waiting for the image so the most-recent card is not blank. Once supplied, set `imageUrl` in `project-catalog.js` (add to deploy allowlist if new), add the same image to the review showcase draft, then build/verify/deploy.
+- Review draft also reordered: Teacher Hub is now 01 / 08 and the default stage; its monogram TH is a temporary visual until a real screenshot is supplied.

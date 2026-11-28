@@ -1017,3 +1017,11 @@ D:\Portfolio\HANDOFF.md
 - No Teacher Hub screenshot exists in the portfolio repo, approved media, or linked Browser/asset folders. Do **not** use the private Firebase admin key found outside the repo or expose TeacherHub/student data. The entry still has no image/link; a safe, non-student screenshot or a public URL is required from the owner.
 - Not deployed yet; waiting for the image so the most-recent card is not blank. Once supplied, set `imageUrl` in `project-catalog.js` (add to deploy allowlist if new), add the same image to the review showcase draft, then build/verify/deploy.
 - Review draft also reordered: Teacher Hub is now 01 / 08 and the default stage; its monogram TH is a temporary visual until a real screenshot is supplied.
+
+## Teacher Hub image live — 2026-11-28 15:36 SGT
+
+- Owner supplied `https://empire-ai-teacher-hub.vercel.app/schedule`. The schedule route redirects to `/login`; capturing signed-in schedule data would expose student information, so the project image uses the public `/python` workspace instead: no names, classes or student records are visible.
+- Added `imgs/Projects/EmpireAI-TeacherHub/empire-ai-teacher-hub.jpg` (1440×900, 58 KB), whitelisted it in `.gitignore` and `deploy/package-cloudbase.ps1`; build count is now 51 files / twelve approved media.
+- Catalog + runtime profile now describe the hub (class scheduling + browser Python workspace), link to the schedule URL, and rank `empire-ai-teacher-hub` at `-1` so it sorts first. CourseCarry remains 02.
+- Review showcase draft uses the same image/link and opens on Teacher Hub (01 / 08).
+- Deployed commit `6f22c4f`; workflow run `46121196513` succeeded. Live check on `/projects`: Teacher Hub first, image loaded, eight cards, no PoliteLoad, no teammate names; no page errors.

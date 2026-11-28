@@ -323,7 +323,7 @@ This historical checkpoint supersedes the older sections below it, but NOT the c
 ### Latest approvals applied
 
 - Main catalog now has **18 projects**: the original 17 plus **Burnt Cones Website Revamp** (`burnt-cones-website-revamp`, no. 18, not featured). User did all website work; teammates made the logo, promotional materials and documentation. Added verified repository/demo links and explicit credits. Commission status and dates are unconfirmed: no client/commission/date claims. Neutral initials preview, no new image.
-- Updated the existing **EchoWorks** entry, no duplicate: user did the website versions and full-site revamp, with UI from **Gracie** and first scenario scene from **KaiMing**. Website role, collaborator credits and verified web demo/repository links are now present.
+- Updated the existing **EchoWorks** entry, no duplicate: user did the website versions and full-site revamp, with UI and first scenario scene from project teammates. Website role, collaborator credits and verified web demo/repository links are now present.
 - Corrected the same outdated Unity attribution in the editorial side site's project fallback/copy and homepage link. Its design/layout are unchanged. Burnt Cones was added to the main catalog only, not duplicated into the standalone side-site defaults.
 - Exact known legacy EchoWorks Unity copy is corrected at render-merge time; custom revised Firebase copy and unknown fields are preserved. No database migration writes.
 - Added editable **Collaborators & credits** to the shared project editor and project detail view.
@@ -952,3 +952,52 @@ D:\Portfolio\HANDOFF.md
   - No console/page errors on home/contact/about/projects/blog; no horizontal overflow at 1440 or 390.
 - Review artifacts (`review/`) and `.claude/`, `skills-lock.json` remain untracked/local and are not part of the deployed allowlist.
 - Next: redesign Projects and Blog with the same system (remove duplicated Featured panel / case-study walls; clean the Blog sidebar), then build + push again.
+
+## Home closing section — 2026-11-24 12:20 SGT
+
+- Owner reported: under "Have a project in mind?" there was nothing on the live home page.
+- Replaced the small inline CTA with a proper closing section before the footer: section tag, large "Have a project in mind?", one-line brief, primary "Start a conversation" button to Contact, and LinkedIn/Telegram text links. Footer socials/copyright follow directly below.
+- Deployed commit `af4a31a` ("Add closing contact section to home"); GitHub Actions run `45324881816` succeeded. Live check: `https://www.portfolio.liuguangxuan.com/` shows the new section; no console errors; desktop and mobile footers present.
+- Note: Projects and Blog redesigns still pending.
+
+## Projects showcase draft — 2026-11-24 13:50 SGT
+
+- Owner: the Projects page feels messy; find another way to showcase projects, no deployment now.
+- Built `review/projects/projects-draft.html` (+ `projects-draft.css` / `projects-draft.js`) as a review-only alternative. It replaces the current three stacked blocks (Featured Work panel → Project Library grid → six-field case-study walls) with:
+  - One editorial header ("Things I've built.") and a short line.
+  - One large selected-project stage: image or monogram, category, title, one-line description, tool chips, Open project / Read case study links.
+  - One compact project rail of all seven public projects; clicking selects the stage with a crossfade, arrow keys move between them.
+  - Shared reactive background/nav/footer theme; static data taken from `project-catalog.js`; no Firebase, so this is a layout/interaction draft only.
+- Verified at 1440 and 390: 7 rail items, EchoWorks default, PoliteLoad falls back to a PL monogram and case-study link, links/selection/arrow keys work, no console errors, no horizontal overflow. Screenshots: `review/projects/screenshots/`.
+- Live Projects page untouched; nothing committed or deployed this pass.
+- Next: owner review; if approved, port the stage + rail pattern into `projects.html` / `projects-firebase.js` (rendering from the same project data and keeping admin editing), then handle Blog.
+
+## Projects showcase draft v2 — 2026-11-24 14:30 SGT
+
+- Owner asked for a more interactive, more creative showcase (still no deployment).
+- Reworked `review/projects/projects-draft.html` into a full-bleed stage + draggable reel:
+  - Stage is now a 16:9 poster: image/monogram, strong scrim, live index (01 / 07), category, large title, one-line description, tool chips, primary/case-study actions, large prev/next buttons.
+  - Hovering or focusing any project in the reel previews it instantly; clicking pins it. Reel supports pointer drag with inertia + snap, mouse scroll/trackpad, arrow keys, and active-card centring.
+  - Stage supports horizontal swipe to change projects, subtle image parallax on pointer move, clip-wipe image transitions and staggered text reveals.
+  - Progress line + numeric counter under the reel; still uses the shared reactive background/nav/footer.
+  - Mobile stacks the poster over a dark info panel with the same controls; drag works on touch; no overlap.
+- Verified 1440/390: hover preview, next/prev, drag snap (StickAR selected after drag), keyboard arrows, 7 items, progress width, no console errors/overflow. Screenshots: `review/projects/screenshots/projects-draft-{desktop,mobile,drag}.png`.
+- Live Projects page untouched; nothing committed or deployed. Next: owner review, then port into `projects.html` / `projects-firebase.js` and finish Blog.
+
+## CourseCarry rename, privacy, Teacher Hub — 2026-11-28 15:10 SGT
+
+- Owner: rename PoliteLoad → CourseCarry; do not expose student information; add Empire AI Teacher Hub to the project showcase. No deployment requested.
+- Rename (public + runtime):
+  - `project-catalog.js` title → CourseCarry, case-study URL → `projects.html#case-study-coursecarry`.
+  - `projects-firebase.js` matching profile accepts legacy `politeload` plus `course carry`/`coursecarry`, forces the display title to CourseCarry for legacy Firestore records, keeps the rank at 02, supports the new anchor in the initial-anchor regex, and rewrites CourseCarry case-study links to the renamed anchor. Search now uses the display title, not the legacy ID/title.
+  - `index.html` home card (CC monogram, CourseCarry title, new anchor/aria label), `about.html` selected-work row, `projects.html` jump link + article id/heading/link, and the review showcase draft all renamed. A legacy `#case-study-politeload` alias span remains inside the new article for old links.
+- Privacy:
+  - Removed teammate names from the public EchoWorks case-study `Collaboration` block and from the catalog `credits` field; both now say work was contributed by project teammates.
+  - Scrubbed the same names from repository handoff/recommendation docs.
+  - CourseCarry copy now explicitly says the utility handles the user's own submissions and authorised materials, with no access to anyone else's files. Teacher Hub has no student details, images or data.
+- Empire AI Teacher Hub:
+  - Added catalog record `empire-ai-teacher-hub` (number 22, Web / Education, description: teacher hub built during the Empire AI teaching internship; tags Web / Education / Empire AI; no invented tools, links or screenshots; monogram TH). No Firebase writes.
+  - Added to the review showcase draft (8 projects; focus chips; “Ask about this project” contact action) and it renders in the local Projects grid.
+  - Catalog now 21 retained / eight public built-ins; README and PROJECT_MAP counts updated.
+- Verification: local Projects page shows CourseCarry + Empire AI Teacher Hub, no PoliteLoad, no teammate names; search “CourseCarry” returns 1 of 8; direct `#case-study-coursecarry` anchor lands at the case study; draft shows 8 items with Teacher Hub at 03/08 and TH monogram; no console errors. `npm run build` PASS (50 files, 231 references, 4 anchors). Nothing committed or deployed; cache-buster for project scripts advanced to `20261128-1`.
+- Follow-up visual fix: indented the draft stage copy so the previous-project arrow no longer covers the category/title; rechecked Teacher Hub stage (03 / 08, TH, focus chips, contact action) and refreshed screenshots.

@@ -108,7 +108,7 @@ Storage provisioning, billing, deployed rules and real phone upload/save/reload 
 - Approved Sketchfab embeds: `Chess pices - Knight` (`6fbc704037754126ae66f0604db4d62b`), `hologram` (`30e4d2f5ffda42718012338c096c9cc5`), `Crystals` (`9daa1337b6704d8cb0d3a6ce90513fea`). All use Maya/Substance Painter; Crystals also uses ZBrush. Preserve source spelling and do not invent descriptions.
 - The gallery uses **Sketchfab Viewer API**, not Three.js. Native Three.js is a possible later stage requiring authorized GLB/GLTF assets. Do not download/extract models from Sketchfab.
 - Burnt Cones: Liu did all website work; teammates made logo, promotional materials and documentation. Do not invent commission/client/date claims.
-- EchoWorks: Liu made the website versions and full-site revamp; UI by Gracie and first scenario scene by KaiMing. Update the existing entry, no duplicate.
+- EchoWorks: Liu made the website versions and full-site revamp; UI and first scenario scene by project teammates. Update the existing entry, no duplicate.
 - Past Portfolio retains ID `personal-portfolio-website` and uses the approved NP-FED links. Carbon Creative Website has separate ID `carbon-creative-website`; the old branding record remains hidden. Carbon's individual role is unconfirmed.
 - CourseCarry remains excluded under the finished-work brief. LabStats is only a possible supporting LabRats link. Do not add new projects based solely on public repositories.
 - ArtStation is a supplied link; historical attempts hit a 403 challenge, so artwork/account contents were not independently verified. Preserve actual contact/profile links; do not invent replacements.

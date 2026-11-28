@@ -23,7 +23,7 @@ Open [the main site](http://127.0.0.1:8765/) or [the editorial site](http://127.
 
 ## Current functionality
 
-- Seven public built-in projects and 20 retained catalog records; visibility controls preserve hidden records. Existing remote records can supplement the catalog.
+- Eight public built-in projects and 21 retained catalog records; visibility controls preserve hidden records. Existing remote records can supplement the catalog.
 - Public Projects and Blog are read-only apart from signed-in comment creation. Owner editing is on `/admin/`; editor markup mounts only after the configured owner UID is authenticated. Firestore rules, not client UI checks, enforce write access.
 - Main-site editors retain validation, preview, chips and admin-account-scoped recoverable drafts. The editorial site's public pages also omit editor controls.
 - Static homepage highlights and two case studies present project roles, tools and technical decisions without depending on Firebase. The interactive focus panel follows the work; case-study navigation and contact calls to action connect the pages.

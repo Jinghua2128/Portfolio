@@ -16,6 +16,16 @@ const projectCopyProfiles = [
         description: "Website revamp for a browser-based workplace feedback-learning platform.",
     },
     {
+        terms: ["politeload", "course carry", "coursecarry"],
+        title: "CourseCarry",
+        description: "A Python utility for archiving personal submissions and authorised course materials from POLITEMall/Brightspace.",
+    },
+    {
+        terms: ["empire ai teacher hub", "teacher hub", "empireai"],
+        title: "Empire AI Teacher Hub",
+        description: "A teacher hub built during the Empire AI teaching internship.",
+    },
+    {
         terms: ["yl clothes", "tailor"],
         title: "YL Clothes",
         description: "Tailor shop website focused on service showcases and customer engagement.",
@@ -147,10 +157,9 @@ const projectFilterTerms = {
 
 function getProjectSearchText(project) {
     return [
-        project.id,
         project.number,
         project.category,
-        project.title,
+        getProjectDisplayTitle(project),
         project.description,
         project.role,
         project.outcome,
@@ -182,12 +191,16 @@ function updateProjectCount(count, total) {
 
 function projectDisplayRank(project) {
     if (getProjectDedupeKey(project) === "echoworks") return 0;
-    if (project.id === "politeload-course-download-utility") return 1;
+    if (getProjectDedupeKey(project) === "coursecarry" || project.id === "politeload-course-download-utility") return 1;
     return 2;
 }
 
 function enrichProjectForDisplay(project) {
-    if (getProjectDedupeKey(project) !== "echoworks") return project;
+    const key = getProjectDedupeKey(project);
+    if (key === "coursecarry") {
+        return { ...project, caseStudyUrl: "projects.html#case-study-coursecarry" };
+    }
+    if (key !== "echoworks") return project;
     const approved = defaultProjects.find((item) => item.id === "echoworks-training-platform");
     if (!approved) return project;
     const vagueDescription = /^currently working on it[.!]?$/i.test(String(project.description || "").trim());
@@ -204,7 +217,7 @@ function enrichProjectForDisplay(project) {
 
 // On arrival from Home, async project cards can move the case-study anchor.
 // Keep that initial destination aligned only until the visitor takes control.
-const initialCaseStudy = /^#case-study-(echoworks|politeload)$/.test(window.location.hash)
+const initialCaseStudy = /^#case-study-(echoworks|politeload|coursecarry)$/.test(window.location.hash)
     ? document.getElementById(window.location.hash.slice(1)) : null;
 let keepInitialCaseStudyAligned = Boolean(initialCaseStudy);
 
@@ -609,6 +622,9 @@ function getProjectCopyProfile(project) {
 
 function getProjectDisplayTitle(project) {
     const profile = getProjectCopyProfile(project);
+    if (project.id === "politeload-course-download-utility" || getProjectDedupeKey(project) === "coursecarry") {
+        return "CourseCarry";
+    }
     return String(project.source === "firebase" ? project.title || profile?.title || "Untitled Project" : profile?.title || project.title || "Untitled Project").trim();
 }
 
@@ -629,6 +645,7 @@ function trimProjectSentence(value) {
 }
 
 function getProjectInitials(project) {
+    if (project.id === "empire-ai-teacher-hub") return "TH";
     const words = getProjectDisplayTitle(project).match(/[A-Za-z0-9]+/g) || [];
     if (!words.length) {
         return String(project.number || "P").slice(0, 2).toUpperCase();

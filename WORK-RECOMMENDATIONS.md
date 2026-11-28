@@ -18,7 +18,7 @@ BurntConesRevamp and the EchoWorks update were approved in the conversation and 
 ## Approved contribution details
 
 - **Burnt Cones Website Revamp:** Liu did all website work; teammates made the logo, promotional materials and documentation. Client/commission status was not confirmed, so the site makes no claim about it. Added as project 18 with the verified live demo and repository, a neutral initials preview, and no new image.
-- **EchoWorks:** Liu did the website versions and revamped the whole website, using UI from Gracie and the first scenario scene from KaiMing. Updated the existing project, not a duplicate; added these credits and the verified web demo/repository. Corrected the same outdated Unity attribution in the editorial side site's fallback content, without changing that site's design.
+- **EchoWorks:** Liu did the website versions and revamped the whole website, using UI and first scenario scene from project teammates. Updated the existing project, not a duplicate; added these credits and the verified web demo/repository. Corrected the same outdated Unity attribution in the editorial side site's fallback content, without changing that site's design.
 - The main Projects editor now has a Collaborators & credits field. Exact known legacy EchoWorks fallback descriptions are corrected at display merge time; unrelated or newly customised Firebase copy is preserved. No migration writes were made.
 
 ## Research evidence and original recommendations

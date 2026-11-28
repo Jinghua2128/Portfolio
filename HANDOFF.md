@@ -1001,3 +1001,11 @@ D:\Portfolio\HANDOFF.md
   - Catalog now 21 retained / eight public built-ins; README and PROJECT_MAP counts updated.
 - Verification: local Projects page shows CourseCarry + Empire AI Teacher Hub, no PoliteLoad, no teammate names; search “CourseCarry” returns 1 of 8; direct `#case-study-coursecarry` anchor lands at the case study; draft shows 8 items with Teacher Hub at 03/08 and TH monogram; no console errors. `npm run build` PASS (50 files, 231 references, 4 anchors). Nothing committed or deployed; cache-buster for project scripts advanced to `20261128-1`.
 - Follow-up visual fix: indented the draft stage copy so the previous-project arrow no longer covers the category/title; rechecked Teacher Hub stage (03 / 08, TH, focus chips, contact action) and refreshed screenshots.
+
+## CourseCarry live + database check — 2026-11-28 15:35 SGT
+
+- Owner reported the live site still showed PoliteLoad and asked to change the database too.
+- Database check: `firebase-config.js` points at `aboutme-c3bdf`; a public Firestore REST read of the `projects` collection returned only **EchoWorks** and **Past Portfolio Webstie**. No PoliteLoad/CourseCarry document exists there, so there was no Firestore record to rename. The Realtime Database endpoint is deactivated. The old name was the static catalog title in the previously deployed build.
+- Deployed the local rename/privacy/Teacher Hub changes: commit `2e4ef1b`, workflow run `46120502870` completed successfully.
+- Live verification at `https://www.portfolio.liuguangxuan.com/projects`: `PoliteLoad` absent; `CourseCarry` and `Empire AI Teacher Hub` present; eight cards listed; teammate names absent. If a stale tab still shows the old name, hard-refresh; project script version is `20261128-1`.
+- Teacher Hub has no Firebase document and no fabricated links/tools; it renders from the catalog as a monogram card. No Firebase writes were made or possible without owner credentials.
